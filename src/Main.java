@@ -7,5 +7,6 @@ public class Main
         System.out.println("Rynke was here");
         System.out.println("lmao");
         System.out.println("hah");
+        System.out.println("Hello flu!");
     }
 }

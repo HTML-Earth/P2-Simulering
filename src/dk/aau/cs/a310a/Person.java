@@ -2,13 +2,11 @@ package dk.aau.cs.a310a;
 
 public class Person {
     private int age;
-    private boolean isSusceptible;
-    private boolean isInfected;
-    private boolean isRecovered;
+    public enum health {isSusceptible, isInfected, isRecovered};
+    private health currentHealth;
 
-    public Person(boolean isSusceptible, boolean isInfected, boolean isRecovered) {
-        this.isSusceptible = isSusceptible;
-        this.isInfected = isInfected;
-        this.isRecovered = isRecovered;
+    public Person(int age, health currentHealth) {
+        this.age = age;
+        this.currentHealth = currentHealth;
     }
 }

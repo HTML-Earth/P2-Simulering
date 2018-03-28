@@ -59,8 +59,6 @@ public class GUI extends Application {
 
         root.getChildren().add(imageView);
 
-        Scene scene = new Scene(root, 800, 400);
-
         final ComboBox comboBox = new ComboBox();
 
         comboBox.getItems().addAll(
@@ -71,6 +69,9 @@ public class GUI extends Application {
         comboBox.setValue("Alle hoster i ærmet");
         root.getChildren().add(comboBox);
 
+        Scene scene = new Scene(root, 1200, 725);
+
+        stage.setTitle("WindowTest");
         stage.setScene(scene);
         stage.show();
 

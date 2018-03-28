@@ -32,7 +32,6 @@ public class GUI extends Application {
         HBox root = new HBox();
 
         Scene scene = new Scene(root, 800, 400);
-        stage.setScene(scene);
 
         final ComboBox comboBox = new ComboBox();
 
@@ -43,6 +42,7 @@ public class GUI extends Application {
         );
         root.getChildren().add(comboBox);
 
+        stage.setScene(scene);
         stage.show();
 
     }

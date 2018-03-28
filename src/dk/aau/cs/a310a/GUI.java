@@ -1,4 +1,6 @@
 package dk.aau.cs.a310a;
 
-public class GUI {
+import javafx.application.Application;
+
+public class GUI extends Application {
 }

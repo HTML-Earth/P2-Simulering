@@ -1,6 +1,7 @@
 package dk.aau.cs.a310a;
 
 public class Person {
+    private int age;
     private boolean isSusceptible;
     private boolean isInfected;
     private boolean isRecovered;

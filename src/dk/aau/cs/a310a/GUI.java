@@ -12,6 +12,10 @@ public class GUI extends Application {
     public static void main(String[] args)
     {
         launch(args);
+    }
+    
+    public void init()
+    {
         Random rand = new Random();
         System.out.println("Hello world!");
         System.out.println("xd");

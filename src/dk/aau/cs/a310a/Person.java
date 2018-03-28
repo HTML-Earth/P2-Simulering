@@ -2,7 +2,7 @@ package dk.aau.cs.a310a;
 
 public class Person {
     private int age;
-    public enum health {isSusceptible, isInfected, isRecovered};
+    public enum health {Susceptible, Infected, Recovered};
     private health currentHealth;
 
     public Person(int age, health currentHealth) {
@@ -19,6 +19,6 @@ public class Person {
     }
 
     public String toString() {
-        return "Person: " + "Age: " + getAge() + "\t Health: " + getCurrentHealth();
+        return "Person: " + "Age: " + getAge() + "\t\t Health: " + getCurrentHealth();
     }
 }

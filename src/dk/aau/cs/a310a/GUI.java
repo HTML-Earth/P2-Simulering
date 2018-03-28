@@ -20,7 +20,7 @@ public class GUI extends Application {
 
         for(int i = 0; i < 100; i ++) {
             int randInt = rand.nextInt(80) + 20;
-            Person person = new Person(randInt, Person.health.isSusceptible);
+            Person person = new Person(randInt, Person.health.Susceptible);
             System.out.println(person);
         }
     }

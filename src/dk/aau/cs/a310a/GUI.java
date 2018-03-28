@@ -34,6 +34,8 @@ public class GUI extends Application {
         //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
         List<Person> people = new ArrayList<>();
         people = addSusceptible(people, 100);
+        Person infected = new Person(25, Person.health.Infected);
+        people.add(infected);
 
         //Løb gennem Listen og print dem
         for(Person elem : people) {

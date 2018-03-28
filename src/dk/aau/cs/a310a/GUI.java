@@ -3,6 +3,8 @@ package dk.aau.cs.a310a;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -38,7 +40,18 @@ public class GUI extends Application {
     public void start(Stage stage) {
         stage.setTitle("WindowTest");
 
+        Image DKmap = new Image("DKmap.png");
+
+        ImageView imageView = new ImageView(DKmap);
+        imageView.setX(50);
+        imageView.setY(25);
+        imageView.setFitHeight(725);
+        imageView.setFitWidth(900);
+        imageView.setPreserveRatio(true);
+
         HBox root = new HBox();
+
+        root.getChildren().add(imageView);
 
         Scene scene = new Scene(root, 800, 400);
 

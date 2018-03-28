@@ -16,18 +16,22 @@ public class GUI extends Application {
     {
         launch(args);
     }
-    
-    public void init()
-    {
-        Random rand = new Random();
-        List<Person> people = new ArrayList<>();
 
-        //Tilføj 100 'susceptibles' med en tilfældig alder(20, 100) til Arraylist
-        for(int i = 0; i < 100; i ++) {
+    public List<Person> addSusceptible(List<Person> people, int n) {
+        Random rand = new Random();
+        for(int i = 0; i < n; i++) {
             int randInt = rand.nextInt(80) + 20;
             Person person = new Person(randInt, Person.health.Susceptible);
             people.add(person);
         }
+        return people;
+    }
+    
+    public void init()
+    {
+        //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
+        List<Person> people = new ArrayList<>();
+        people = addSusceptible(people, 100);
 
         //Løb gennem Listen og print dem
         for(Person elem : people) {

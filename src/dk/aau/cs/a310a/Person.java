@@ -18,6 +18,10 @@ public class Person {
         return currentHealth;
     }
 
+    public void setCurrentHealth(health currentHealth) {
+        this.currentHealth = currentHealth;
+    }
+
     public String toString() {
         return "Person: " + "Age: " + getAge() + "\t\t Health: " + getCurrentHealth();
     }

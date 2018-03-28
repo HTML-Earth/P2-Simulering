@@ -9,4 +9,16 @@ public class Person {
         this.age = age;
         this.currentHealth = currentHealth;
     }
+
+    public int getAge() {
+        return age;
+    }
+
+    public health getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public String toString() {
+        return "Person: " + "Age: " + getAge() + "\t Health: " + getCurrentHealth();
+    }
 }

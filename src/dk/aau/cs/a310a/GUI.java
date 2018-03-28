@@ -62,6 +62,7 @@ public class GUI extends Application {
                 "Ingen hoster i ærmet",
                 "Custom value"
         );
+        comboBox.setValue("Alle hoster i ærmet");
         root.getChildren().add(comboBox);
 
         stage.setScene(scene);

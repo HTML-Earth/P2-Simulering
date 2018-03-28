@@ -6,6 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GUI extends Application {
@@ -18,11 +20,18 @@ public class GUI extends Application {
     public void init()
     {
         Random rand = new Random();
+        List<Person> people = new ArrayList<>();
 
+        //Tilføj 100 'susceptibles' med en tilfældig alder(20, 100) til Arraylist
         for(int i = 0; i < 100; i ++) {
             int randInt = rand.nextInt(80) + 20;
             Person person = new Person(randInt, Person.health.Susceptible);
-            System.out.println(person);
+            people.add(person);
+        }
+
+        //Løb gennem Listen og print dem
+        for(Person elem : people) {
+            System.out.println(elem);
         }
     }
 

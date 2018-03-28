@@ -1,3 +1,5 @@
+package dk.aau.cs.a310a;
+
 public class Person {
     private boolean isSusceptible;
     private boolean isInfected;

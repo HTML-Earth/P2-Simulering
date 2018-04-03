@@ -7,6 +7,7 @@ public class Influenza {
     public enum influenzaType {A, B}
     private influenzaType type;
 
+    //Gør det muligt at bede om en Influenza af typen A eller B
     public Influenza(influenzaType type) {
         switch (type){
             case A:
@@ -28,10 +29,12 @@ public class Influenza {
         return amountCured;
     }
 
+    //Sætter personen/objektets 'health' til at være 'infected'
     public void infectPerson(Person person) {
         person.setCurrentHealth(Person.health.Infected);
     }
 
+    //Udregn R0 (chancen for epidemi) baseret på beta og gamme
     public double calculateR0(int beta, int gamma) {
         double isEpidemic = (double)beta / gamma; //R0
 

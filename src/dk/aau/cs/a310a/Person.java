@@ -22,6 +22,7 @@ public class Person {
         this.currentHealth = currentHealth;
     }
 
+    //Metoden som kaldes når man printer objektet
     public String toString() {
         return "Person: " + "Age: " + getAge() + "\t\t Health: " + getCurrentHealth();
     }

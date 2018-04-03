@@ -58,6 +58,15 @@ public class GUI extends Application {
 
         HBox root = new HBox();
 
+        //Combobox med options
+        final ComboBox<ComboItem> comboBox = new ComboBox<>();
+
+        comboBox.getItems().addAll(
+                new ComboItem("Alle hoster i ærmet", 0.0),
+                new ComboItem("Ingen hoster i ærmet", 1.0)
+        );
+        comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
+
         Image DKmap = new Image("DKmap.png");
 
         //Canvas og Bob Ross til at tegne på det

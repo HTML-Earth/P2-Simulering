@@ -70,7 +70,7 @@ public class GUI extends Application {
 
         // Der laves layers med stackpane til at placere en knap på billedet.
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(comboBox, imageView);
+        stackPane.getChildren().addAll(imageView, comboBox);
 
         StackPane.setAlignment(comboBox, Pos.TOP_RIGHT);
         StackPane.setAlignment(imageView, Pos.TOP_RIGHT);

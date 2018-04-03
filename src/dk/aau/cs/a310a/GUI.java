@@ -88,17 +88,24 @@ public class GUI extends Application {
         new AnimationTimer() {
             double f = 0.2;
             int i = 0;
-            int circleX = 100;
-            int circleY = 100;
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
+                int circleX = 200 + (int)(t*5);
+                int circleY = 200 + (int)(t*6);
+                int circleRadius = 10 + (int)(t*10);
+
                 gc.drawImage(DKmap, 0,0,900,750);
-                bob.drawCircle(circleX*2,circleY*2, 10 + i, Color.RED, pw);
+
+                bob.drawCircle(circleX,circleY, circleRadius, Color.RED, pw);
+
+                bob.drawRectangle(100,100 + (int)(Math.sin(t) * 50), 200,300 + (int)(Math.cos(t) * 50), Color.BLUE, pw);
+
+                bob.drawCircle(700 + (int)(Math.sin(t) * 40),200 + (int)(Math.cos(t) * 40),30 + (int)(Math.sin(t * 4) * 30), Color.CYAN, pw);
 
                 if (t >= f && i < people.size()) {
-                    circleX++;
-                    circleY++;
+                    circleX += 2;
+                    circleY += 2;
 
                     if (i < people.size()) {
                         personData.setText(personData.getText() + "\n" + people.get(i));
@@ -113,8 +120,6 @@ public class GUI extends Application {
 
         stage.setScene(scene);
         stage.show();
-
-
     }
 
 }

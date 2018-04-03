@@ -47,6 +47,8 @@ public class GUI extends Application {
 
     public void start(Stage stage) {
 
+        stage.setTitle("WindowTest");
+
         HBox root = new HBox();
 
         Image DKmap = new Image("DKmap.png");
@@ -75,7 +77,6 @@ public class GUI extends Application {
 
         Scene scene = new Scene(root, 1200, 725);
 
-        stage.setTitle("WindowTest");
         stage.setScene(scene);
         stage.show();
 

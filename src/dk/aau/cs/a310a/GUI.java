@@ -55,14 +55,6 @@ public class GUI extends Application {
         imageView.setFitHeight(725);
         imageView.setPreserveRatio(true);
 
-        //TODO: If statement der tager værdi ud fra hvad der er valgt i combobox
-        //Hashmap til værdier for forbyggelse (1.0 hvor smitten er 100%)
-        Map<String, Double> preventionVariable = new HashMap<>();
-        preventionVariable.put("Alle hoster i ærmet", 0.0);
-        preventionVariable.put("Ingen hoster i ærmet", 1.0);
-
-        Double alleHosterValue = preventionVariable.get("Alle hoster i ærmet");
-
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
         comboBox.getItems().addAll(

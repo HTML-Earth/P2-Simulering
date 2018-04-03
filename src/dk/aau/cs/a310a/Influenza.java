@@ -4,7 +4,7 @@ public class Influenza {
     private int baseSpread;  //Beta
     private int amountCured; //Gamma
 
-    private enum influenzaType {A, B}
+    public enum influenzaType {A, B}
     private influenzaType type;
 
     public Influenza(influenzaType type) {
@@ -20,12 +20,20 @@ public class Influenza {
         }
     }
 
+    public int getBaseSpread() {
+        return baseSpread;
+    }
+
+    public int getAmountCured() {
+        return amountCured;
+    }
+
     public void infectPerson(Person person) {
         person.setCurrentHealth(Person.health.Infected);
     }
 
-    public double calculateR0(int spread, int amountCured) {
-        double isEpidemic = (double)spread / amountCured; //R0
+    public double calculateR0(int beta, int gamma) {
+        double isEpidemic = (double)beta / gamma; //R0
 
         if(isEpidemic >= 1)
             System.out.println("There is a chance of an epidemic.");

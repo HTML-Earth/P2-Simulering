@@ -63,14 +63,13 @@ public class GUI extends Application {
 
         Double alleHosterValue = preventionVariable.get("Alle hoster i ærmet");
 
-        final ComboBox comboBox = new ComboBox();
+        final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
         comboBox.getItems().addAll(
-                "Alle hoster i ærmet",
-                "Ingen hoster i ærmet",
-                "Custom value"
-        );
-        comboBox.setValue("Alle hoster i ærmet");
+                new ComboItem("Alle hoster i ærmet", 0.0),
+                new ComboItem("Ingen hoster i ærmet", 1.0),
+                );
+        comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageView, comboBox);

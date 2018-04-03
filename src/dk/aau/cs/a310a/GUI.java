@@ -55,13 +55,7 @@ public class GUI extends Application {
         imageView.setFitHeight(725);
         imageView.setPreserveRatio(true);
 
-        final ComboBox<ComboItem> comboBox = new ComboBox<>();
-
-        comboBox.getItems().addAll(
-                new ComboItem("Alle hoster i ærmet", 0.0),
-                new ComboItem("Ingen hoster i ærmet", 1.0)
-                );
-        comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
+        
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(imageView, comboBox);

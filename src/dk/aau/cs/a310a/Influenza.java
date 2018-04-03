@@ -4,9 +4,10 @@ public class Influenza {
     private int baseSpread;  //Beta
     private int amountCured; //Gamma
 
-    private enum influenzaType {A, B}
+    public enum influenzaType {A, B}
     private influenzaType type;
 
+    //Gør det muligt at bede om en Influenza af typen A eller B
     public Influenza(influenzaType type) {
         switch (type){
             case A:
@@ -20,12 +21,22 @@ public class Influenza {
         }
     }
 
+    public int getBaseSpread() {
+        return baseSpread;
+    }
+
+    public int getAmountCured() {
+        return amountCured;
+    }
+
+    //Sætter personen/objektets 'health' til at være 'infected'
     public void infectPerson(Person person) {
         person.setCurrentHealth(Person.health.Infected);
     }
 
-    public double calculateR0(int spread, int amountCured) {
-        double isEpidemic = (double)spread / amountCured; //R0
+    //Udregn R0 (chancen for epidemi) baseret på beta og gamme
+    public double calculateR0(int beta, int gamma) {
+        double isEpidemic = (double)beta / gamma; //R0
 
         if(isEpidemic >= 1)
             System.out.println("There is a chance of an epidemic.");

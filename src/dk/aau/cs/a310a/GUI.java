@@ -13,9 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GUI extends Application {
 
@@ -62,14 +60,7 @@ public class GUI extends Application {
         imageView.setFitHeight(725);
         imageView.setPreserveRatio(true);
 
-        final ComboBox comboBox = new ComboBox();
-
-        comboBox.getItems().addAll(
-                "Alle hoster i ærmet",
-                "Ingen hoster i ærmet",
-                "Custom value"
-        );
-        comboBox.setValue("Alle hoster i ærmet");
+        
 
         // Der laves layers med stackpane til at placere en knap på billedet.
         StackPane stackPane = new StackPane();

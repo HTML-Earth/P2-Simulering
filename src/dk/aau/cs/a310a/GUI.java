@@ -10,9 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GUI extends Application {
 
@@ -56,6 +54,13 @@ public class GUI extends Application {
         ImageView imageView = new ImageView(DKmap);
         imageView.setFitHeight(725);
         imageView.setPreserveRatio(true);
+
+        //Hashmap til værdier for forbyggelse (1.0 hvor smitten er 100%)
+        Map<String, Double> preventionVariable = new HashMap<>();
+        preventionVariable.put("Alle hoster i ærmet", 0.0);
+        preventionVariable.put("Ingen hoster i ærmet", 1.0);
+
+        Double alleHosterValue = preventionVariable.get("Alle hoster i ærmet");
 
         final ComboBox comboBox = new ComboBox();
 

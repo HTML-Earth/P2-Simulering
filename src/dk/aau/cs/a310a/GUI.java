@@ -9,12 +9,15 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.*;
@@ -77,11 +80,11 @@ public class GUI extends Application {
 
         // TextArea til at udskrive data fra people listen.
         Label personData = new Label();
+        personData.setFont(Font.font(12));
 
         // Canvas og tekstdata tilføjes til programvinduet.
         root.getChildren().add(canvas);
         root.getChildren().add(personData);
-        root.setAlignment(Pos.CENTER);
 
         final long startNanoTime = System.nanoTime();
 
@@ -108,7 +111,7 @@ public class GUI extends Application {
                     circleY += 2;
 
                     if (i < people.size()) {
-                        personData.setText(personData.getText() + "\n" + people.get(i));
+                        personData.setText(personData.getText() + "\n " + people.get(i));
                         f += 0.2;
                         i++;
                     }

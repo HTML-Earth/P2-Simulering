@@ -6,16 +6,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -61,7 +59,16 @@ public class GUI extends Application {
 
         stage.setTitle("WindowTest");
 
-        HBox root = new HBox();
+        HBox simWindow = new HBox();
+        StackPane root = new StackPane();
+
+
+        // Tilføj knapper til menu
+        Button run = new Button("Start");
+        run.setFont(Font.font(20));
+        run.setTranslateX(400);
+        run.setTranslateY(260);
+
 
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
@@ -86,8 +93,11 @@ public class GUI extends Application {
         personData.setFont(Font.font(12));
 
         // Canvas og tekstdata tilføjes til programvinduet.
-        root.getChildren().add(canvas);
-        root.getChildren().add(personData);
+        simWindow.getChildren().add(canvas);
+        simWindow.getChildren().add(personData);
+        root.getChildren().add(simWindow);
+        root.getChildren().add(new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95)));
+        root.getChildren().add(run);
 
         final long startNanoTime = System.nanoTime();
 

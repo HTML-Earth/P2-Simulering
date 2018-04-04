@@ -97,10 +97,9 @@ public class GUI extends Application {
                 rand = new Random();
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                sim.simulate();
-
                 if (t >= updateTime) {
                     gc.drawImage(DKmap, 0,0,900,750);
+                    sim.simulate();
                     for (Person p : sim.getPeople())
                     {
                         Color color = Color.BLACK;

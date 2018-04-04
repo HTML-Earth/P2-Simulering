@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class BobRoss
 {
-    public void drawCircle(int xCenter, int yCenter, int radius, Color col, PixelWriter pw)
+    public void drawCircle(Vector center, int radius, Color col, PixelWriter pw)
     {
         int x, y, r2;
 
@@ -15,7 +15,7 @@ public class BobRoss
 
             for (int yi = -y; yi <= y; yi++)
             {
-                pw.setColor(xCenter + x, yCenter + yi, col);
+                pw.setColor((int)center.x + x, (int)center.y + yi, col);
             }
         }
     }

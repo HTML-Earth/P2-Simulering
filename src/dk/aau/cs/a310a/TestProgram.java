@@ -18,7 +18,7 @@ public class TestProgram {
     @Test
     public void infectPerson01() {
         Influenza influenzaA = new Influenza(Influenza.influenzaType.A);
-        Person person = new Person(25, Person.health.Susceptible);
+        Person person = new Person(25, Person.health.Susceptible, new Vector(0,0));
 
         influenzaA.infectPerson(person);
         assertEquals(Person.health.Infected, person.getCurrentHealth());

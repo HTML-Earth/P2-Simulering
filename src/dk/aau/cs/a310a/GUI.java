@@ -29,8 +29,10 @@ public class GUI extends Application {
     public List<Person> addSusceptible(List<Person> people, int n) {
         Random rand = new Random();
         for(int i = 0; i < n; i++) {
-            int randInt = rand.nextInt(80) + 20;
-            Person person = new Person(randInt, Person.health.Susceptible);
+            int randAge = rand.nextInt(80) + 20;
+            double randX = rand.nextDouble()*200 + 400;
+            double randY = rand.nextDouble()*200 + 400;
+            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX,randY));
             people.add(person);
         }
         return people;
@@ -43,7 +45,7 @@ public class GUI extends Application {
         //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
         people = new ArrayList<>();
         people = addSusceptible(people, 100);
-        Person infected = new Person(25, Person.health.Infected);
+        Person infected = new Person(25, Person.health.Infected, new Vector(400,400));
         people.add(infected);
 
         //Løb gennem Listen og print dem
@@ -91,21 +93,27 @@ public class GUI extends Application {
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                int circleX = 200 + (int)(t*5);
-                int circleY = 200 + (int)(t*6);
-                int circleRadius = 10 + (int)(t*10);
-
                 gc.drawImage(DKmap, 0,0,900,750);
 
-                bob.drawCircle(circleX,circleY, circleRadius, Color.RED, pw);
+                for (Person p : people)
+                {
+                    Color color = Color.BLACK;
+                    switch (p.getCurrentHealth())
+                    {
+                        case Susceptible:
+                            color = Color.YELLOW;
+                            break;
+                        case Infected:
+                            color = Color.LIGHTGREEN;
+                            break;
+                        case Recovered:
+                            color = Color.RED;
+                            break;
+                    }
+                    bob.drawCircle(p.getPosition(), 10, color, pw);
+                }
 
-                bob.drawRectangle(100,100 + (int)(Math.sin(t) * 50), 200,300 + (int)(Math.cos(t) * 50), Color.BLUE, pw);
-
-                bob.drawCircle(700 + (int)(Math.sin(t) * 40),200 + (int)(Math.cos(t) * 40),30 + (int)(Math.sin(t * 4) * 30), Color.CYAN, pw);
-
-                if (t >= f && i < people.size()) {
-                    circleX += 2;
-                    circleY += 2;
+                if (t >= f) {
 
                     if (i < people.size()) {
                         personData.setText(personData.getText() + "\n" + people.get(i));

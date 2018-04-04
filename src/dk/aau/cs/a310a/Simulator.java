@@ -28,12 +28,7 @@ public class Simulator
 
         //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
         people = new ArrayList<>();
-        people = addSusceptible(people, 100);
-
-        //Løb gennem Listen og print dem
-        for(Person elem : people) {
-            System.out.println(elem);
-        }
+        people = addSusceptible(people, 1000);
     }
 
     public void simulate()

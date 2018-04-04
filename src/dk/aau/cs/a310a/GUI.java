@@ -25,6 +25,7 @@ import java.util.*;
 public class GUI extends Application {
 
     Simulator sim;
+    Influenza influenzaA;
 
     public static void main(String[] args)
     {
@@ -63,6 +64,7 @@ public class GUI extends Application {
         // TextArea til at udskrive data fra people listen.
         TextArea personData = new TextArea();
         personData.setFont(Font.font(12));
+
         //Tilføj personer fra starten
         personData.setEditable(false);
         for(Person p : sim.getPeople()) {
@@ -74,10 +76,12 @@ public class GUI extends Application {
         root.getChildren().add(personData);
 
         final long startNanoTime = System.nanoTime();
-
+        influenzaA = new Influenza(Influenza.influenzaType.A);
         new AnimationTimer() {
             double updateTime = 0;
             int i = 0;
+            int start = 0;
+            int end = 1;
             Random rand;
             public void handle(long currentNanoTime) {
                 rand = new Random();
@@ -87,7 +91,7 @@ public class GUI extends Application {
 
                 if (t >= updateTime) {
                     gc.drawImage(DKmap, 0,0,900,750);
-
+                    influenzaA.infectPerson(sim.getPeople(), start, end);
                     for (Person p : sim.getPeople())
                     {
                         Color color = Color.BLACK;
@@ -108,9 +112,14 @@ public class GUI extends Application {
 
                     if (i < sim.getPeople().size()) {
                         i++;
+                        start++;
+                        end *= influenzaA.getBaseSpread() + 1;
                     }
-
-                    updateTime += 0.1;
+                    personData.setText("");
+                    for(Person p : sim.getPeople()) {
+                        personData.setText(personData.getText() + "\n " + p);
+                    }
+                    updateTime += 5;
                 }
             }
         }.start();

@@ -35,7 +35,8 @@ public class Simulator
     {
         for (Person p : people)
         {
-            p.setPosition(Vector.Add(p.getPosition(),new Vector(rand.nextDouble() * 10 - 5,rand.nextDouble() * 10 - 5)));
+            p.setTarget(new Vector(p.getPosition().x + rand.nextDouble()*400-200,p.getPosition().y + rand.nextDouble()*400-200));
+            p.updateMovement();
         }
     }
 

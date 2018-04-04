@@ -61,8 +61,13 @@ public class GUI extends Application {
         BobRoss bob = new BobRoss();
 
         // TextArea til at udskrive data fra people listen.
-        Label personData = new Label();
+        TextArea personData = new TextArea();
         personData.setFont(Font.font(12));
+        //Tilføj personer fra starten
+        personData.setEditable(false);
+        for(Person p : sim.getPeople()) {
+            personData.setText(personData.getText() + "\n " + p);
+        }
 
         // Canvas og tekstdata tilføjes til programvinduet.
         root.getChildren().add(canvas);
@@ -102,7 +107,6 @@ public class GUI extends Application {
                     }
 
                     if (i < sim.getPeople().size()) {
-                        personData.setText(personData.getText() + "\n " + sim.getPeople().get(i));
                         i++;
                     }
 

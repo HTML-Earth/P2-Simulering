@@ -21,6 +21,11 @@ public class Person {
         return position;
     }
 
+    public void setPosition(Vector position)
+    {
+        this.position = position;
+    }
+
     public health getCurrentHealth() {
         return currentHealth;
     }

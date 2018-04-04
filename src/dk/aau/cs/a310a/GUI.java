@@ -91,36 +91,39 @@ public class GUI extends Application {
         final long startNanoTime = System.nanoTime();
 
         new AnimationTimer() {
-            double f = 0.2;
+            double updateTime = 0;
             int i = 0;
+            Random rand;
             public void handle(long currentNanoTime) {
+                rand = new Random();
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                gc.drawImage(DKmap, 0,0,900,750);
+                if (t >= updateTime) {
+                    gc.drawImage(DKmap, 0,0,900,750);
 
-                for (Person p : people)
-                {
-                    Color color = Color.BLACK;
-                    switch (p.getCurrentHealth())
+                    for (Person p : people)
                     {
-                        case Susceptible:
-                            color = Color.YELLOW;
-                            break;
-                        case Infected:
-                            color = Color.LIGHTGREEN;
-                            break;
-                        case Recovered:
-                            color = Color.RED;
-                            break;
-                    }
-                    bob.drawCircle(p.getPosition(), 10, color, pw);
-                }
+                        p.setPosition(new Vector(p.getPosition().x + rand.nextDouble() * 10 - 5, p.getPosition().y + rand.nextDouble() * 10 - 5));
 
-                if (t >= f) {
+                        Color color = Color.BLACK;
+                        switch (p.getCurrentHealth())
+                        {
+                            case Susceptible:
+                                color = Color.YELLOW;
+                                break;
+                            case Infected:
+                                color = Color.LIGHTGREEN;
+                                break;
+                            case Recovered:
+                                color = Color.RED;
+                                break;
+                        }
+                        bob.drawCircle(p.getPosition(), 10, color, pw);
+                    }
 
                     if (i < people.size()) {
                         personData.setText(personData.getText() + "\n " + people.get(i));
-                        f += 0.2;
+                        updateTime += 0.2;
                         i++;
                     }
                 }

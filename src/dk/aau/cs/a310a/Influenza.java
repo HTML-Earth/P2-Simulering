@@ -1,5 +1,7 @@
 package dk.aau.cs.a310a;
 
+import java.util.List;
+
 public class Influenza {
     private int baseSpread;  //Beta
     private int amountCured; //Gamma
@@ -30,8 +32,13 @@ public class Influenza {
     }
 
     //Sætter personen/objektets 'health' til at være 'infected'
-    public void infectPerson(Person person) {
-        person.setCurrentHealth(Person.health.Infected);
+    public void infectPerson(List<Person> people, int start, int end) {
+        for(int i = start; i < end; i++) {
+            if(i < people.size())
+                people.get(i).setCurrentHealth(Person.health.Infected);
+            else
+                break;
+        }
     }
 
     //Udregn R0 (chancen for epidemi) baseret på beta og gamme

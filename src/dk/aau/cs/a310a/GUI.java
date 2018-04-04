@@ -22,37 +22,17 @@ import java.util.*;
 
 public class GUI extends Application {
 
+    Simulator sim;
+    Influenza influenzaA;
+
     public static void main(String[] args)
     {
         launch(args);
     }
 
-    public List<Person> addSusceptible(List<Person> people, int n) {
-        Random rand = new Random();
-        for(int i = 0; i < n; i++) {
-            int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble()*200 + 400;
-            double randY = rand.nextDouble()*200 + 400;
-            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX,randY));
-            people.add(person);
-        }
-        return people;
-    }
-
-    List<Person> people;
-
     public void init()
     {
-        //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
-        people = new ArrayList<>();
-        people = addSusceptible(people, 100);
-        Person infected = new Person(25, Person.health.Infected, new Vector(600,600));
-        people.add(infected);
-
-        //Løb gennem Listen og print dem
-        for(Person elem : people) {
-            System.out.println(elem);
-        }
+        sim = new Simulator();
     }
 
     public void start(Stage stage) {
@@ -89,8 +69,14 @@ public class GUI extends Application {
         BobRoss bob = new BobRoss();
 
         // TextArea til at udskrive data fra people listen.
-        Label personData = new Label();
+        TextArea personData = new TextArea();
         personData.setFont(Font.font(12));
+
+        //Tilføj personer fra starten
+        personData.setEditable(false);
+        for(Person p : sim.getPeople()) {
+            personData.setText(personData.getText() + "\n " + p);
+        }
 
         // Canvas og tekstdata tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
@@ -100,22 +86,24 @@ public class GUI extends Application {
         root.getChildren().add(run);
 
         final long startNanoTime = System.nanoTime();
-
+        influenzaA = new Influenza(Influenza.influenzaType.A);
         new AnimationTimer() {
             double updateTime = 0;
             int i = 0;
+            int start = 0;
+            int end = 1;
             Random rand;
             public void handle(long currentNanoTime) {
                 rand = new Random();
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
+                sim.simulate();
+
                 if (t >= updateTime) {
                     gc.drawImage(DKmap, 0,0,900,750);
-
-                    for (Person p : people)
+                    influenzaA.infectPerson(sim.getPeople(), start, end);
+                    for (Person p : sim.getPeople())
                     {
-                        p.setPosition(new Vector(p.getPosition().x + rand.nextDouble() * 10 - 5, p.getPosition().y + rand.nextDouble() * 10 - 5));
-
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth())
                         {
@@ -132,12 +120,16 @@ public class GUI extends Application {
                         bob.drawCircle(p.getPosition(), 10, color, pw);
                     }
 
-                    if (i < people.size()) {
-                        personData.setText(personData.getText() + "\n " + people.get(i));
+                    if (i < sim.getPeople().size()) {
                         i++;
+                        start++;
+                        end *= influenzaA.getBaseSpread() + 1;
                     }
-
-                    updateTime += 0.1;
+                    personData.setText("");
+                    for(Person p : sim.getPeople()) {
+                        personData.setText(personData.getText() + "\n " + p);
+                    }
+                    updateTime += 5;
                 }
             }
         }.start();

@@ -5,11 +5,13 @@ public class Person {
     public enum health {Susceptible, Infected, Recovered};
     private health currentHealth;
     private Vector position;
+    private Vector target;
 
     public Person(int age, health currentHealth, Vector position) {
         this.age = age;
         this.currentHealth = currentHealth;
         this.position = position;
+        this.target = this.position;
     }
 
     public int getAge() {
@@ -24,6 +26,16 @@ public class Person {
     public void setPosition(Vector position)
     {
         this.position = position;
+    }
+
+    public void setTarget(Vector target)
+    {
+        this.target = target;
+    }
+
+    public void updateMovement()
+    {
+        position = Vector.lerp(position,target,0.01);
     }
 
     public health getCurrentHealth() {

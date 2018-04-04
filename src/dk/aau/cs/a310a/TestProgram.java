@@ -14,7 +14,7 @@ public class TestProgram {
         assertEquals(2, R0);
     }
 
-    //Test om person/objektet bliver inficeret
+    /*Test om person/objektet bliver inficeret
     @Test
     public void infectPerson01() {
         Influenza influenzaA = new Influenza(Influenza.influenzaType.A);
@@ -23,5 +23,5 @@ public class TestProgram {
         influenzaA.infectPerson(person);
         assertEquals(Person.health.Infected, person.getCurrentHealth());
     }
-
+    */
 }

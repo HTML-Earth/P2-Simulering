@@ -104,7 +104,7 @@ public class GUI extends Application {
 
                     for (Person p : people)
                     {
-                        p.setPosition(new Vector(p.getPosition().x + rand.nextDouble() * 10 - 5, p.getPosition().y + rand.nextDouble() * 10 - 5));
+                        p.setPosition(Vector.Add(p.getPosition(),new Vector(rand.nextDouble() * 10 - 5,rand.nextDouble() * 10 - 5)));
 
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth())

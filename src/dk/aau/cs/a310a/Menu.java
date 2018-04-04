@@ -7,9 +7,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Menu {
-    boolean showMenu = true;
+    private boolean showMenu;
 
-    void changeLayer(StackPane root, Node x, Button y) {
+    public void setShowMenu(boolean showMenu) {
+        this.showMenu = showMenu;
+    }
+
+    public void changeLayer(StackPane root, Node x, Button y) {
         if (!showMenu) {
             root.getChildren().add(x);
         } else {

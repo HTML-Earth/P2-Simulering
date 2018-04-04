@@ -48,7 +48,7 @@ public class GUI extends Application {
         //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
         people = new ArrayList<>();
         people = addSusceptible(people, 100);
-        Person infected = new Person(25, Person.health.Infected, new Vector(400,400));
+        Person infected = new Person(25, Person.health.Infected, new Vector(600,600));
         people.add(infected);
 
         //Løb gennem Listen og print dem
@@ -124,9 +124,10 @@ public class GUI extends Application {
 
                     if (i < people.size()) {
                         personData.setText(personData.getText() + "\n " + people.get(i));
-                        updateTime += 0.2;
                         i++;
                     }
+
+                    updateTime += 0.1;
                 }
             }
         }.start();

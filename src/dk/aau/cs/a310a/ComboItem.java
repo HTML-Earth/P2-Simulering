@@ -1,5 +1,6 @@
 package dk.aau.cs.a310a;
 
+//Class til combobox valg og tilhørende værdier til udregning
 public class ComboItem {
     private String key;
     private double value;

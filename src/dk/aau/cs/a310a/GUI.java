@@ -63,13 +63,14 @@ public class GUI extends Application {
 
         HBox root = new HBox();
 
-        //Combobox med options
+        //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
         comboBox.getItems().addAll(
                 new ComboItem("Alle hoster i ærmet", 0.0),
                 new ComboItem("Ingen hoster i ærmet", 1.0)
         );
+        //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
 
         Image DKmap = new Image("DKmap.png");

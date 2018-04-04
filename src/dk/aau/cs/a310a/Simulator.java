@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Simulator
-{
+public class Simulator {
     Influenza influenzaA;
     List<Person> people;
+    List<Person> susceptible;
+    List<Person> infected;
+    List<Person> recovered;
     Random rand;
     int i;
     int start;
@@ -15,18 +17,18 @@ public class Simulator
 
     public List<Person> addSusceptible(List<Person> people, int n) {
         Random rand = new Random();
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble()*200 + 400;
-            double randY = rand.nextDouble()*200 + 400;
-            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX,randY));
+            double randX = rand.nextDouble() * 200 + 400;
+            double randY = rand.nextDouble() * 200 + 400;
+            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX, randY));
             people.add(person);
+            susceptible.add(person);
         }
         return people;
     }
 
-    public Simulator()
-    {
+    public Simulator() {
         //Random number generator
         rand = new Random();
 
@@ -42,14 +44,7 @@ public class Simulator
         end = 1;
     }
 
-    public void simulate()
-    {
-        for (Person p : people)
-        {
-            p.setTarget(new Vector(p.getPosition().x + rand.nextDouble()*400-200,p.getPosition().y + rand.nextDouble()*400-200));
-            p.updateMovement();
-        }
-
+    public void simulate() {
         influenzaA.infectPerson(people, start, end);
 
         if (i < people.size()) {
@@ -57,10 +52,14 @@ public class Simulator
             start++;
             end *= influenzaA.getBaseSpread() + 1;
         }
+
+        for (Person p : people) {
+            p.setTarget(new Vector(p.getPosition().x + rand.nextDouble() * 400 - 200, p.getPosition().y + rand.nextDouble() * 400 - 200));
+            p.updateMovement();
+        }
     }
 
-    public List<Person> getPeople()
-    {
+    public List<Person> getPeople() {
         return people;
     }
 }

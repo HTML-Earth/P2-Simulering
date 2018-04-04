@@ -24,13 +24,11 @@ public class GUI extends Application {
 
     Simulator sim;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 
-    public void init()
-    {
+    public void init() {
         sim = new Simulator();
     }
 
@@ -50,7 +48,10 @@ public class GUI extends Application {
         run.setFont(Font.font(20));
         run.setTranslateX(400);
         run.setTranslateY(260);
-        run.setOnMouseClicked(event -> {root.getChildren().remove(run); root.getChildren().remove(menuRec);});
+        run.setOnMouseClicked(event -> {
+            root.getChildren().remove(run);
+            root.getChildren().remove(menuRec);
+        });
 
 
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
@@ -67,7 +68,7 @@ public class GUI extends Application {
         Image DKmap = new Image("DKmap.png");
 
         //Canvas og Bob Ross til at tegne på det
-        Canvas canvas = new Canvas(900,750);
+        Canvas canvas = new Canvas(900, 750);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         BobRoss bob = new BobRoss();
@@ -78,7 +79,7 @@ public class GUI extends Application {
 
         //Tilføj personer fra starten
         personData.setEditable(false);
-        for(Person p : sim.getPeople()) {
+        for (Person p : sim.getPeople()) {
             personData.setText(personData.getText() + "\n " + p);
         }
 
@@ -93,18 +94,17 @@ public class GUI extends Application {
         new AnimationTimer() {
             double updateTime = 0;
             Random rand;
+
             public void handle(long currentNanoTime) {
                 rand = new Random();
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
                 if (t >= updateTime) {
-                    gc.drawImage(DKmap, 0,0,900,750);
+                    gc.drawImage(DKmap, 0, 0, 900, 750);
                     sim.simulate();
-                    for (Person p : sim.getPeople())
-                    {
+                    for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
-                        switch (p.getCurrentHealth())
-                        {
+                        switch (p.getCurrentHealth()) {
                             case Susceptible:
                                 color = Color.YELLOW;
                                 break;
@@ -118,7 +118,7 @@ public class GUI extends Application {
                         bob.drawCircle(p.getPosition(), 10, color, pw);
                     }
                     personData.setText("");
-                    for(Person p : sim.getPeople()) {
+                    for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                     }
                     updateTime += 5;

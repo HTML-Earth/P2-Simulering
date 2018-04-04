@@ -6,8 +6,12 @@ import java.util.Random;
 
 public class Simulator
 {
+    Influenza influenzaA;
     List<Person> people;
     Random rand;
+    int i;
+    int start;
+    int end;
 
     public List<Person> addSusceptible(List<Person> people, int n) {
         Random rand = new Random();
@@ -29,6 +33,13 @@ public class Simulator
         //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
         people = new ArrayList<>();
         people = addSusceptible(people, 1000);
+
+
+        influenzaA = new Influenza(Influenza.influenzaType.A);
+
+        i = 0;
+        start = 0;
+        end = 1;
     }
 
     public void simulate()
@@ -37,6 +48,14 @@ public class Simulator
         {
             p.setTarget(new Vector(p.getPosition().x + rand.nextDouble()*400-200,p.getPosition().y + rand.nextDouble()*400-200));
             p.updateMovement();
+        }
+
+        influenzaA.infectPerson(people, start, end);
+
+        if (i < people.size()) {
+            i++;
+            start++;
+            end *= influenzaA.getBaseSpread() + 1;
         }
     }
 

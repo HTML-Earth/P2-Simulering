@@ -42,12 +42,16 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
 
+        // Rectangle
+        Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
+
 
         // Tilføj knapper til menu
         Button run = new Button("Start");
         run.setFont(Font.font(20));
         run.setTranslateX(400);
         run.setTranslateY(260);
+        run.setOnMouseClicked(event -> {root.getChildren().remove(run); root.getChildren().remove(menuRec);});
 
 
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
@@ -60,6 +64,7 @@ public class GUI extends Application {
         //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
 
+        // Billedet i canvas
         Image DKmap = new Image("DKmap.png");
 
         //Canvas og Bob Ross til at tegne på det
@@ -82,7 +87,7 @@ public class GUI extends Application {
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
         root.getChildren().add(simWindow);
-        root.getChildren().add(new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95)));
+        root.getChildren().add(menuRec);
         root.getChildren().add(run);
 
         final long startNanoTime = System.nanoTime();

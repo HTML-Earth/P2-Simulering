@@ -24,37 +24,16 @@ import java.util.*;
 
 public class GUI extends Application {
 
+    Simulator sim;
+
     public static void main(String[] args)
     {
         launch(args);
     }
 
-    public List<Person> addSusceptible(List<Person> people, int n) {
-        Random rand = new Random();
-        for(int i = 0; i < n; i++) {
-            int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble()*200 + 400;
-            double randY = rand.nextDouble()*200 + 400;
-            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX,randY));
-            people.add(person);
-        }
-        return people;
-    }
-
-    List<Person> people;
-
     public void init()
     {
-        //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
-        people = new ArrayList<>();
-        people = addSusceptible(people, 100);
-        Person infected = new Person(25, Person.health.Infected, new Vector(600,600));
-        people.add(infected);
-
-        //Løb gennem Listen og print dem
-        for(Person elem : people) {
-            System.out.println(elem);
-        }
+        sim = new Simulator();
     }
 
     public void start(Stage stage) {
@@ -99,13 +78,13 @@ public class GUI extends Application {
                 rand = new Random();
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
+                sim.simulate();
+
                 if (t >= updateTime) {
                     gc.drawImage(DKmap, 0,0,900,750);
 
-                    for (Person p : people)
+                    for (Person p : sim.getPeople())
                     {
-                        p.setPosition(Vector.Add(p.getPosition(),new Vector(rand.nextDouble() * 10 - 5,rand.nextDouble() * 10 - 5)));
-
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth())
                         {
@@ -122,8 +101,8 @@ public class GUI extends Application {
                         bob.drawCircle(p.getPosition(), 10, color, pw);
                     }
 
-                    if (i < people.size()) {
-                        personData.setText(personData.getText() + "\n " + people.get(i));
+                    if (i < sim.getPeople().size()) {
+                        personData.setText(personData.getText() + "\n " + sim.getPeople().get(i));
                         i++;
                     }
 

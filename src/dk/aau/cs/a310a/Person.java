@@ -75,7 +75,36 @@ public class Person {
     }
 
     public void setCurrentHealth(health currentHealth) {
+        if (this.currentHealth == currentHealth)
+            return;
+
+        //Fjern fra nuværende liste
+        switch (this.currentHealth) {
+            case Susceptible:
+                Simulator.theSimulator.susceptible.remove(this);
+                break;
+            case Infected:
+                Simulator.theSimulator.infected.remove(this);
+                break;
+            case Recovered:
+                Simulator.theSimulator.recovered.remove(this);
+                break;
+        }
+
         this.currentHealth = currentHealth;
+
+        //Tilføj til ny liste
+        switch (currentHealth) {
+            case Susceptible:
+                Simulator.theSimulator.susceptible.add(this);
+                break;
+            case Infected:
+                Simulator.theSimulator.infected.add(this);
+                break;
+            case Recovered:
+                Simulator.theSimulator.recovered.add(this);
+                break;
+        }
     }
 
     public Influenza getDisease() {

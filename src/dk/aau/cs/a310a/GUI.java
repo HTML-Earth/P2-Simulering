@@ -44,17 +44,6 @@ public class GUI extends Application {
 
 
         // Tilføj knapper til menu
-        Button runButton = new Button("Start");
-        runButton.setFont(Font.font(20));
-        runButton.setTranslateX(400);
-        runButton.setTranslateY(260);
-        runButton.setOnMouseClicked(event -> {
-            root.getChildren().remove(runButton);
-            root.getChildren().remove(menuRec);
-            sim.startSimulation();
-        });
-
-
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
@@ -64,6 +53,25 @@ public class GUI extends Application {
         );
         //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
+
+        //Tilføj knap til at starte programmet
+        Button runButton = new Button("Start");
+        runButton.setFont(Font.font(20));
+        runButton.setTranslateX(400);
+        runButton.setTranslateY(260);
+        runButton.setOnMouseClicked(event -> {
+            root.getChildren().remove(runButton);
+            root.getChildren().remove(menuRec);
+            sim.startSimulation();
+        });
+        //Knap til at vise menuen
+        Button showMenu = new Button("Menu");
+        showMenu.setFont(Font.font(20));
+        StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
+        showMenu.setOnMouseClicked(event -> {
+            root.getChildren().addAll(menuRec, runButton, comboBox);
+        });
+
 
         // Billedet i canvas
         Image DKmap = new Image("DKmap.png");
@@ -88,6 +96,7 @@ public class GUI extends Application {
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
         root.getChildren().add(simWindow);
+        root.getChildren().add(showMenu);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
 

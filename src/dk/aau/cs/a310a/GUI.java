@@ -87,6 +87,7 @@ public class GUI extends Application {
             root.getChildren().remove(resetSim);
             root.getChildren().add(showMenu);
             simWindow.setEffect(null);
+            info.setEffect(null);
             sim.startSimulation();
         });
 
@@ -111,6 +112,7 @@ public class GUI extends Application {
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);
+            info.setEffect(boxblur);
             sim.pauseSimulation();
         });
 
@@ -154,6 +156,7 @@ public class GUI extends Application {
         // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
+        info.setEffect(boxblur);
 
         simWindow.setEffect(boxblur);
 

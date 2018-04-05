@@ -178,7 +178,7 @@ public class GUI extends Application {
             }
         }.start();
 
-        Scene scene = new Scene(root, 1200, 725);
+        Scene scene = new Scene(root, 1200, 750);
 
         stage.setScene(scene);
         stage.show();

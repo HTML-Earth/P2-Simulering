@@ -64,6 +64,17 @@ public class GUI extends Application {
         //knap til at vise menuen
         Button showMenu = new Button("Menu");
 
+        // Knap til Apply og Check
+        Button applySettings = new Button("Apply");
+        applySettings.setFont(Font.font(20));
+        applySettings.setTranslateX(300);
+        applySettings.setTranslateY(260);
+        applySettings.setOnMouseClicked(event -> {
+            int populationSize = Integer.parseInt(populationAmount.getText());
+        });
+
+
+
         // Tilføj knap til at starte program
         Button runButton = new Button("Start");
         runButton.setFont(Font.font(20));
@@ -74,6 +85,7 @@ public class GUI extends Application {
             root.getChildren().remove(menuRec);
             root.getChildren().remove(comboBox);
             root.getChildren().remove(populationAmount);
+            root.getChildren().remove(applySettings);
             root.getChildren().add(showMenu);
             sim.startSimulation();
         });
@@ -82,7 +94,7 @@ public class GUI extends Application {
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount);
+            root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount, applySettings);
             root.getChildren().remove(showMenu);
         });
 
@@ -114,6 +126,7 @@ public class GUI extends Application {
         root.getChildren().add(runButton);
         root.getChildren().add(comboBox);
         root.getChildren().add(populationAmount);
+        root.getChildren().add(applySettings);
 
 
         final long startNanoTime = System.nanoTime();

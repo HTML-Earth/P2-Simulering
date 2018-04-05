@@ -8,22 +8,22 @@ public class Vector {
         this.y = y;
     }
 
-    public static Vector Add(Vector a, Vector b) {
+    public static Vector add(Vector a, Vector b) {
         Vector result = new Vector(a.x + b.x, a.y + b.y);
         return result;
     }
 
-    public static Vector Subtract(Vector a, Vector b) {
+    public static Vector subtract(Vector a, Vector b) {
         Vector result = new Vector(a.x - b.x, a.y - b.y);
         return result;
     }
 
-    public static Vector Multiply(Vector v, double a) {
+    public static Vector multiply(Vector v, double a) {
         Vector result = new Vector(v.x * a, v.y * a);
         return result;
     }
 
     public static Vector lerp(Vector a, Vector b, double t) {
-        return Vector.Add(Vector.Multiply(a, (1 - t)), Vector.Multiply(b, t));
+        return Vector.add(Vector.multiply(a, (1 - t)), Vector.multiply(b, t));
     }
 }

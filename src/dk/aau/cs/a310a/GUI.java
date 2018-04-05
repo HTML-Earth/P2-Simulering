@@ -39,17 +39,17 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
 
-        // Rectangle
+        // Rectangle til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
 
         // Tilføj knapper til menu
-        Button run = new Button("Start");
-        run.setFont(Font.font(20));
-        run.setTranslateX(400);
-        run.setTranslateY(260);
-        run.setOnMouseClicked(event -> {
-            root.getChildren().remove(run);
+        Button runButton = new Button("Start");
+        runButton.setFont(Font.font(20));
+        runButton.setTranslateX(400);
+        runButton.setTranslateY(260);
+        runButton.setOnMouseClicked(event -> {
+            root.getChildren().remove(runButton);
             root.getChildren().remove(menuRec);
         });
 
@@ -83,12 +83,13 @@ public class GUI extends Application {
             personData.setText(personData.getText() + "\n " + p);
         }
 
-        // Canvas og tekstdata tilføjes til programvinduet.
+        // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
-        root.getChildren().add(run);
+        root.getChildren().add(runButton);
+
 
         final long startNanoTime = System.nanoTime();
         new AnimationTimer() {

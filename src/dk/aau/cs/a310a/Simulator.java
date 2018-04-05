@@ -5,12 +5,19 @@ import java.util.List;
 import java.util.Random;
 
 public class Simulator {
+    //Sygdom
     Influenza influenzaA;
+
+    //Lister over personer
     List<Person> people;
-    List<Person> susceptible = new ArrayList<>();
+    List<Person> susceptible;
     List<Person> infected;
     List<Person> recovered;
+
+    //RNG
     Random rand;
+
+    //Simuleringsvariabler
     int i;
     int start;
     int end;
@@ -19,10 +26,14 @@ public class Simulator {
         //Random number generator
         rand = new Random();
 
-        //Lav tom liste af 'Person' og lav 100 'Person' med Susceptible
+        //Lav tomme lister af 'Person'
         people = new ArrayList<>();
-        people = addSusceptible(people, 1000);
+        susceptible = new ArrayList<>();
+        infected = new ArrayList<>();
+        recovered = new ArrayList<>();
 
+        //lav 100 'Person' med Susceptible
+        addPeople(100, Person.health.Susceptible);
 
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
@@ -31,17 +42,30 @@ public class Simulator {
         end = 1;
     }
 
-    public List<Person> addSusceptible(List<Person> people, int n) {
+    public void addPeople(int amount, Person.health health) {
         Random rand = new Random();
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < amount; i++) {
             int randAge = rand.nextInt(80) + 20;
             double randX = rand.nextDouble() * 200 + 400;
             double randY = rand.nextDouble() * 200 + 400;
-            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX, randY));
+            Person person = new Person(randAge, health, new Vector(randX, randY));
+
+            //Tilføj person til generel liste
             people.add(person);
-            susceptible.add(person);
+
+            //Tilføj person til specifik liste
+            switch (health) {
+                case Susceptible:
+                    susceptible.add(person);
+                    break;
+                case Infected:
+                    infected.add(person);
+                    break;
+                case Recovered:
+                    recovered.add(person);
+                    break;
+            }
         }
-        return people;
     }
 
     public void simulate() {

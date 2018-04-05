@@ -42,18 +42,6 @@ public class GUI extends Application {
         // Rectangle til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
-
-        // Tilføj knapper til menu
-        Button runButton = new Button("Start");
-        runButton.setFont(Font.font(20));
-        runButton.setTranslateX(400);
-        runButton.setTranslateY(260);
-        runButton.setOnMouseClicked(event -> {
-            root.getChildren().remove(runButton);
-            root.getChildren().remove(menuRec);
-        });
-
-
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
@@ -63,6 +51,27 @@ public class GUI extends Application {
         );
         //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
+        comboBox.setTranslateX(-300);
+        comboBox.setTranslateY(-250);
+
+        // Textfield til at skrive befolkning
+        TextField populationAmount = new TextField("0");
+        populationAmount.setMaxWidth(80);
+        populationAmount.setTranslateX(-300);
+        populationAmount.setTranslateY(-200);
+
+        // Tilføj knapper til menu
+        Button runButton = new Button("Start");
+        runButton.setFont(Font.font(20));
+        runButton.setTranslateX(400);
+        runButton.setTranslateY(260);
+        runButton.setOnMouseClicked(event -> {
+            root.getChildren().remove(runButton);
+            root.getChildren().remove(menuRec);
+            root.getChildren().remove(comboBox);
+            root.getChildren().remove(populationAmount);
+        });
+
 
         // Billedet i canvas
         Image DKmap = new Image("DKmap.png");
@@ -89,6 +98,8 @@ public class GUI extends Application {
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
+        root.getChildren().add(comboBox);
+        root.getChildren().add(populationAmount);
 
 
         final long startNanoTime = System.nanoTime();

@@ -124,8 +124,13 @@ public class GUI extends Application {
             root.getChildren().remove(menuRec);
             root.getChildren().remove(comboBox);
             root.getChildren().remove(susceptibleAmount);
+            root.getChildren().remove(recoveredAmount);
+            root.getChildren().remove(infectedAmount);
             root.getChildren().remove(applySettings);
             root.getChildren().remove(resetSim);
+            root.getChildren().remove(susceptibleLabel);
+            root.getChildren().remove(infectedLabel);
+            root.getChildren().remove(recoveredLabel);
             root.getChildren().add(showMenu);
             simWindow.setEffect(null);
             info.setEffect(null);
@@ -149,7 +154,7 @@ public class GUI extends Application {
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, applySettings, resetSim);
+            root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, applySettings, resetSim);
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);

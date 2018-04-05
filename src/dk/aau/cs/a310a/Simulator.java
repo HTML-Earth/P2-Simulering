@@ -7,26 +7,13 @@ import java.util.Random;
 public class Simulator {
     Influenza influenzaA;
     List<Person> people;
-    List<Person> susceptible;
+    List<Person> susceptible = new ArrayList<>();
     List<Person> infected;
     List<Person> recovered;
     Random rand;
     int i;
     int start;
     int end;
-
-    public List<Person> addSusceptible(List<Person> people, int n) {
-        Random rand = new Random();
-        for (int i = 0; i < n; i++) {
-            int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble() * 200 + 400;
-            double randY = rand.nextDouble() * 200 + 400;
-            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX, randY));
-            people.add(person);
-            susceptible.add(person);
-        }
-        return people;
-    }
 
     public Simulator() {
         //Random number generator
@@ -42,6 +29,19 @@ public class Simulator {
         i = 0;
         start = 0;
         end = 1;
+    }
+
+    public List<Person> addSusceptible(List<Person> people, int n) {
+        Random rand = new Random();
+        for (int i = 0; i < n; i++) {
+            int randAge = rand.nextInt(80) + 20;
+            double randX = rand.nextDouble() * 200 + 400;
+            double randY = rand.nextDouble() * 200 + 400;
+            Person person = new Person(randAge, Person.health.Susceptible, new Vector(randX, randY));
+            people.add(person);
+            susceptible.add(person);
+        }
+        return people;
     }
 
     public void simulate() {

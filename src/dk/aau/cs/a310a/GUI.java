@@ -6,13 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -46,6 +44,7 @@ public class GUI extends Application {
 
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
+        GridPane info = new GridPane();
 
         // Rectangle og blur til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
@@ -143,6 +142,15 @@ public class GUI extends Application {
         personData.setFont(Font.font(12));
         personData.setTranslateY(300);
 
+        //Label
+        Label countSusceptible = new Label();
+        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
+
+        //Grid
+        info.setTranslateX(920);
+        info.setTranslateY(20);
+        info.add(countSusceptible, 0, 0);
+
         //Tilføj personer fra starten
         personData.setEditable(false);
         for (Person p : sim.getPeople()) {
@@ -155,6 +163,7 @@ public class GUI extends Application {
 
         simWindow.setEffect(boxblur);
 
+        root.getChildren().add(info);
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
@@ -205,6 +214,7 @@ public class GUI extends Application {
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
+                        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
                     }
 
                     //60 fps

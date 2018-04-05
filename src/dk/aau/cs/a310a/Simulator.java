@@ -86,6 +86,10 @@ public class Simulator {
         people.clear();
     }
 
+    public boolean isSimulationActive () {
+        return simulationIsActive;
+    }
+
     public void simulate(double time) {
         if (!simulationIsActive)
             return;

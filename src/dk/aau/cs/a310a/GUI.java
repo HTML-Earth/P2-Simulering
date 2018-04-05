@@ -164,9 +164,9 @@ public class GUI extends Application {
                                 break;
                         }
                         if (p.getCurrentHealth() == Person.health.Dead)
-                            bob.drawCircle(p.getPosition(), 5, color, pw);
+                            bob.drawCross(p.getPosition(), 8, color, pw);
                         else
-                            bob.drawCircle(p.getPosition(), 10, color, pw);
+                            bob.drawCircle(p.getPosition(), 8, color, pw);
                     }
                     personData.setText("");
                     for (Person p : sim.getPeople()) {

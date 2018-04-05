@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -39,8 +40,13 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
 
-        // Rectangle til menu
+        // Rectangle og blur til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
+        BoxBlur boxblur = new BoxBlur();
+        boxblur.setHeight(5);
+        boxblur.setWidth(5);
+        boxblur.setIterations(3);
+
 
         //Tilføj knapper til menuen
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
@@ -80,6 +86,7 @@ public class GUI extends Application {
             root.getChildren().remove(populationAmount);
             root.getChildren().remove(applySettings);
             root.getChildren().add(showMenu);
+            simWindow.setEffect(null);
             sim.startSimulation();
         });
 
@@ -103,6 +110,8 @@ public class GUI extends Application {
             root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount, applySettings);
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
+            simWindow.setEffect(boxblur);
+            sim.pauseSimulation();
         });
 
 
@@ -128,6 +137,9 @@ public class GUI extends Application {
         // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
+
+        simWindow.setEffect(boxblur);
+
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);

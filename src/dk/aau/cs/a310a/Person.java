@@ -19,16 +19,18 @@ public class Person {
         this.target = this.position;
     }
 
-    public void updateDisease(double time) {
+    public void updateDisease() {
         switch (currentHealth) {
             case Susceptible:
                 break;
             case Infected:
                 //Check for recovery
+                /*
                 if(timeInfected == 0)
                     timeInfected = time;
 
                 influenzaRecover(time);
+                */
                 for (Person p : Simulator.theSimulator.susceptible) {
                     //Tjek om personerne er tæt på hinanden
                     if (Vector.distance(this.position,p.getPosition()) < 50){

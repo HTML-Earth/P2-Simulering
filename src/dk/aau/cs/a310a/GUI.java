@@ -147,32 +147,39 @@ public class GUI extends Application {
 
                 if (t >= updateTime) {
                     gc.drawImage(DKmap, 0, 0, 900, 750);
-                    sim.simulate();
+                    sim.simulate(t);
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth()) {
                             case Susceptible:
-                                color = Color.YELLOW;
+                                color = Color.CYAN;
                                 break;
                             case Infected:
-                                color = Color.LIGHTGREEN;
+                                color = Color.RED;
                                 break;
                             case Recovered:
+                                color = Color.YELLOW;
+                                break;
+                            case Dead:
                                 color = Color.RED;
                                 break;
                         }
-                        bob.drawCircle(p.getPosition(), 10, color, pw);
+                        if (p.getCurrentHealth() == Person.health.Dead)
+                            bob.drawCross(p.getPosition(), 8, color, pw);
+                        else
+                            bob.drawCircle(p.getPosition(), 8, color, pw);
                     }
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                     }
-                    updateTime += 0.2;
+                    //60 fps
+                    updateTime += 0.017;
                 }
             }
         }.start();
 
-        Scene scene = new Scene(root, 1200, 725);
+        Scene scene = new Scene(root, 1200, 750);
 
         stage.setScene(scene);
         stage.show();

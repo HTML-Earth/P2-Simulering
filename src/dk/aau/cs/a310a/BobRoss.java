@@ -17,6 +17,15 @@ public class BobRoss {
         }
     }
 
+    public void drawCross(Vector center, int size, Color col, PixelWriter pw) {
+        for (int j = -1; j <= 1; j++) {
+            for (int i = -size; i <= size; i++) {
+                pw.setColor((int)center.x + i + j, (int)center.y + i, col);
+                pw.setColor((int)center.x - i + j, (int)center.y + i, col);
+            }
+        }
+    }
+
     public void drawRectangle(int x1, int x2, int y1, int y2, Color col, PixelWriter pw) {
         int xlow = (x1 < x2) ? x1 : x2;
         int xhigh = (x1 > x2) ? x1 : x2;

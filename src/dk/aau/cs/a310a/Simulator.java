@@ -21,6 +21,7 @@ public class Simulator {
     int i;
     int start;
     int end;
+    boolean simulationIsActive;
 
     public Simulator() {
         //Random number generator
@@ -40,6 +41,8 @@ public class Simulator {
         i = 0;
         start = 0;
         end = 1;
+
+        simulationIsActive = false;
     }
 
     public void addPeople(int amount, Person.health health) {
@@ -68,7 +71,14 @@ public class Simulator {
         }
     }
 
+    public void startSimulation(){
+        simulationIsActive = true;
+    }
+
     public void simulate() {
+        if (!simulationIsActive)
+            return;
+
         //Inficer og opdater variabler til inficering af personer
         influenzaA.infectPerson(people, start, end);
 

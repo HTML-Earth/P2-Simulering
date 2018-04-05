@@ -51,6 +51,7 @@ public class GUI extends Application {
         runButton.setOnMouseClicked(event -> {
             root.getChildren().remove(runButton);
             root.getChildren().remove(menuRec);
+            sim.startSimulation();
         });
 
 

@@ -39,17 +39,17 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
 
-        // Rectangle
+        // Rectangle til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
 
         // Tilføj knapper til menu
-        Button run = new Button("Start");
-        run.setFont(Font.font(20));
-        run.setTranslateX(400);
-        run.setTranslateY(260);
-        run.setOnMouseClicked(event -> {
-            root.getChildren().remove(run);
+        Button runButton = new Button("Start");
+        runButton.setFont(Font.font(20));
+        runButton.setTranslateX(400);
+        runButton.setTranslateY(260);
+        runButton.setOnMouseClicked(event -> {
+            root.getChildren().remove(runButton);
             root.getChildren().remove(menuRec);
         });
 
@@ -83,12 +83,13 @@ public class GUI extends Application {
             personData.setText(personData.getText() + "\n " + p);
         }
 
-        // Canvas og tekstdata tilføjes til programvinduet.
+        // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
-        root.getChildren().add(run);
+        root.getChildren().add(runButton);
+
 
         final long startNanoTime = System.nanoTime();
         new AnimationTimer() {
@@ -100,8 +101,12 @@ public class GUI extends Application {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
                 if (t >= updateTime) {
+                    //Opdater billedet med prikkerne på
                     gc.drawImage(DKmap, 0, 0, 900, 750);
+                    //Infect personer og flyt prikker
                     sim.simulate();
+
+                    //Sæt farven for prikkerne baseret 'health'
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth()) {
@@ -115,13 +120,16 @@ public class GUI extends Application {
                                 color = Color.RED;
                                 break;
                         }
+                        //Tegn prikkerne
                         bob.drawCircle(p.getPosition(), 10, color, pw);
                     }
+                    //Reset hele TextArea for at opdater listen med nuværende 'health'
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                     }
-                    updateTime += 5;
+                    //Hvor hurtigt billedet opdaterer
+                    updateTime += 0.5;
                 }
             }
         }.start();
@@ -131,5 +139,4 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 }

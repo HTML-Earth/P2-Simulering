@@ -69,6 +69,7 @@ public class Simulator {
     }
 
     public void simulate() {
+        //Inficer og opdater variabler til inficering af personer
         influenzaA.infectPerson(people, start, end);
 
         if (i < people.size()) {
@@ -77,6 +78,7 @@ public class Simulator {
             end *= influenzaA.getBaseSpread() + 1;
         }
 
+        //Opdater positionen for prikken for personen
         for (Person p : people) {
             p.setTarget(new Vector(p.getPosition().x + rand.nextDouble() * 400 - 200, p.getPosition().y + rand.nextDouble() * 400 - 200));
             p.updateMovement();

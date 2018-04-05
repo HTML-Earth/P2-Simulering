@@ -63,7 +63,7 @@ public class GUI extends Application {
         comboBox.setTranslateY(-250);
 
         // Textfield til at skrive befolkning
-        TextField populationAmount = new TextField("0");
+        TextField populationAmount = new TextField("100");
         populationAmount.setMaxWidth(80);
         populationAmount.setTranslateX(-300);
         populationAmount.setTranslateY(-200);

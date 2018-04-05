@@ -6,10 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
@@ -41,6 +38,8 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
 
+
+
         // Rectangle og blur til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
         BoxBlur boxblur = new BoxBlur();
@@ -60,13 +59,46 @@ public class GUI extends Application {
         //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
         comboBox.setTranslateX(-300);
-        comboBox.setTranslateY(-250);
+        comboBox.setTranslateY(200);
 
         // Textfield til at skrive befolkning
-        TextField populationAmount = new TextField("100");
-        populationAmount.setMaxWidth(80);
-        populationAmount.setTranslateX(-300);
-        populationAmount.setTranslateY(-200);
+        TextField susceptibleAmount = new TextField("100");
+        susceptibleAmount.setMaxWidth(80);
+        susceptibleAmount.setTranslateX(-220);
+        susceptibleAmount.setTranslateY(-200+50);
+
+        TextField infectedAmount = new TextField("100");
+        infectedAmount.setMaxWidth(80);
+        infectedAmount.setTranslateX(-220);
+        infectedAmount.setTranslateY(-200+100);
+
+        TextField recoveredAmount = new TextField("100");
+        recoveredAmount.setMaxWidth(80);
+        recoveredAmount.setTranslateX(-220);
+        recoveredAmount.setTranslateY(-200+150);
+        //labels til beskrivelse af opsætningsbokse
+
+
+        Label susceptibleLabel = new Label("Susceptible:");
+        Label infectedLabel = new Label("Infected:");
+        Label recoveredLabel = new Label("Recovered:");
+
+
+        susceptibleLabel.setTextFill(Color.WHITE);
+        infectedLabel.setTextFill(Color.WHITE);
+        recoveredLabel.setTextFill(Color.WHITE);
+
+
+        susceptibleLabel.setTranslateX(-300);
+        susceptibleLabel.setTranslateY(-197+50);
+
+        infectedLabel.setTranslateX(-300);
+        infectedLabel.setTranslateY(-197+100);
+
+        recoveredLabel.setTranslateX(-300);
+        recoveredLabel.setTranslateY(-197+150);
+
+
 
         //Button factory
         Button showMenu = new Button("Menu");
@@ -83,7 +115,7 @@ public class GUI extends Application {
             root.getChildren().remove(runButton);
             root.getChildren().remove(menuRec);
             root.getChildren().remove(comboBox);
-            root.getChildren().remove(populationAmount);
+            root.getChildren().remove(susceptibleAmount);
             root.getChildren().remove(applySettings);
             root.getChildren().remove(resetSim);
             root.getChildren().add(showMenu);
@@ -97,7 +129,7 @@ public class GUI extends Application {
         applySettings.setTranslateY(260);
         applySettings.setOnMouseClicked(event -> {
             
-            int populationSize = Integer.parseInt(populationAmount.getText());
+            int populationSize = Integer.parseInt(susceptibleAmount.getText());
             if (populationSize > 0 && populationSize < 1000) {
                 runButton.setDisable(false);
 
@@ -108,7 +140,7 @@ public class GUI extends Application {
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount, applySettings, resetSim);
+            root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, applySettings, resetSim);
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);
@@ -152,10 +184,15 @@ public class GUI extends Application {
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
-        root.getChildren().add(comboBox);
-        root.getChildren().add(populationAmount);
+        root.getChildren().add(susceptibleAmount);
+        root.getChildren().add(infectedAmount);
+        root.getChildren().add(recoveredAmount);
         root.getChildren().add(applySettings);
         root.getChildren().add(resetSim);
+        root.getChildren().add(susceptibleLabel);
+        root.getChildren().add(infectedLabel);
+        root.getChildren().add(recoveredLabel);
+        root.getChildren().add(comboBox);
 
         gc.drawImage(DKmap, 0, 0, 900, 750);
 

@@ -43,6 +43,9 @@ public class Simulator {
 
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
+        //Inficer 1 person
+        influenzaA.infectPerson(people.get(0));
+
         i = 0;
         start = 0;
         end = 1;
@@ -85,7 +88,7 @@ public class Simulator {
             return;
 
         //Inficer og opdater variabler til inficering af personer
-        influenzaA.infectPerson(people, start, end);
+        //influenzaA.infectPerson(people, start, end);
 
         if (i < people.size()) {
             i++;

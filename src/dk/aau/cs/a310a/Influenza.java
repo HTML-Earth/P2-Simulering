@@ -42,6 +42,11 @@ public class Influenza {
         }
     }
 
+    public void infectPerson(Person person){
+        person.setDisease(this);
+        person.setCurrentHealth(Person.health.Infected);
+    }
+
     //Udregn R0 (chancen for epidemi) baseret på beta og gamme
     public double calculateR0(int beta, int gamma) {
         double isEpidemic = (double) beta / gamma; //R0

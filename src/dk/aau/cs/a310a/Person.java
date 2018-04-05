@@ -1,10 +1,11 @@
 package dk.aau.cs.a310a;
 
 public class Person {
-    private int age;
-
     public enum health {Susceptible, Infected, Recovered};
+
     private health currentHealth;
+    private Influenza disease;
+    private int age;
     private Vector position;
     private Vector target;
 
@@ -23,8 +24,13 @@ public class Person {
                 //Check for recovery
 
                 for (Person p : Simulator.theSimulator.susceptible) {
-                    if (Vector.distance(this.position,p.getPosition()) < 5){
-                        //Chance of infection
+                    //Tjek om personerne er tæt på hinanden
+                    if (Vector.distance(this.position,p.getPosition()) < 50){
+                        //Risiko for infektion
+                        if (Simulator.theSimulator.rand.nextDouble() < 0.2){
+                            //Inficer den anden person
+                            disease.infectPerson(p);
+                        }
                     }
                 }
                 break;
@@ -62,6 +68,14 @@ public class Person {
 
     public void setCurrentHealth(health currentHealth) {
         this.currentHealth = currentHealth;
+    }
+
+    public Influenza getDisease() {
+        return disease;
+    }
+
+    public void setDisease(Influenza disease) {
+        this.disease = disease;
     }
 
     //Metoden som kaldes når man printer objektet

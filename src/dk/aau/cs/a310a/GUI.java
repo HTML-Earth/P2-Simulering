@@ -137,13 +137,13 @@ public class GUI extends Application {
         personData.setTranslateY(300);
 
         //Label
-        Label labelSusceptible = new Label();
-        labelSusceptible.setText(sim.healthCount(Person.health.Susceptible));
+        Label countSusceptible = new Label();
+        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
 
         //Grid
         info.setTranslateX(920);
         info.setTranslateY(20);
-        info.add(labelSusceptible, 0, 0);
+        info.add(countSusceptible, 0, 0);
 
         //Tilføj personer fra starten
         personData.setEditable(false);
@@ -208,7 +208,7 @@ public class GUI extends Application {
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
-                        labelSusceptible.setText(sim.healthCount(Person.health.Susceptible));
+                        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
                     }
 
                     //60 fps

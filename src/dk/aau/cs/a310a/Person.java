@@ -1,6 +1,5 @@
 package dk.aau.cs.a310a;
 
-import java.util.List;
 import java.util.Random;
 
 public class Person {

@@ -26,7 +26,10 @@ import java.util.Random;
 
 public class GUI extends Application {
 
+    //Simulator objekt
     Simulator sim;
+
+    // Billedet i canvas
     BufferedImage cityMap;
 
     public static void main(String[] args) {
@@ -169,9 +172,6 @@ public class GUI extends Application {
         resetSim.setOnMouseClicked(event -> {
             sim.stopSimulation();
         });
-
-        // Billedet i canvas
-        Image DKmap = new Image("DKmap.png");
 
         //Canvas og Bob Ross til at tegne på det
         Canvas canvas = new Canvas(800, 600);

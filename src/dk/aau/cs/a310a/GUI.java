@@ -172,7 +172,8 @@ public class GUI extends Application {
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                     }
-                    updateTime += 0.2;
+                    //60 fps
+                    updateTime += 0.017;
                 }
             }
         }.start();

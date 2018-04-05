@@ -52,6 +52,17 @@ public class Simulator {
         }
     }
 
+    public String healthCount(Person.health health) {
+        int count = 0;
+        for(Person p : people) {
+            if(p.getCurrentHealth() == health) {
+                count += 1;
+            }
+        }
+        String value = String.valueOf(count);
+        return value;
+    }
+
     void initialiseSimulation() {
         //lav 100 'Person' med Susceptible
         addPeople(300, Person.health.Susceptible);

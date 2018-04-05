@@ -12,9 +12,6 @@ public class Simulator {
 
     //Lister over personer
     public List<Person> people;
-    public List<Person> susceptible;
-    public List<Person> infected;
-    public List<Person> recovered;
 
     //RNG
     public Random rand;
@@ -34,9 +31,6 @@ public class Simulator {
 
         //Lav tomme lister af 'Person'
         people = new ArrayList<>();
-        susceptible = new ArrayList<>();
-        infected = new ArrayList<>();
-        recovered = new ArrayList<>();
 
         //lav 100 'Person' med Susceptible
         addPeople(100, Person.health.Susceptible);
@@ -61,21 +55,8 @@ public class Simulator {
             double randY = rand.nextDouble() * 650 + 50;
             Person person = new Person(randAge, health, new Vector(randX, randY));
 
-            //Tilføj person til generel liste
+            //Tilføj person til liste
             people.add(person);
-
-            //Tilføj person til specifik liste
-            switch (health) {
-                case Susceptible:
-                    susceptible.add(person);
-                    break;
-                case Infected:
-                    infected.add(person);
-                    break;
-                case Recovered:
-                    recovered.add(person);
-                    break;
-            }
         }
     }
 

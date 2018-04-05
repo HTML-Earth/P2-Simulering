@@ -5,14 +5,16 @@ import java.util.List;
 import java.util.Random;
 
 public class Simulator {
+    public static Simulator theSimulator;
+
     //Sygdom
     Influenza influenzaA;
 
     //Lister over personer
-    List<Person> people;
-    List<Person> susceptible;
-    List<Person> infected;
-    List<Person> recovered;
+    public List<Person> people;
+    public List<Person> susceptible;
+    public List<Person> infected;
+    public List<Person> recovered;
 
     //RNG
     Random rand;
@@ -24,6 +26,9 @@ public class Simulator {
     boolean simulationIsActive;
 
     public Simulator() {
+        //Gør denne simulator globalt tilgængelig
+        theSimulator = this;
+
         //Random number generator
         rand = new Random();
 

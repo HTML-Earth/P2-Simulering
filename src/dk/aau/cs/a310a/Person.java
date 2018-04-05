@@ -15,6 +15,24 @@ public class Person {
         this.target = this.position;
     }
 
+    public void updateDisease() {
+        switch (currentHealth) {
+            case Susceptible:
+                break;
+            case Infected:
+                //Check for recovery
+
+                for (Person p : Simulator.theSimulator.susceptible) {
+                    if (Vector.distance(this.position,p.getPosition()) < 5){
+                        //Chance of infection
+                    }
+                }
+                break;
+            case Recovered:
+                break;
+        }
+    }
+
     public void updateMovement() {
         position = Vector.lerp(position, target, 0.01);
     }

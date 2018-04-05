@@ -27,8 +27,7 @@ public class Vector {
         return Vector.add(Vector.multiply(a, (1 - t)), Vector.multiply(b, t));
     }
 
-    public static double distance(Vector a, Vector b)
-    {
+    public static double distance(Vector a, Vector b) {
         double distance = Math.sqrt(Math.pow(b.x - a.x, 2)+Math.pow(b.y-a.y,2));
         return distance;
     }

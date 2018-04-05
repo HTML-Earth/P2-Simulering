@@ -147,6 +147,7 @@ public class GUI extends Application {
         root.getChildren().add(populationAmount);
         root.getChildren().add(applySettings);
 
+        gc.drawImage(DKmap, 0, 0, 900, 750);
 
         final long startNanoTime = System.nanoTime();
         new AnimationTimer() {
@@ -157,37 +158,37 @@ public class GUI extends Application {
                 rand = new Random();
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
+                if (!sim.isSimulationActive())
+                    return;
+
                 if (t >= updateTime) {
                     sim.simulate(t);
                     gc.drawImage(DKmap, 0, 0, 900, 750);
 
-                    if (sim.isSimulationActive())
-                    {
-                        for (Person p : sim.getPeople()) {
-                            Color color = Color.BLACK;
-                            switch (p.getCurrentHealth()) {
-                                case Susceptible:
-                                    color = Color.CYAN;
-                                    break;
-                                case Infected:
-                                    color = Color.RED;
-                                    break;
-                                case Recovered:
-                                    color = Color.YELLOW;
-                                    break;
-                                case Dead:
-                                    color = Color.RED;
-                                    break;
-                            }
-                            if (p.getCurrentHealth() == Person.health.Dead)
-                                bob.drawCross(p.getPosition(), 8, color, pw);
-                            else
-                                bob.drawCircle(p.getPosition(), 8, color, pw);
+                    for (Person p : sim.getPeople()) {
+                        Color color = Color.BLACK;
+                        switch (p.getCurrentHealth()) {
+                            case Susceptible:
+                                color = Color.CYAN;
+                                break;
+                            case Infected:
+                                color = Color.RED;
+                                break;
+                            case Recovered:
+                                color = Color.YELLOW;
+                                break;
+                            case Dead:
+                                color = Color.RED;
+                                break;
                         }
-                        personData.setText("");
-                        for (Person p : sim.getPeople()) {
-                            personData.setText(personData.getText() + "\n " + p);
-                        }
+                        if (p.getCurrentHealth() == Person.health.Dead)
+                            bob.drawCross(p.getPosition(), 8, color, pw);
+                        else
+                            bob.drawCircle(p.getPosition(), 8, color, pw);
+                    }
+                    personData.setText("");
+                    for (Person p : sim.getPeople()) {
+                        personData.setText(personData.getText() + "\n " + p);
                     }
 
                     //60 fps

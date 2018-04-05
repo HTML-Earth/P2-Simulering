@@ -151,16 +151,22 @@ public class GUI extends Application {
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth()) {
                             case Susceptible:
-                                color = Color.YELLOW;
+                                color = Color.CYAN;
                                 break;
                             case Infected:
-                                color = Color.LIGHTGREEN;
+                                color = Color.RED;
                                 break;
                             case Recovered:
+                                color = Color.YELLOW;
+                                break;
+                            case Dead:
                                 color = Color.RED;
                                 break;
                         }
-                        bob.drawCircle(p.getPosition(), 10, color, pw);
+                        if (p.getCurrentHealth() == Person.health.Dead)
+                            bob.drawCircle(p.getPosition(), 5, color, pw);
+                        else
+                            bob.drawCircle(p.getPosition(), 10, color, pw);
                     }
                     personData.setText("");
                     for (Person p : sim.getPeople()) {

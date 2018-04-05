@@ -135,6 +135,7 @@ public class GUI extends Application {
         // TextArea til at udskrive data fra people listen.
         TextArea personData = new TextArea();
         personData.setFont(Font.font(12));
+        personData.setTranslateY(300);
 
         //Tilføj personer fra starten
         personData.setEditable(false);

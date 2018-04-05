@@ -49,8 +49,8 @@ public class Simulator {
         Random rand = new Random();
         for (int i = 0; i < amount; i++) {
             int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble() * 200 + 400;
-            double randY = rand.nextDouble() * 200 + 400;
+            double randX = rand.nextDouble() * 800 + 50;
+            double randY = rand.nextDouble() * 650 + 50;
             Person person = new Person(randAge, health, new Vector(randX, randY));
 
             //Tilføj person til generel liste

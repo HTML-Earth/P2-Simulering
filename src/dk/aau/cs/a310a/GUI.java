@@ -61,6 +61,9 @@ public class GUI extends Application {
         populationAmount.setTranslateX(-300);
         populationAmount.setTranslateY(-200);
 
+        //knap til at vise menuen
+        Button showMenu = new Button("Menu");
+
         // Tilføj knap til at starte program
         Button runButton = new Button("Start");
         runButton.setFont(Font.font(20));
@@ -71,16 +74,18 @@ public class GUI extends Application {
             root.getChildren().remove(menuRec);
             root.getChildren().remove(comboBox);
             root.getChildren().remove(populationAmount);
+            root.getChildren().add(showMenu);
             sim.startSimulation();
         });
 
-        //Knap til at vise menuen
-        Button showMenu = new Button("Menu");
+        //Events til menuknap
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount);
+            root.getChildren().remove(showMenu);
         });
+
 
         // Billedet i canvas
         Image DKmap = new Image("DKmap.png");
@@ -105,7 +110,6 @@ public class GUI extends Application {
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
         root.getChildren().add(simWindow);
-        root.getChildren().add(showMenu);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
         root.getChildren().add(comboBox);

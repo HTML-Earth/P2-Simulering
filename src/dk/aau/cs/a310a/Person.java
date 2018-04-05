@@ -15,6 +15,10 @@ public class Person {
         this.target = this.position;
     }
 
+    public void updateMovement() {
+        position = Vector.lerp(position, target, 0.01);
+    }
+
     public int getAge() {
         return age;
     }
@@ -29,10 +33,6 @@ public class Person {
 
     public void setTarget(Vector target) {
         this.target = target;
-    }
-
-    public void updateMovement() {
-        position = Vector.lerp(position, target, 0.01);
     }
 
     public health getCurrentHealth() {

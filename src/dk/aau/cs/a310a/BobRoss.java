@@ -3,7 +3,26 @@ package dk.aau.cs.a310a;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
+import java.awt.image.BufferedImage;
+
 public class BobRoss {
+    public void drawBufferedImage(BufferedImage img, int x, int y, int w, int h, PixelWriter pw) {
+        int imgW = img.getWidth();
+        int imgH = img.getHeight();
+        for (int ix = x; ix < x + w; ix++) {
+            for (int iy = y; iy < y + h; iy++) {
+                int argb = img.getRGB((ix - x) * imgW/w,(iy - y) * imgH/h);
+                int r = (argb>>16)&0xFF;
+                int g = (argb>>8)&0xFF;
+                int b = (argb>>0)&0xFF;
+                Color color = Color.rgb(r,g,b);
+                if (color.isOpaque()) {
+                    pw.setColor(x + ix, y + iy, color);
+                }
+            }
+        }
+    }
+
     public void drawCircle(Vector center, int radius, Color col, PixelWriter pw) {
         int x, y, r2;
 

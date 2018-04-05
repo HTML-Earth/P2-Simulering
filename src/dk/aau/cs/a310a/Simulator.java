@@ -43,13 +43,24 @@ public class Simulator {
         Random rand = new Random();
         for (int i = 0; i < amount; i++) {
             int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble() * 800 + 50;
-            double randY = rand.nextDouble() * 650 + 50;
+            double randX = rand.nextDouble() * 700 + 50;
+            double randY = rand.nextDouble() * 500 + 50;
             Person person = new Person(randAge, health, new Vector(randX, randY));
 
             //Tilføj person til liste
             people.add(person);
         }
+    }
+
+    public String healthCount(Person.health health) {
+        int count = 0;
+        for(Person p : people) {
+            if(p.getCurrentHealth() == health) {
+                count += 1;
+            }
+        }
+        String value = String.valueOf(count);
+        return value;
     }
 
     void initialiseSimulation() {

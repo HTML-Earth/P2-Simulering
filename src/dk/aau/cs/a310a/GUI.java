@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,17 +18,23 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class GUI extends Application {
 
     Simulator sim;
+    BufferedImage cityMap;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public void init() {
+    public void init() throws IOException {
+        cityMap = ImageIO.read(getClass().getResource("/city.png"));
         sim = new Simulator();
     }
 
@@ -37,6 +44,7 @@ public class GUI extends Application {
 
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
+        GridPane info = new GridPane();
 
 
 
@@ -120,6 +128,7 @@ public class GUI extends Application {
             root.getChildren().remove(resetSim);
             root.getChildren().add(showMenu);
             simWindow.setEffect(null);
+            info.setEffect(null);
             sim.startSimulation();
         });
 
@@ -144,6 +153,7 @@ public class GUI extends Application {
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);
+            info.setEffect(boxblur);
             sim.pauseSimulation();
         });
 
@@ -159,7 +169,7 @@ public class GUI extends Application {
         Image DKmap = new Image("DKmap.png");
 
         //Canvas og Bob Ross til at tegne på det
-        Canvas canvas = new Canvas(900, 750);
+        Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         BobRoss bob = new BobRoss();
@@ -168,6 +178,15 @@ public class GUI extends Application {
         TextArea personData = new TextArea();
         personData.setFont(Font.font(12));
         personData.setTranslateY(300);
+
+        //Label
+        Label countSusceptible = new Label();
+        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
+
+        //Grid
+        info.setTranslateX(920);
+        info.setTranslateY(20);
+        info.add(countSusceptible, 0, 0);
 
         //Tilføj personer fra starten
         personData.setEditable(false);
@@ -178,9 +197,11 @@ public class GUI extends Application {
         // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
+        info.setEffect(boxblur);
 
         simWindow.setEffect(boxblur);
 
+        root.getChildren().add(info);
         root.getChildren().add(simWindow);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
@@ -194,7 +215,7 @@ public class GUI extends Application {
         root.getChildren().add(recoveredLabel);
         root.getChildren().add(comboBox);
 
-        gc.drawImage(DKmap, 0, 0, 900, 750);
+        bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
         final long startNanoTime = System.nanoTime();
         new AnimationTimer() {
@@ -210,7 +231,7 @@ public class GUI extends Application {
 
                 if (t >= updateTime) {
                     sim.simulate(t);
-                    gc.drawImage(DKmap, 0, 0, 900, 750);
+                    bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
@@ -236,6 +257,7 @@ public class GUI extends Application {
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
+                        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
                     }
 
                     //60 fps

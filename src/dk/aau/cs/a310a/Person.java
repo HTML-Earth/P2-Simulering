@@ -1,11 +1,14 @@
 package dk.aau.cs.a310a;
 
+import java.util.Random;
+
 public class Person {
-    public enum health {Susceptible, Infected, Recovered};
+    public enum health {Susceptible, Infected, Recovered;};
 
     private health currentHealth;
     private Influenza disease;
     private int age;
+    public double timeInfected = 0;
     private Vector position;
     private Vector target;
 
@@ -16,13 +19,16 @@ public class Person {
         this.target = this.position;
     }
 
-    public void updateDisease() {
+    public void updateDisease(double time) {
         switch (currentHealth) {
             case Susceptible:
                 break;
             case Infected:
                 //Check for recovery
+                if(timeInfected == 0)
+                    timeInfected = time;
 
+                influenzaRecover(time);
                 for (Person p : Simulator.theSimulator.susceptible) {
                     //Tjek om personerne er tæt på hinanden
                     if (Vector.distance(this.position,p.getPosition()) < 50){
@@ -76,6 +82,15 @@ public class Person {
 
     public void setDisease(Influenza disease) {
         this.disease = disease;
+    }
+
+    public void influenzaRecover(double timer) {
+        Random rand = new Random();
+        int timeBeforeRecover = rand.nextInt(3) + 2;
+
+        if(timer - timeInfected > timeBeforeRecover) {
+            setCurrentHealth(health.Recovered);
+        }
     }
 
     //Metoden som kaldes når man printer objektet

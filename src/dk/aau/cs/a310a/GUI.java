@@ -19,6 +19,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.util.*;
 
 public class GUI extends Application {
@@ -67,14 +68,13 @@ public class GUI extends Application {
         populationAmount.setTranslateX(-300);
         populationAmount.setTranslateY(-200);
 
-        //knap til at vise menuen
+        //Button factory
         Button showMenu = new Button("Menu");
-
-        // knap til apply
+        Button resetSim = new Button("Reset");
         Button applySettings = new Button("Apply");
+        Button runButton = new Button("Start");
 
         // Tilføj knap til at starte program
-        Button runButton = new Button("Start");
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
         runButton.setTranslateX(400);
@@ -85,6 +85,7 @@ public class GUI extends Application {
             root.getChildren().remove(comboBox);
             root.getChildren().remove(populationAmount);
             root.getChildren().remove(applySettings);
+            root.getChildren().remove(resetSim);
             root.getChildren().add(showMenu);
             simWindow.setEffect(null);
             sim.startSimulation();
@@ -107,13 +108,20 @@ public class GUI extends Application {
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount, applySettings);
+            root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount, applySettings, resetSim);
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);
             sim.pauseSimulation();
         });
 
+        //Knap til at genstarte simulation
+        resetSim.setFont(Font.font(20));
+        resetSim.setTranslateX(200);
+        resetSim.setTranslateY(260);
+        resetSim.setOnMouseClicked(event -> {
+            sim.stopSimulation();
+        });
 
         // Billedet i canvas
         Image DKmap = new Image("DKmap.png");
@@ -146,6 +154,7 @@ public class GUI extends Application {
         root.getChildren().add(comboBox);
         root.getChildren().add(populationAmount);
         root.getChildren().add(applySettings);
+        root.getChildren().add(resetSim);
 
         gc.drawImage(DKmap, 0, 0, 900, 750);
 

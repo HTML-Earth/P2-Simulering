@@ -17,7 +17,7 @@ public class Simulator {
     public List<Person> recovered;
 
     //RNG
-    Random rand;
+    public Random rand;
 
     //Simuleringsvariabler
     int i;
@@ -93,10 +93,10 @@ public class Simulator {
             end *= influenzaA.getBaseSpread() + 1;
         }
 
-        //Opdater positionen for prikken for personen
+        //Opdater positionen og sygdommen for personen
         for (Person p : people) {
-            p.setTarget(new Vector(p.getPosition().x + rand.nextDouble() * 400 - 200, p.getPosition().y + rand.nextDouble() * 400 - 200));
             p.updateMovement();
+            p.updateDisease();
         }
     }
 

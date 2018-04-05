@@ -42,8 +42,7 @@ public class GUI extends Application {
         // Rectangle til menu
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
-
-        // Tilføj knapper til menu
+        //Tilføj knapper til menuen
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
@@ -53,8 +52,16 @@ public class GUI extends Application {
         );
         //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
+        comboBox.setTranslateX(-300);
+        comboBox.setTranslateY(-250);
 
-        //Tilføj knap til at starte programmet
+        // Textfield til at skrive befolkning
+        TextField populationAmount = new TextField("0");
+        populationAmount.setMaxWidth(80);
+        populationAmount.setTranslateX(-300);
+        populationAmount.setTranslateY(-200);
+
+        // Tilføj knap til at starte program
         Button runButton = new Button("Start");
         runButton.setFont(Font.font(20));
         runButton.setTranslateX(400);
@@ -62,16 +69,17 @@ public class GUI extends Application {
         runButton.setOnMouseClicked(event -> {
             root.getChildren().remove(runButton);
             root.getChildren().remove(menuRec);
-            sim.startSimulation();
+            root.getChildren().remove(comboBox);
+            root.getChildren().remove(populationAmount);
         });
+
         //Knap til at vise menuen
         Button showMenu = new Button("Menu");
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox);
+            root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount);
         });
-
 
         // Billedet i canvas
         Image DKmap = new Image("DKmap.png");
@@ -99,6 +107,8 @@ public class GUI extends Application {
         root.getChildren().add(showMenu);
         root.getChildren().add(menuRec);
         root.getChildren().add(runButton);
+        root.getChildren().add(comboBox);
+        root.getChildren().add(populationAmount);
 
 
         final long startNanoTime = System.nanoTime();
@@ -111,12 +121,8 @@ public class GUI extends Application {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
                 if (t >= updateTime) {
-                    //Opdater billedet med prikkerne på
                     gc.drawImage(DKmap, 0, 0, 900, 750);
-                    //Infect personer og flyt prikker
                     sim.simulate();
-
-                    //Sæt farven for prikkerne baseret 'health'
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth()) {
@@ -130,16 +136,13 @@ public class GUI extends Application {
                                 color = Color.RED;
                                 break;
                         }
-                        //Tegn prikkerne
                         bob.drawCircle(p.getPosition(), 10, color, pw);
                     }
-                    //Reset hele TextArea for at opdater listen med nuværende 'health'
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                     }
-                    //Hvor hurtigt billedet opdaterer
-                    updateTime += 0.5;
+                    updateTime += 5;
                 }
             }
         }.start();
@@ -149,4 +152,5 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
 }

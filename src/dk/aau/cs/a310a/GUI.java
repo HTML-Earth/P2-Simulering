@@ -64,19 +64,12 @@ public class GUI extends Application {
         //knap til at vise menuen
         Button showMenu = new Button("Menu");
 
-        // Knap til Apply og Check
+        // knap til apply
         Button applySettings = new Button("Apply");
-        applySettings.setFont(Font.font(20));
-        applySettings.setTranslateX(300);
-        applySettings.setTranslateY(260);
-        applySettings.setOnMouseClicked(event -> {
-            int populationSize = Integer.parseInt(populationAmount.getText());
-        });
-
-
 
         // Tilføj knap til at starte program
         Button runButton = new Button("Start");
+        runButton.setDisable(true);
         runButton.setFont(Font.font(20));
         runButton.setTranslateX(400);
         runButton.setTranslateY(260);
@@ -90,12 +83,25 @@ public class GUI extends Application {
             sim.startSimulation();
         });
 
+        // Knap til Apply og Check
+        applySettings.setFont(Font.font(20));
+        applySettings.setTranslateX(300);
+        applySettings.setTranslateY(260);
+        applySettings.setOnMouseClicked(event -> {
+            int populationSize = Integer.parseInt(populationAmount.getText());
+            if (populationSize > 0 && populationSize < 1000) {
+                runButton.setDisable(false);
+
+            }
+        });
+
         //Events til menuknap
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().addAll(menuRec, runButton, comboBox, populationAmount, applySettings);
             root.getChildren().remove(showMenu);
+            runButton.setDisable(true);
         });
 
 

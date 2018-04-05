@@ -5,24 +5,30 @@ import java.util.List;
 import java.util.Random;
 
 public class Simulator {
+    public static Simulator theSimulator;
+
     //Sygdom
     Influenza influenzaA;
 
     //Lister over personer
-    List<Person> people;
-    List<Person> susceptible;
-    List<Person> infected;
-    List<Person> recovered;
+    public List<Person> people;
+    public List<Person> susceptible;
+    public List<Person> infected;
+    public List<Person> recovered;
 
     //RNG
-    Random rand;
+    public Random rand;
 
     //Simuleringsvariabler
     int i;
     int start;
     int end;
+    boolean simulationIsActive;
 
     public Simulator() {
+        //Gør denne simulator globalt tilgængelig
+        theSimulator = this;
+
         //Random number generator
         rand = new Random();
 
@@ -40,14 +46,16 @@ public class Simulator {
         i = 0;
         start = 0;
         end = 1;
+
+        simulationIsActive = false;
     }
 
     public void addPeople(int amount, Person.health health) {
         Random rand = new Random();
         for (int i = 0; i < amount; i++) {
             int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble() * 200 + 400;
-            double randY = rand.nextDouble() * 200 + 400;
+            double randX = rand.nextDouble() * 800 + 50;
+            double randY = rand.nextDouble() * 650 + 50;
             Person person = new Person(randAge, health, new Vector(randX, randY));
 
             //Tilføj person til generel liste
@@ -68,7 +76,15 @@ public class Simulator {
         }
     }
 
+    public void startSimulation(){
+        simulationIsActive = true;
+    }
+
     public void simulate() {
+        if (!simulationIsActive)
+            return;
+
+        //Inficer og opdater variabler til inficering af personer
         influenzaA.infectPerson(people, start, end);
 
         if (i < people.size()) {
@@ -77,9 +93,10 @@ public class Simulator {
             end *= influenzaA.getBaseSpread() + 1;
         }
 
+        //Opdater positionen og sygdommen for personen
         for (Person p : people) {
-            p.setTarget(new Vector(p.getPosition().x + rand.nextDouble() * 400 - 200, p.getPosition().y + rand.nextDouble() * 400 - 200));
             p.updateMovement();
+            p.updateDisease();
         }
     }
 

@@ -71,6 +71,7 @@ public class GUI extends Application {
             root.getChildren().remove(menuRec);
             root.getChildren().remove(comboBox);
             root.getChildren().remove(populationAmount);
+            sim.startSimulation();
         });
 
         //Knap til at vise menuen
@@ -142,7 +143,7 @@ public class GUI extends Application {
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                     }
-                    updateTime += 5;
+                    updateTime += 0.2;
                 }
             }
         }.start();

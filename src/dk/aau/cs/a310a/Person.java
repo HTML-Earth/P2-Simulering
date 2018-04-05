@@ -34,6 +34,9 @@ public class Person {
     }
 
     public void updateMovement() {
+        double targetX = position.x + Simulator.theSimulator.rand.nextDouble() * 400 - 200;
+        double targetY = position.y + Simulator.theSimulator.rand.nextDouble() * 400 - 200;
+        setTarget(new Vector(targetX, targetY));
         position = Vector.lerp(position, target, 0.01);
     }
 

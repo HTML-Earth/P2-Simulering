@@ -20,6 +20,7 @@ public class Simulator {
     int i;
     int start;
     int end;
+    boolean simulationHasBeenInitialised;
     boolean simulationIsActive;
 
     public Simulator() {
@@ -32,18 +33,9 @@ public class Simulator {
         //Lav tomme lister af 'Person'
         people = new ArrayList<>();
 
-        //lav 100 'Person' med Susceptible
-        addPeople(300, Person.health.Susceptible);
+        initialiseSimulation();
 
-        influenzaA = new Influenza(Influenza.influenzaType.A);
-
-        //Inficer 1 person
-        influenzaA.infectPerson(people.get(0));
-
-        i = 0;
-        start = 0;
-        end = 1;
-
+        simulationHasBeenInitialised = true;
         simulationIsActive = false;
     }
 
@@ -60,8 +52,38 @@ public class Simulator {
         }
     }
 
+    void initialiseSimulation() {
+        //lav 100 'Person' med Susceptible
+        addPeople(300, Person.health.Susceptible);
+
+        influenzaA = new Influenza(Influenza.influenzaType.A);
+
+        //Inficer 1 person
+        influenzaA.infectPerson(people.get(0));
+
+        i = 0;
+        start = 0;
+        end = 1;
+    }
+
     public void startSimulation(){
+        if (!simulationHasBeenInitialised){
+            initialiseSimulation();
+        }
         simulationIsActive = true;
+    }
+
+    public void pauseSimulation() {
+        simulationIsActive = false;
+    }
+
+    public void stopSimulation() {
+        simulationIsActive = false;
+        simulationHasBeenInitialised = false;
+        for (Person p : people){
+            p = null;
+        }
+        people.clear();
     }
 
     public void simulate(double time) {

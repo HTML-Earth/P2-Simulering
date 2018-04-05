@@ -140,7 +140,7 @@ public class GUI extends Application {
 
                 if (t >= updateTime) {
                     gc.drawImage(DKmap, 0, 0, 900, 750);
-                    sim.simulate();
+                    sim.simulate(t);
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth()) {

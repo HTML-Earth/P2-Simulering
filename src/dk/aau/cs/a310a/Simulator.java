@@ -33,7 +33,7 @@ public class Simulator {
         people = new ArrayList<>();
 
         //lav 100 'Person' med Susceptible
-        addPeople(100, Person.health.Susceptible);
+        addPeople(300, Person.health.Susceptible);
 
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
@@ -64,7 +64,7 @@ public class Simulator {
         simulationIsActive = true;
     }
 
-    public void simulate() {
+    public void simulate(double time) {
         if (!simulationIsActive)
             return;
 
@@ -80,7 +80,7 @@ public class Simulator {
         //Opdater positionen og sygdommen for personen
         for (Person p : people) {
             p.updateMovement();
-            p.updateDisease();
+            p.updateDisease(time);
         }
     }
 

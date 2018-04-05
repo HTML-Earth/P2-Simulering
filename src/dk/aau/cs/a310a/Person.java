@@ -20,18 +20,16 @@ public class Person {
         this.target = this.position;
     }
 
-    public void updateDisease() {
+    public void updateDisease(double time) {
         switch (currentHealth) {
             case Susceptible:
                 break;
             case Infected:
                 //Check for recovery
-                /*
                 if(timeInfected == 0)
                     timeInfected = time;
 
                 influenzaRecover(time);
-                */
                 for (Person p : Simulator.theSimulator.people) {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
@@ -94,7 +92,7 @@ public class Person {
 
     public void influenzaRecover(double timer) {
         Random rand = new Random();
-        int timeBeforeRecover = rand.nextInt(3) + 2;
+        int timeBeforeRecover = rand.nextInt(6) + 4;
 
         if(timer - timeInfected > timeBeforeRecover) {
             setCurrentHealth(health.Recovered);

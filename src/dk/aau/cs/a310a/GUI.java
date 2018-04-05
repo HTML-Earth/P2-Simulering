@@ -83,11 +83,12 @@ public class GUI extends Application {
             sim.startSimulation();
         });
 
-        // Knap til Apply og Check
+        // event til Apply og Check
         applySettings.setFont(Font.font(20));
         applySettings.setTranslateX(300);
         applySettings.setTranslateY(260);
         applySettings.setOnMouseClicked(event -> {
+            
             int populationSize = Integer.parseInt(populationAmount.getText());
             if (populationSize > 0 && populationSize < 1000) {
                 runButton.setDisable(false);

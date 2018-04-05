@@ -20,17 +20,23 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class GUI extends Application {
 
     Simulator sim;
+    BufferedImage cityMap;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    public void init() {
+    public void init() throws IOException {
+        cityMap = ImageIO.read(getClass().getResource("/city.png"));
         sim = new Simulator();
     }
 
@@ -127,7 +133,7 @@ public class GUI extends Application {
         Image DKmap = new Image("DKmap.png");
 
         //Canvas og Bob Ross til at tegne på det
-        Canvas canvas = new Canvas(900, 750);
+        Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         BobRoss bob = new BobRoss();
@@ -157,7 +163,7 @@ public class GUI extends Application {
         root.getChildren().add(applySettings);
         root.getChildren().add(resetSim);
 
-        gc.drawImage(DKmap, 0, 0, 900, 750);
+        bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
         final long startNanoTime = System.nanoTime();
         new AnimationTimer() {
@@ -173,7 +179,7 @@ public class GUI extends Application {
 
                 if (t >= updateTime) {
                     sim.simulate(t);
-                    gc.drawImage(DKmap, 0, 0, 900, 750);
+                    bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;

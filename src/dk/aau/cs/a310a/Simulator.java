@@ -117,7 +117,7 @@ public class Simulator {
         }
 
         if (recoveredAmount > 0) {
-            for (int recovered = infectedAmount; recovered < infectedAmount + susceptibleAmount; recovered++) {
+            for (int recovered = infectedAmount; recovered < infectedAmount + recoveredAmount; recovered++) {
                 people.get(recovered).setCurrentHealth(Person.health.Recovered);
             }
         }

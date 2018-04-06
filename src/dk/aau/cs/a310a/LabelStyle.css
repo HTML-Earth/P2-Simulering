@@ -10,7 +10,6 @@
 /* Til styling af gridpane */
 .grid {
     -fx-border-color: Black;
-    -fx-border-style: groove;
     -fx-border-width: 5;
     -fx-border-radius: 2;
 }

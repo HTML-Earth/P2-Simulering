@@ -82,7 +82,9 @@ public class GUI extends Application {
 
         comboBox.getItems().addAll(
                 new ComboItem("Alle hoster i ærmet", 0.0),
-                new ComboItem("Ingen hoster i ærmet", 1.0)
+                new ComboItem("Ingen hoster i ærmet", 1.0),
+                new ComboItem("Folk bliver oftere hjemme", 2.0),
+                new ComboItem("Vacciner", 3.0)
         );
         //Standard value til combobox
         comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));

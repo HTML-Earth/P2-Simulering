@@ -133,6 +133,7 @@ public class GUI extends Application {
         resetSim.setFont(Font.font(20));
         resetSim.setTranslateX(200);
         resetSim.setTranslateY(260);
+        resetSim.setDisable(true);
 
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));
@@ -198,33 +199,27 @@ public class GUI extends Application {
 
         //Livestatistikker
         //Label
-        Label countSusceptible = new Label(sim.healthCount(Person.health.Susceptible));
-        Label countInfected = new Label(sim.healthCount(Person.health.Infected));
-        Label countRecovered = new Label(sim.healthCount(Person.health.Recovered));
-        Label countDead = new Label(sim.healthCount(Person.health.Dead));
-        Label stringSusceptible = new Label("Susceptible   ");
-        Label stringInfected = new Label("Infected   ");
-        Label stringRecovered = new Label("Recovered   ");
-        Label stringDead = new Label("Dead");
-
+        Label stringSusceptible = new Label("Susceptible: " + sim.healthCount(Person.health.Susceptible));
+        Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
+        Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
+        Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
         Label stringEpidemic = new Label("Chance of epidemic" + "\n" + influenzaA.calculateR0(1,1.0));
 
+<<<<<<< HEAD
         stringEpidemic.setTranslateX(322);
         stringEpidemic.setTranslateY(-280);
 
 
+=======
+>>>>>>> 92e70ee62cbaa7003fcbad715a9ec7ca2bfddbbe
         //Grid
         info.setTranslateX(820);
         info.setTranslateY(20);
         info.add(stringSusceptible, 0, 0);
-        info.add(countSusceptible, 0, 1);
-        info.add(stringInfected, 1, 0);
-        info.add(countInfected,1, 1);
-        info.add(stringRecovered, 2, 0);
-        info.add(countRecovered, 2, 1);
-        info.add(stringDead, 3, 0);
-        info.add(countDead, 3, 1);
-        info.add(stringEpidemic, 0, 3);
+        info.add(stringInfected, 0, 1);
+        info.add(stringRecovered, 0, 2);
+        info.add(stringDead, 0, 3);
+        info.add(stringEpidemic, 0, 4);
 
         //Information om personer
         //TextArea til at udskrive data fra people listen.
@@ -245,8 +240,7 @@ public class GUI extends Application {
 
         root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount,
                 infectedAmount, recoveredAmount, applySettings, resetSim,
-                susceptibleLabel, recoveredLabel, infectedLabel, comboBox,
-                stringEpidemic);
+                susceptibleLabel, recoveredLabel, infectedLabel, comboBox);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");
@@ -282,10 +276,10 @@ public class GUI extends Application {
                     //Skriv antal personer i hver gruppe
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
-                        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
-                        countInfected.setText(sim.healthCount(Person.health.Infected));
-                        countRecovered.setText(sim.healthCount(Person.health.Recovered));
-                        countDead.setText(sim.healthCount(Person.health.Dead));
+                        stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
+                        stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
+                        stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
+                        stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                     }
 
                     //60 fps

@@ -1,11 +1,17 @@
 package dk.aau.cs.a310a;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Simulator {
     public static Simulator theSimulator;
+
+    //Området der simuleres på
+    BufferedImage pixelMap;
 
     //Sygdom
     Influenza influenzaA;
@@ -23,12 +29,15 @@ public class Simulator {
     boolean simulationHasBeenInitialised;
     boolean simulationIsActive;
 
-    public Simulator() {
+    public Simulator() throws IOException {
         //Gør denne simulator globalt tilgængelig
         theSimulator = this;
 
         //Random number generator
         rand = new Random();
+
+        //Load billede der bruges til simulering
+        pixelMap = ImageIO.read(getClass().getResource("/city.png"));
 
         //Lav tomme lister af 'Person'
         people = new ArrayList<>();

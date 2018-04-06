@@ -1,5 +1,7 @@
 package dk.aau.cs.a310a;
 
+import com.sun.source.doctree.EndElementTree;
+
 import java.util.Random;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -23,7 +25,7 @@ public class Person {
         this.target = homePosition;
     }
 
-    public void updateDisease(double currentTime) {
+    public void updateDisease(double currentTime, double deltaTime) {
         switch (currentHealth) {
             case Susceptible:
                 break;
@@ -39,7 +41,7 @@ public class Person {
                         //Tjek om personerne er tæt på hinanden
                         if (Vector.distance(this.position,p.getPosition()) < 30){
                             //Risiko for infektion
-                            if (Simulator.theSimulator.rand.nextDouble() < 0.05){
+                            if (Simulator.theSimulator.rand.nextDouble() < 0.5 * deltaTime){
                                 //Inficer den anden person
                                 disease.infectPerson(p);
                             }

@@ -165,7 +165,7 @@ public class Simulator {
         //Opdater positionen og helbredet for personen
         for (Person p : people) {
             p.updateMovement(deltaTime);
-            p.updateDisease(currentTime);
+            p.updateDisease(currentTime, deltaTime);
         }
     }
 

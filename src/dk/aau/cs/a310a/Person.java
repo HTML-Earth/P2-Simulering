@@ -1,5 +1,7 @@
 package dk.aau.cs.a310a;
 
+import com.sun.source.doctree.EndElementTree;
+
 import java.util.Random;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -20,26 +22,26 @@ public class Person {
         this.currentHealth = currentHealth;
         this.position = position;
         this.homePosition = homePosition;
-        this.target = this.position;
+        this.target = homePosition;
     }
 
-    public void updateDisease(double time) {
+    public void updateDisease(double currentTime, double deltaTime) {
         switch (currentHealth) {
             case Susceptible:
                 break;
             case Infected:
                 //Check for recovery
                 if(timeInfected == 0)
-                    timeInfected = time;
+                    timeInfected = currentTime;
 
-                influenzaRecover(time);
+                influenzaRecover(currentTime);
                 for (Person p : Simulator.theSimulator.people) {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
                         //Tjek om personerne er tæt på hinanden
                         if (Vector.distance(this.position,p.getPosition()) < 30){
                             //Risiko for infektion
-                            if (Simulator.theSimulator.rand.nextDouble() < 0.05){
+                            if (Simulator.theSimulator.rand.nextDouble() < 0.5 * deltaTime){
                                 //Inficer den anden person
                                 disease.infectPerson(p);
                             }
@@ -54,7 +56,7 @@ public class Person {
         }
     }
 
-    public void updateMovement() {
+    public void updateMovement(double deltaTime) {
         if (currentHealth == health.Dead)
             return;
 
@@ -97,8 +99,7 @@ public class Person {
                 setTarget(new Vector(targetX, targetY));
             }
         }
-
-        position = Vector.lerp(position, target, 0.1);
+        position = Vector.lerp(position, target, deltaTime);
     }
 
     public int getAge() {
@@ -150,6 +151,6 @@ public class Person {
 
     //Metoden som kaldes når man printer objektet
     public String toString() {
-        return "Person: " + "Age: " + getAge() + "\t\t Health: " + getCurrentHealth();
+        return getCurrentHealth() + "\t Age:" + age + "\t X:" + (int)position.x + "\t Y:" + (int)position.y;
     }
 }

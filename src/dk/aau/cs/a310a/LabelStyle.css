@@ -2,4 +2,6 @@
     -fx-border-color: Black;
     -fx-padding:3;
     -fx-max-width: 120;
+    -fx-font: Georgia;
+    -fx-font-size: 14;
 }

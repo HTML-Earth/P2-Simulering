@@ -65,7 +65,7 @@ public class Simulator {
 
     void initialiseSimulation() {
         //lav 100 'Person' med Susceptible
-        addPeople(300, Person.health.Susceptible);
+        addPeople(250, Person.health.Susceptible);
 
         influenzaA = new Influenza(Influenza.influenzaType.A);
 

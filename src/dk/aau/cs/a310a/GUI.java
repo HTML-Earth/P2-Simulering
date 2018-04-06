@@ -186,12 +186,24 @@ public class GUI extends Application {
 
         //Label
         Label countSusceptible = new Label();
+        Label countInfected = new Label();
+        Label countRecovered = new Label();
+        Label stringSusceptible = new Label("Susceptible   ");
+        Label stringInfected = new Label("Infected   ");
+        Label stringRecovered = new Label("Recovered   ");
         countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
+        countInfected.setText(sim.healthCount(Person.health.Infected));
+        countRecovered.setText(sim.healthCount(Person.health.Recovered));
 
         //Grid
-        info.setTranslateX(920);
+        info.setTranslateX(820);
         info.setTranslateY(20);
-        info.add(countSusceptible, 0, 0);
+        info.add(stringSusceptible, 0, 0);
+        info.add(countSusceptible, 0, 1);
+        info.add(stringInfected, 1, 0);
+        info.add(countInfected,1, 1);
+        info.add(stringRecovered, 2, 0);
+        info.add(countRecovered, 2, 1);
 
         //Tilføj personer fra starten
         personData.setEditable(false);
@@ -263,6 +275,8 @@ public class GUI extends Application {
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                         countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
+                        countInfected.setText(sim.healthCount(Person.health.Infected));
+                        countRecovered.setText(sim.healthCount(Person.health.Recovered));
                     }
 
                     //60 fps

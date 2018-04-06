@@ -54,7 +54,7 @@ public class GUI extends Application {
         boxblur.setIterations(3);
 
 
-        //Tilføj knapper til menuen
+        //Menu - Tilføj knapper
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
@@ -165,12 +165,7 @@ public class GUI extends Application {
         PixelWriter pw = gc.getPixelWriter();
         BobRoss bob = new BobRoss();
 
-
-        // TextArea til at udskrive data fra people listen.
-        TextArea personData = new TextArea();
-        personData.setFont(Font.font(12));
-        personData.setTranslateY(300);
-
+        //Livestatistikker
         //Label
         Label countSusceptible = new Label(sim.healthCount(Person.health.Susceptible));
         Label countInfected = new Label(sim.healthCount(Person.health.Infected));
@@ -192,6 +187,12 @@ public class GUI extends Application {
         info.add(countRecovered, 2, 1);
         info.add(stringDead, 3, 0);
         info.add(countDead, 3, 1);
+
+        //Information om personer
+        //TextArea til at udskrive data fra people listen.
+        TextArea personData = new TextArea();
+        personData.setFont(Font.font(12));
+        personData.setTranslateY(300);
 
         //Tilføj personer fra starten
         personData.setEditable(false);

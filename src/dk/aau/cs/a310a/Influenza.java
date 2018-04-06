@@ -48,14 +48,12 @@ public class Influenza {
     }
 
     //Udregn R0 (chancen for epidemi) baseret på beta og gamme
-    public double calculateR0(int beta, int gamma) {
-        double isEpidemic = (double) beta / gamma; //R0
+    public String calculateR0(double beta, double gamma) {
+        double isEpidemic = beta / gamma; //R0
 
         if (isEpidemic >= 1)
-            System.out.println("There is a chance of an epidemic.");
+            return "There is a chance of an epidemic.";
         else
-            System.out.println("No chance of an epidemic. (yet)");
-
-        return isEpidemic;
+            return "No chance of an epidemic. (yet)   ";
     }
 }

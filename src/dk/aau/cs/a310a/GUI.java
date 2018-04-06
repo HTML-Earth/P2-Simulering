@@ -26,6 +26,9 @@ public class GUI extends Application {
     //Simulator objekt
     Simulator sim;
 
+    //Influenza objekt
+    Influenza influenzaA;
+
     //Billedet i canvas
     Image visualMap;
 
@@ -35,6 +38,7 @@ public class GUI extends Application {
 
     public void init() throws IOException {
         sim = new Simulator();
+        influenzaA = new Influenza(Influenza.influenzaType.A);
     }
 
     public void start(Stage stage) {
@@ -176,6 +180,11 @@ public class GUI extends Application {
         Label stringRecovered = new Label("Recovered   ");
         Label stringDead = new Label("Dead");
 
+        Label stringEpidemic = new Label("Chance of epidemic" + "\n" + influenzaA.calculateR0(1,1.0));
+
+        stringEpidemic.setTranslateX(322);
+        stringEpidemic.setTranslateY(-280);
+
         //Grid
         info.setTranslateX(820);
         info.setTranslateY(20);
@@ -187,6 +196,7 @@ public class GUI extends Application {
         info.add(countRecovered, 2, 1);
         info.add(stringDead, 3, 0);
         info.add(countDead, 3, 1);
+        info.add(stringEpidemic, 0, 3);
 
         //Information om personer
         //TextArea til at udskrive data fra people listen.
@@ -205,7 +215,10 @@ public class GUI extends Application {
         info.setEffect(boxblur);
         simWindow.setEffect(boxblur);
 
-        root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount, infectedAmount, recoveredAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, comboBox);
+        root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount,
+                infectedAmount, recoveredAmount, applySettings, resetSim,
+                susceptibleLabel, recoveredLabel, infectedLabel, comboBox,
+                stringEpidemic);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");

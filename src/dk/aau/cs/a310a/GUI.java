@@ -85,14 +85,18 @@ public class GUI extends Application {
         recoveredAmount.setTranslateY(-200+150);
 
 
-        //labels til beskrivelse af opsætningsbokse
+        // Menu - labels til beskrivelse
         Label susceptibleLabel = new Label("Susceptible:");
         Label infectedLabel = new Label("Infected:");
         Label recoveredLabel = new Label("Recovered:");
+        Label appliedLabel = new Label("Population applied!");
+        Label resetLabel = new Label("Simulation reset!");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
         recoveredLabel.setTextFill(Color.WHITE);
+        appliedLabel.setTextFill(Color.LIGHTGREEN);
+        resetLabel.setTextFill(Color.ORANGE);
 
         susceptibleLabel.setTranslateX(-300);
         susceptibleLabel.setTranslateY(-197+50);
@@ -102,6 +106,14 @@ public class GUI extends Application {
 
         recoveredLabel.setTranslateX(-300);
         recoveredLabel.setTranslateY(-197+150);
+
+        appliedLabel.setTranslateX(200);
+        appliedLabel.setTranslateY(150);
+        appliedLabel.setFont(Font.font(20));
+
+        resetLabel.setTranslateX(200);
+        resetLabel.setTranslateY(150);
+        resetLabel.setFont(Font.font(20));
 
 
         //Button factory
@@ -128,8 +140,9 @@ public class GUI extends Application {
 
         // Event til at fjerne menu og blur og derefter starte simulationen
         runButton.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel);
+            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel);
             root.getChildren().add(showMenu);
+            resetSim.setDisable(false);
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
@@ -138,9 +151,16 @@ public class GUI extends Application {
         // Event til at anvende og checke indtastede værdier
         applySettings.setOnMouseClicked(event -> {
             int populationSize = Integer.parseInt(susceptibleAmount.getText());
+            boolean alreadyApplied = true;
             if (populationSize > 0 && populationSize < 1000) {
                 runButton.setDisable(false);
             }
+
+            if (alreadyApplied == true) {
+                root.getChildren().remove(resetLabel);
+                root.getChildren().add(appliedLabel);
+            }
+
         });
 
         //Events til menuknap
@@ -156,6 +176,9 @@ public class GUI extends Application {
         //Event til at genstarte simulation
         resetSim.setOnMouseClicked(event -> {
             sim.stopSimulation();
+            resetSim.setDisable(true);
+            root.getChildren().remove(appliedLabel);
+            root.getChildren().add(resetLabel);
         });
 
 

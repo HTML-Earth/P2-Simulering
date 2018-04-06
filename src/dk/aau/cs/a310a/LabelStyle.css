@@ -1,5 +1,15 @@
+/* Til styling af labels */
 .label {
     -fx-border-color: Black;
     -fx-padding:3;
     -fx-max-width: 120;
+    -fx-font-family: Georgia;
+    -fx-font-size: 14;
+}
+
+/* Til styling af gridpane */
+.grid {
+    -fx-border-color: Black;
+    -fx-border-width: 5;
+    -fx-border-radius: 2;
 }

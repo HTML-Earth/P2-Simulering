@@ -302,20 +302,22 @@ public class GUI extends Application {
                 //Opdater simulering
                 sim.simulate(currentTime, deltaTime);
 
-                //Vis baggrund (hvilket overskriver forrige frame
-                gc.drawImage(visualMap,0,0,800,600);
+                if (sim.isSimulationActive()) {
+                    //Vis baggrund (hvilket overskriver forrige frame
+                    gc.drawImage(visualMap,0,0,800,600);
 
-                //Reset personData tekst
-                personData.setText("");
+                    //Reset personData tekst
+                    personData.setText("");
 
-                //Tegn alle personer og print deres info
-                for (Person p : sim.getPeople()) {
-                    bob.drawPerson(p.getPosition(),p.getCurrentHealth(),gc);
-                    personData.setText(personData.getText() + "\n " + p);
-                    stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
-                    stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
-                    stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
-                    stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
+                    //Tegn alle personer og print deres info
+                    for (Person p : sim.getPeople()) {
+                        bob.drawPerson(p.getPosition(),p.getCurrentHealth(),gc);
+                        personData.setText(personData.getText() + "\n " + p);
+                        stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
+                        stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
+                        stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
+                        stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
+                    }
                 }
 
                 previousTime = currentTime;

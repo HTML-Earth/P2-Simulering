@@ -23,6 +23,10 @@ import java.util.Random;
 
 public class GUI extends Application {
 
+
+    //booleans
+    boolean removed = false;
+
     //Simulator objekt
     Simulator sim;
 
@@ -153,17 +157,20 @@ public class GUI extends Application {
         });
 
         // Event til at anvende og checke indtastede værdier
+
+
+
         applySettings.setOnMouseClicked(event -> {
             int populationSize = Integer.parseInt(susceptibleAmount.getText());
-            boolean alreadyApplied = true;
             if (populationSize > 0 && populationSize < 1000) {
                 runButton.setDisable(false);
             }
-
-            if (alreadyApplied == true) {
+            if (!removed) {
                 root.getChildren().remove(resetLabel);
                 root.getChildren().add(appliedLabel);
+                removed = true;
             }
+
 
         });
 

@@ -1,5 +1,5 @@
 .label {
     -fx-border-color: Black;
     -fx-padding:3;
-    -fx-min-width: 100;
+    -fx-max-width: 120;
 }

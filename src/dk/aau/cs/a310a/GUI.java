@@ -51,7 +51,7 @@ public class GUI extends Application {
     public void start(Stage stage) {
 
         //Vindue titel
-        stage.setTitle("WindowTest");
+        stage.setTitle("Zombe");
 
         //vindue ikon
         stage.getIcons().add(new Image("file:resources/zombe.png"));

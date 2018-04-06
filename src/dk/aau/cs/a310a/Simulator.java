@@ -114,16 +114,16 @@ public class Simulator {
         if (!simulationIsActive)
             return;
 
-        //Inficer og opdater variabler til inficering af personer
+        /*Inficer og opdater variabler til inficering af personer
         //influenzaA.infectPerson(people, start, end);
-
         if (i < people.size()) {
             i++;
             start++;
             end *= influenzaA.getBaseSpread() + 1;
         }
+        */
 
-        //Opdater positionen og sygdommen for personen
+        //Opdater positionen og helbredet for personen
         for (Person p : people) {
             p.updateMovement();
             p.updateDisease(time);

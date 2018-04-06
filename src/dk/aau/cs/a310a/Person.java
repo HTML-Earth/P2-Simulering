@@ -1,6 +1,7 @@
 package dk.aau.cs.a310a;
 
 import java.util.Random;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Person {
     public enum health {Susceptible, Infected, Recovered, Dead};
@@ -12,10 +13,13 @@ public class Person {
     private Vector position;
     private Vector target;
 
-    public Person(int age, health currentHealth, Vector position) {
+    private Vector homePosition;
+
+    public Person(int age, health currentHealth, Vector position, Vector homePosition) {
         this.age = age;
         this.currentHealth = currentHealth;
         this.position = position;
+        this.homePosition = homePosition;
         this.target = this.position;
     }
 
@@ -33,9 +37,9 @@ public class Person {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
                         //Tjek om personerne er tæt på hinanden
-                        if (Vector.distance(this.position,p.getPosition()) < 50){
+                        if (Vector.distance(this.position,p.getPosition()) < 30){
                             //Risiko for infektion
-                            if (Simulator.theSimulator.rand.nextDouble() < 0.2){
+                            if (Simulator.theSimulator.rand.nextDouble() < 0.05){
                                 //Inficer den anden person
                                 disease.infectPerson(p);
                             }
@@ -54,10 +58,47 @@ public class Person {
         if (currentHealth == health.Dead)
             return;
 
-        double targetX = position.x + Simulator.theSimulator.rand.nextDouble() * 400 - 200;
-        double targetY = position.y + Simulator.theSimulator.rand.nextDouble() * 400 - 200;
-        setTarget(new Vector(targetX, targetY));
-        position = Vector.lerp(position, target, 0.02);
+        if (Vector.distance(position, target) < 10) {
+
+            double goToWorkChance = 0;
+            double stayHomeChance = 0;
+            double goToHospitalChance = 0;
+
+            switch (currentHealth) {
+                case Susceptible:
+                    goToWorkChance = 0.4;
+                    stayHomeChance = 0.1;
+                    goToHospitalChance = 0.01;
+                    break;
+                case Infected:
+                    goToWorkChance = 0.3;
+                    stayHomeChance = 0.8;
+                    goToHospitalChance = 0.9;
+                    break;
+                case Recovered:
+                    goToWorkChance = 0.5;
+                    stayHomeChance = 0.1;
+                    goToHospitalChance = 0.001;
+                    break;
+            }
+
+            if (Simulator.theSimulator.rand.nextDouble() < goToWorkChance) {
+                setTarget(Simulator.theSimulator.getWorkPosition());
+            }
+            else if (Simulator.theSimulator.rand.nextDouble() < stayHomeChance) {
+                setTarget(homePosition);
+            }
+            else if (Simulator.theSimulator.rand.nextDouble() < goToHospitalChance) {
+                setTarget(Simulator.theSimulator.getHospitalPosition());
+            }
+            else {
+                double targetX = position.x + Simulator.theSimulator.rand.nextDouble() * 100 - 50;
+                double targetY = position.y + Simulator.theSimulator.rand.nextDouble() * 100 - 50;
+                setTarget(new Vector(targetX, targetY));
+            }
+        }
+
+        position = Vector.lerp(position, target, 0.1);
     }
 
     public int getAge() {

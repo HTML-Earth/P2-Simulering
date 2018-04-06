@@ -18,9 +18,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -29,15 +26,14 @@ public class GUI extends Application {
     //Simulator objekt
     Simulator sim;
 
-    // Billedet i canvas
-    BufferedImage cityMap;
+    //Billedet i canvas
+    Image visualMap;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     public void init() throws IOException {
-        cityMap = ImageIO.read(getClass().getResource("/city.png"));
         sim = new Simulator();
     }
 
@@ -207,8 +203,12 @@ public class GUI extends Application {
         simWindow.getChildren().addAll(canvas, personData);
         info.setEffect(boxblur);
         simWindow.setEffect(boxblur);
+
         root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount, infectedAmount, recoveredAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, comboBox);
-        bob.drawBufferedImage(cityMap,0,0,800,600,pw);
+
+        //Load og vis baggrundsbilledet
+        visualMap = new Image("city_upscaled.png");
+        gc.drawImage(visualMap,0,0,800,600);
 
         final long startNanoTime = System.nanoTime();
         new AnimationTimer() {
@@ -223,31 +223,21 @@ public class GUI extends Application {
                     return;
 
                 if (t >= updateTime) {
+                    //Opdater simulering
                     sim.simulate(t);
-                    bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
+                    //Vis baggrund (hvilket overskriver forrige frame
+                    gc.drawImage(visualMap,0,0,800,600);
+
+                    //Tegn alle personer
                     for (Person p : sim.getPeople()) {
-                        Color color = Color.BLACK;
-                        switch (p.getCurrentHealth()) {
-                            case Susceptible:
-                                color = Color.CYAN;
-                                break;
-                            case Infected:
-                                color = Color.RED;
-                                break;
-                            case Recovered:
-                                color = Color.YELLOW;
-                                break;
-                            case Dead:
-                                color = Color.RED;
-                                break;
-                        }
-                        if (p.getCurrentHealth() == Person.health.Dead)
-                            bob.drawCross(p.getPosition(), 8, color, pw);
-                        else
-                            bob.drawCircle(p.getPosition(), 8, color, pw);
+                        bob.drawPerson(p.getPosition(),p.getCurrentHealth(),gc);
                     }
+
+                    //Reset personData tekst
                     personData.setText("");
+
+                    //Skriv antal personer i hver gruppe
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);
                         countSusceptible.setText(sim.healthCount(Person.health.Susceptible));

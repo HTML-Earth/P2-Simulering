@@ -1,60 +1,97 @@
 package dk.aau.cs.a310a;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
 
 import java.awt.image.BufferedImage;
 
 public class BobRoss {
-    public void drawBufferedImage(BufferedImage img, int x, int y, int w, int h, PixelWriter pw) {
-        int imgW = img.getWidth();
-        int imgH = img.getHeight();
-        for (int ix = x; ix < x + w; ix++) {
-            for (int iy = y; iy < y + h; iy++) {
-                int argb = img.getRGB((ix - x) * imgW/w,(iy - y) * imgH/h);
-                int r = (argb>>16)&0xFF;
-                int g = (argb>>8)&0xFF;
-                int b = (argb>>0)&0xFF;
-                Color color = Color.rgb(r,g,b);
-                if (color.isOpaque()) {
-                    pw.setColor(x + ix, y + iy, color);
-                }
-            }
-        }
+    double[] crossPointsX;
+    double[] crossPointsY;
+
+    public BobRoss() {
+        crossPointsX = new double[12];
+        crossPointsY = new double[12];
+
+        //Top Left
+        crossPointsX[0] = -1.0;
+        crossPointsY[0] = -1.0;
+
+        crossPointsX[1] = -0.8;
+        crossPointsY[1] = -1.0;
+
+        //Middle up
+        crossPointsX[2] = 0.0;
+        crossPointsY[2] = -0.2;
+
+        //Top right
+        crossPointsX[3] = 0.8;
+        crossPointsY[3] = -1.0;
+
+        crossPointsX[4] = 1.0;
+        crossPointsY[4] = -1.0;
+
+        //Middle right
+        crossPointsX[5] = 0.2;
+        crossPointsY[5] = 0.0;
+
+        //Bottom right
+        crossPointsX[6] = 1.0;
+        crossPointsY[6] = 1.0;
+
+        crossPointsX[7] = 0.8;
+        crossPointsY[7] = 1.0;
+
+        //Middle down
+        crossPointsX[8] = 0.0;
+        crossPointsY[8] = 0.2;
+
+        //Bottom left
+        crossPointsX[9] = -0.8;
+        crossPointsY[9] = 1.0;
+
+        crossPointsX[10] = -1.0;
+        crossPointsY[10] = 1.0;
+
+        //Middle left
+        crossPointsX[11] = -0.2;
+        crossPointsY[11] = 0.0;
     }
 
-    public void drawCircle(Vector center, int radius, Color col, PixelWriter pw) {
-        int x, y, r2;
-
-        r2 = radius * radius;
-        for (x = -radius; x <= radius; x++) {
-            y = (int) (Math.sqrt(r2 - x * x) + 0.5);
-
-            for (int yi = -y; yi <= y; yi++) {
-                pw.setColor((int) center.x + x, (int) center.y + yi, col);
-            }
+    public void drawPerson(Vector position, Person.health health, GraphicsContext gc) {
+        Color color = Color.BLACK;
+        switch (health) {
+            case Susceptible:
+                color = Color.CYAN;
+                break;
+            case Infected:
+                color = Color.RED;
+                break;
+            case Recovered:
+                color = Color.YELLOW;
+                break;
+            case Dead:
+                color = Color.RED;
+                break;
         }
-    }
 
-    public void drawCross(Vector center, int size, Color col, PixelWriter pw) {
-        for (int j = -1; j <= 1; j++) {
-            for (int i = -size; i <= size; i++) {
-                pw.setColor((int)center.x + i + j, (int)center.y + i, col);
-                pw.setColor((int)center.x - i + j, (int)center.y + i, col);
-            }
+        gc.setFill(color);
+        if (health != Person.health.Dead) {
+            //Tegn cirkel
+            gc.fillOval(position.x-8,position.y-8,16,16);
         }
-    }
+        else {
+            double[] xPoints = new double[12];
+            double[] yPoints = new double[12];
 
-    public void drawRectangle(int x1, int x2, int y1, int y2, Color col, PixelWriter pw) {
-        int xlow = (x1 < x2) ? x1 : x2;
-        int xhigh = (x1 > x2) ? x1 : x2;
-        int ylow = (y1 < y2) ? y1 : y2;
-        int yhigh = (y1 > y2) ? y1 : y2;
-
-        for (int x = xlow; x <= xhigh; x++) {
-            for (int y = ylow; y <= yhigh; y++) {
-                pw.setColor(x, y, col);
+            for (int i = 0; i < 12; i++) {
+                xPoints[i] = position.x + crossPointsX[i] * 8;
+                yPoints[i] = position.y + crossPointsY[i] * 8;
             }
+
+            //Tegn kryds
+            gc.fillPolygon(xPoints,yPoints,12);
         }
     }
 }

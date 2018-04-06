@@ -172,12 +172,10 @@ public class GUI extends Application {
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
+            removed = false;
         });
 
         // Event til at anvende og checke indtastede værdier
-
-
-
         applySettings.setOnMouseClicked(event -> {
             int populationSize = Integer.parseInt(susceptibleAmount.getText());
             if (populationSize > 0 && populationSize < 1000) {

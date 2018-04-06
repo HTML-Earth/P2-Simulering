@@ -43,7 +43,11 @@ public class GUI extends Application {
 
     public void start(Stage stage) {
 
+        //Vindue titel
         stage.setTitle("WindowTest");
+
+        //vindue ikon
+        stage.getIcons().add(new Image("file:resources/zombe.png"));
 
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
@@ -207,6 +211,7 @@ public class GUI extends Application {
 
         stringEpidemic.setTranslateX(322);
         stringEpidemic.setTranslateY(-280);
+
 
         //Grid
         info.setTranslateX(820);

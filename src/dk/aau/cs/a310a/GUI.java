@@ -59,6 +59,7 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
         StackPane root = new StackPane();
         GridPane info = new GridPane();
+        GridPane menuButttonsBottomRight = new GridPane();
 
         //Canvas og Bob Ross til at tegne på det
         Canvas canvas = new Canvas(800, 600);
@@ -154,25 +155,31 @@ public class GUI extends Application {
 
         Button resetSim = new Button("Reset");
         resetSim.setFont(Font.font(20));
-        resetSim.setTranslateX(200);
-        resetSim.setTranslateY(260);
         resetSim.setDisable(true);
+        /*
+        resetSim.setTranslateX(150);
+        resetSim.setTranslateY(260);
+        */
 
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));
-        applySettings.setTranslateX(300);
+        /*
+        applySettings.setTranslateX(250);
         applySettings.setTranslateY(260);
+        */
 
         Button runButton = new Button("Start");
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
-        runButton.setTranslateX(400);
+        /*
+        runButton.setFont(Font.font(20));
+        runButton.setTranslateX(350);
         runButton.setTranslateY(260);
-
+        */
 
         // Event til starte simulering og fjerne menu og blur
         runButton.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel, titleLabel);
+            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel, titleLabel, menuButttonsBottomRight);
             root.getChildren().add(showMenu);
             resetSim.setDisable(false);
             simWindow.setEffect(null);
@@ -201,7 +208,7 @@ public class GUI extends Application {
 
         //Events til menuknap
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, applySettings, resetSim, titleLabel);
+            root.getChildren().addAll(menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, menuButttonsBottomRight);
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);
@@ -238,7 +245,14 @@ public class GUI extends Application {
         styler.StyleLabel(stringInfected);
         styler.StyleLabel(stringDead);
 
-        //Grid
+        //Grids
+        //menuButttonsBottomRight.setTranslateX(400);
+        //menuButttonsBottomRight.setTranslateY(20);
+        menuButttonsBottomRight.add(applySettings, 0, 0);
+        menuButttonsBottomRight.add(runButton, 1, 0);
+        menuButttonsBottomRight.setTranslateX(800);
+        menuButttonsBottomRight.setTranslateY(600);
+
         info.setTranslateX(820);
         info.setTranslateY(20);
         info.add(stringSusceptible, 0, 0);
@@ -264,9 +278,9 @@ public class GUI extends Application {
         info.setEffect(boxblur);
         simWindow.setEffect(boxblur);
 
-        root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount,
-                infectedAmount, recoveredAmount, applySettings, resetSim,
-                susceptibleLabel, recoveredLabel, infectedLabel, comboBox, titleLabel);
+        root.getChildren().addAll(info, simWindow, menuRec, susceptibleAmount,
+                infectedAmount, recoveredAmount,
+                susceptibleLabel, recoveredLabel, infectedLabel, comboBox, titleLabel, menuButttonsBottomRight);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");

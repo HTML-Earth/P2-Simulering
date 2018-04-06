@@ -50,8 +50,7 @@ public class GUI extends Application {
         GridPane info = new GridPane();
 
 
-
-        // Rectangle og blur til menu
+        // Rektangel hvor menuens knapper placeres og blurring
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
         BoxBlur boxblur = new BoxBlur();
         boxblur.setHeight(5);
@@ -72,6 +71,7 @@ public class GUI extends Application {
         comboBox.setTranslateX(-300);
         comboBox.setTranslateY(200);
 
+
         // Textfield til at skrive befolkning
         TextField susceptibleAmount = new TextField("100");
         susceptibleAmount.setMaxWidth(80);
@@ -87,18 +87,16 @@ public class GUI extends Application {
         recoveredAmount.setMaxWidth(80);
         recoveredAmount.setTranslateX(-220);
         recoveredAmount.setTranslateY(-200+150);
+
+
         //labels til beskrivelse af opsætningsbokse
-
-
         Label susceptibleLabel = new Label("Susceptible:");
         Label infectedLabel = new Label("Infected:");
         Label recoveredLabel = new Label("Recovered:");
 
-
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
         recoveredLabel.setTextFill(Color.WHITE);
-
 
         susceptibleLabel.setTranslateX(-300);
         susceptibleLabel.setTranslateY(-197+50);
@@ -110,52 +108,46 @@ public class GUI extends Application {
         recoveredLabel.setTranslateY(-197+150);
 
 
-
         //Button factory
         Button showMenu = new Button("Menu");
-        Button resetSim = new Button("Reset");
-        Button applySettings = new Button("Apply");
-        Button runButton = new Button("Start");
+        showMenu.setFont(Font.font(20));
+        StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
 
-        // Tilføj knap til at starte program
+        Button resetSim = new Button("Reset");
+        resetSim.setFont(Font.font(20));
+        resetSim.setTranslateX(200);
+        resetSim.setTranslateY(260);
+
+        Button applySettings = new Button("Apply");
+        applySettings.setFont(Font.font(20));
+        applySettings.setTranslateX(300);
+        applySettings.setTranslateY(260);
+
+        Button runButton = new Button("Start");
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
         runButton.setTranslateX(400);
         runButton.setTranslateY(260);
+
+
+        // Event til at fjerne menu og blur og derefter starte simulationen
         runButton.setOnMouseClicked(event -> {
-            root.getChildren().remove(runButton);
-            root.getChildren().remove(menuRec);
-            root.getChildren().remove(comboBox);
-            root.getChildren().remove(susceptibleAmount);
-            root.getChildren().remove(recoveredAmount);
-            root.getChildren().remove(infectedAmount);
-            root.getChildren().remove(applySettings);
-            root.getChildren().remove(resetSim);
-            root.getChildren().remove(susceptibleLabel);
-            root.getChildren().remove(infectedLabel);
-            root.getChildren().remove(recoveredLabel);
+            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel);
             root.getChildren().add(showMenu);
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
         });
 
-        // event til Apply og Check
-        applySettings.setFont(Font.font(20));
-        applySettings.setTranslateX(300);
-        applySettings.setTranslateY(260);
+        // Event til at anvende og checke indtastede værdier
         applySettings.setOnMouseClicked(event -> {
-            
             int populationSize = Integer.parseInt(susceptibleAmount.getText());
             if (populationSize > 0 && populationSize < 1000) {
                 runButton.setDisable(false);
-
             }
         });
 
         //Events til menuknap
-        showMenu.setFont(Font.font(20));
-        StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, applySettings, resetSim);
             root.getChildren().remove(showMenu);
@@ -165,19 +157,18 @@ public class GUI extends Application {
             sim.pauseSimulation();
         });
 
-        //Knap til at genstarte simulation
-        resetSim.setFont(Font.font(20));
-        resetSim.setTranslateX(200);
-        resetSim.setTranslateY(260);
+        //Event til at genstarte simulation
         resetSim.setOnMouseClicked(event -> {
             sim.stopSimulation();
         });
+
 
         //Canvas og Bob Ross til at tegne på det
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
         BobRoss bob = new BobRoss();
+
 
         // TextArea til at udskrive data fra people listen.
         TextArea personData = new TextArea();
@@ -212,26 +203,10 @@ public class GUI extends Application {
         }
 
         // HBox, canvas og stackpane tilføjes til programvinduet.
-        simWindow.getChildren().add(canvas);
-        simWindow.getChildren().add(personData);
+        simWindow.getChildren().addAll(canvas, personData);
         info.setEffect(boxblur);
-
         simWindow.setEffect(boxblur);
-
-        root.getChildren().add(info);
-        root.getChildren().add(simWindow);
-        root.getChildren().add(menuRec);
-        root.getChildren().add(runButton);
-        root.getChildren().add(susceptibleAmount);
-        root.getChildren().add(infectedAmount);
-        root.getChildren().add(recoveredAmount);
-        root.getChildren().add(applySettings);
-        root.getChildren().add(resetSim);
-        root.getChildren().add(susceptibleLabel);
-        root.getChildren().add(infectedLabel);
-        root.getChildren().add(recoveredLabel);
-        root.getChildren().add(comboBox);
-
+        root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount, infectedAmount, recoveredAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, comboBox);
         bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
         final long startNanoTime = System.nanoTime();

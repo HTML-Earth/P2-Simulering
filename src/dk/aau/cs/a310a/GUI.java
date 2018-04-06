@@ -205,13 +205,6 @@ public class GUI extends Application {
         Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
         Label stringEpidemic = new Label("Chance of epidemic" + "\n" + influenzaA.calculateR0(1,1.0));
 
-<<<<<<< HEAD
-        stringEpidemic.setTranslateX(322);
-        stringEpidemic.setTranslateY(-280);
-
-
-=======
->>>>>>> 92e70ee62cbaa7003fcbad715a9ec7ca2bfddbbe
         //Grid
         info.setTranslateX(820);
         info.setTranslateY(20);

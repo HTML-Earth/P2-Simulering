@@ -49,8 +49,6 @@ public class Simulator {
         //Find alle huse på kortet
         findBuildings();
 
-        initialiseSimulation();
-
         simulationHasBeenInitialised = true;
         simulationIsActive = false;
     }
@@ -108,14 +106,24 @@ public class Simulator {
         return value;
     }
 
-    void initialiseSimulation() {
-        //lav 100 'Person' med Susceptible
-        addPeople(250, Person.health.Susceptible);
+    void initialiseSimulation(int susceptibleAmount, int infectedAmount, int recoveredAmount) {
+        //lav personer
+        addPeople(susceptibleAmount + infectedAmount + recoveredAmount, Person.health.Susceptible);
 
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
-        //Inficer 1 person
-        influenzaA.infectPerson(people.get(0));
+        //inficer personer
+        if (infectedAmount > 0) {
+            for (int infected = 0; infected < infectedAmount; infected++) {
+                influenzaA.infectPerson(people.get(infected));
+            }
+        }
+
+        if (recoveredAmount > 0) {
+            for (int recovered = infectedAmount; recovered < infectedAmount + susceptibleAmount; recovered++) {
+                people.get(recovered).setCurrentHealth(Person.health.Recovered);
+            }
+        }
 
         i = 0;
         start = 0;
@@ -124,7 +132,7 @@ public class Simulator {
 
     public void startSimulation(){
         if (!simulationHasBeenInitialised){
-            initialiseSimulation();
+            //Error message
         }
         simulationIsActive = true;
     }

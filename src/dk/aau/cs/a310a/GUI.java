@@ -57,6 +57,12 @@ public class GUI extends Application {
         StackPane root = new StackPane();
         GridPane info = new GridPane();
 
+        //Canvas og Bob Ross til at tegne på det
+        Canvas canvas = new Canvas(800, 600);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        PixelWriter pw = gc.getPixelWriter();
+        BobRoss bob = new BobRoss();
+
 
         // Rektangel hvor menuens knapper placeres og blurring
         Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
@@ -86,12 +92,12 @@ public class GUI extends Application {
         susceptibleAmount.setTranslateX(-220);
         susceptibleAmount.setTranslateY(-200+50);
 
-        TextField infectedAmount = new TextField("100");
+        TextField infectedAmount = new TextField("1");
         infectedAmount.setMaxWidth(80);
         infectedAmount.setTranslateX(-220);
         infectedAmount.setTranslateY(-200+100);
 
-        TextField recoveredAmount = new TextField("100");
+        TextField recoveredAmount = new TextField("0");
         recoveredAmount.setMaxWidth(80);
         recoveredAmount.setTranslateX(-220);
         recoveredAmount.setTranslateY(-200+150);
@@ -166,9 +172,12 @@ public class GUI extends Application {
 
 
         applySettings.setOnMouseClicked(event -> {
-            int populationSize = Integer.parseInt(susceptibleAmount.getText());
-            if (populationSize > 0 && populationSize < 1000) {
+            int susceptibles = Integer.parseInt(susceptibleAmount.getText());
+            int infected = Integer.parseInt(infectedAmount.getText());
+            int recovered = Integer.parseInt(recoveredAmount.getText());
+            if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles < 1000 && infected < 1000 && recovered < 1000) {
                 runButton.setDisable(false);
+                sim.initialiseSimulation(susceptibles,infected,recovered);
             }
             if (!removed) {
                 root.getChildren().remove(resetLabel);
@@ -192,17 +201,14 @@ public class GUI extends Application {
         //Event til at genstarte simulation
         resetSim.setOnMouseClicked(event -> {
             sim.stopSimulation();
+            gc.drawImage(visualMap,0,0,800,600);
             resetSim.setDisable(true);
             root.getChildren().remove(appliedLabel);
             root.getChildren().add(resetLabel);
         });
 
 
-        //Canvas og Bob Ross til at tegne på det
-        Canvas canvas = new Canvas(800, 600);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        PixelWriter pw = gc.getPixelWriter();
-        BobRoss bob = new BobRoss();
+
 
         //Livestatistikker
         //Label

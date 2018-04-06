@@ -8,7 +8,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +19,6 @@ import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
@@ -248,6 +246,7 @@ public class GUI extends Application {
                     sim.simulate(t);
                     bob.drawBufferedImage(cityMap,0,0,800,600,pw);
 
+                    //Håndtering af farver for personer
                     for (Person p : sim.getPeople()) {
                         Color color = Color.BLACK;
                         switch (p.getCurrentHealth()) {
@@ -269,6 +268,8 @@ public class GUI extends Application {
                         else
                             bob.drawCircle(p.getPosition(), 8, color, pw);
                     }
+
+                    //Tøm tekstfeltet og opdater det med nye informationer
                     personData.setText("");
                     for (Person p : sim.getPeople()) {
                         personData.setText(personData.getText() + "\n " + p);

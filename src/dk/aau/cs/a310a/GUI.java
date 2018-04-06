@@ -259,6 +259,7 @@ public class GUI extends Application {
 
         // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().addAll(canvas, personData);
+        simWindow.setAlignment(Pos.BOTTOM_LEFT);
         info.setEffect(boxblur);
         simWindow.setEffect(boxblur);
 
@@ -270,45 +271,38 @@ public class GUI extends Application {
         visualMap = new Image("city_upscaled.png");
         gc.drawImage(visualMap,0,0,800,600);
 
-        final long startNanoTime = System.nanoTime();
+        final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */
+        //final long startNanoTime = System.nanoTime();
+
+
         new AnimationTimer() {
-            double updateTime = 0;
-            Random rand;
+            double previousTime = System.nanoTime();
 
             public void handle(long currentNanoTime) {
-                rand = new Random();
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                if (!sim.isSimulationActive())
-                    return;
+                double currentTime = currentNanoTime / 1_000_000_000.0;
+                double deltaTime = currentTime - previousTime;
 
-                if (t >= updateTime) {
-                    //Opdater simulering
-                    sim.simulate(t);
+                //Opdater simulering
+                sim.simulate(currentTime, deltaTime);
 
-                    //Vis baggrund (hvilket overskriver forrige frame
-                    gc.drawImage(visualMap,0,0,800,600);
+                //Vis baggrund (hvilket overskriver forrige frame
+                gc.drawImage(visualMap,0,0,800,600);
 
-                    //Tegn alle personer
-                    for (Person p : sim.getPeople()) {
-                        bob.drawPerson(p.getPosition(),p.getCurrentHealth(),gc);
-                    }
+                //Reset personData tekst
+                personData.setText("");
 
-                    //Reset personData tekst
-                    personData.setText("");
-
-                    //Skriv antal personer i hver gruppe
-                    for (Person p : sim.getPeople()) {
-                        personData.setText(personData.getText() + "\n " + p);
-                        stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
-                        stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
-                        stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
-                        stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
-                    }
-
-                    //60 fps
-                    updateTime += 0.017;
+                //Tegn alle personer og print deres info
+                for (Person p : sim.getPeople()) {
+                    bob.drawPerson(p.getPosition(),p.getCurrentHealth(),gc);
+                    personData.setText(personData.getText() + "\n " + p);
+                    stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
+                    stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
+                    stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
+                    stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                 }
+
+                previousTime = currentTime;
             }
         }.start();
 

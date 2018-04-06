@@ -23,9 +23,6 @@ public class Simulator {
     public Random rand;
 
     //Simuleringsvariabler
-    int i;
-    int start;
-    int end;
     boolean simulationHasBeenInitialised;
     boolean simulationIsActive;
 
@@ -49,7 +46,7 @@ public class Simulator {
         //Find alle huse på kortet
         findBuildings();
 
-        simulationHasBeenInitialised = true;
+        simulationHasBeenInitialised = false;
         simulationIsActive = false;
     }
 
@@ -125,14 +122,12 @@ public class Simulator {
             }
         }
 
-        i = 0;
-        start = 0;
-        end = 1;
+        simulationHasBeenInitialised = true;
     }
 
     public void startSimulation(){
         if (!simulationHasBeenInitialised){
-            //Error message
+            System.out.println("Please initialise first");
         }
         simulationIsActive = true;
     }
@@ -154,7 +149,7 @@ public class Simulator {
         return simulationIsActive;
     }
 
-    public void simulate(double time) {
+    public void simulate(double currentTime, double deltaTime) {
         if (!simulationIsActive)
             return;
 
@@ -169,8 +164,8 @@ public class Simulator {
 
         //Opdater positionen og helbredet for personen
         for (Person p : people) {
-            p.updateMovement();
-            p.updateDisease(time);
+            p.updateMovement(deltaTime);
+            p.updateDisease(currentTime);
         }
     }
 

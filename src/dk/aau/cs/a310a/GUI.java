@@ -170,7 +170,7 @@ public class GUI extends Application {
         runButton.setTranslateY(260);
 
 
-        // Event til at fjerne menu og blur og derefter starte simulationen
+        // Event til starte simulering og fjerne menu og blur
         runButton.setOnMouseClicked(event -> {
             root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel, titleLabel);
             root.getChildren().add(showMenu);
@@ -207,6 +207,7 @@ public class GUI extends Application {
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);
             sim.pauseSimulation();
+            runButton.setText("Continue");
         });
 
         //Event til at genstarte simulation
@@ -216,6 +217,7 @@ public class GUI extends Application {
             resetSim.setDisable(true);
             root.getChildren().remove(appliedLabel);
             root.getChildren().add(resetLabel);
+            runButton.setText("Start");
         });
 
 

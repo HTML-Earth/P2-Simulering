@@ -280,7 +280,7 @@ public class GUI extends Application {
 
         root.getChildren().addAll(info, simWindow, menuRec, susceptibleAmount,
                 infectedAmount, recoveredAmount,
-                susceptibleLabel, recoveredLabel, infectedLabel, comboBox, titleLabel, menuButttonsBottomRight);
+                susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, menuButttonsBottomRight);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");

@@ -176,15 +176,14 @@ public class GUI extends Application {
         personData.setTranslateY(300);
 
         //Label
-        Label countSusceptible = new Label();
-        Label countInfected = new Label();
-        Label countRecovered = new Label();
+        Label countSusceptible = new Label(sim.healthCount(Person.health.Susceptible));
+        Label countInfected = new Label(sim.healthCount(Person.health.Infected));
+        Label countRecovered = new Label(sim.healthCount(Person.health.Recovered));
+        Label countDead = new Label(sim.healthCount(Person.health.Dead));
         Label stringSusceptible = new Label("Susceptible   ");
         Label stringInfected = new Label("Infected   ");
         Label stringRecovered = new Label("Recovered   ");
-        countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
-        countInfected.setText(sim.healthCount(Person.health.Infected));
-        countRecovered.setText(sim.healthCount(Person.health.Recovered));
+        Label stringDead = new Label("Dead");
 
         //Grid
         info.setTranslateX(820);
@@ -195,6 +194,8 @@ public class GUI extends Application {
         info.add(countInfected,1, 1);
         info.add(stringRecovered, 2, 0);
         info.add(countRecovered, 2, 1);
+        info.add(stringDead, 3, 0);
+        info.add(countDead, 3, 1);
 
         //Tilføj personer fra starten
         personData.setEditable(false);
@@ -252,6 +253,7 @@ public class GUI extends Application {
                         countSusceptible.setText(sim.healthCount(Person.health.Susceptible));
                         countInfected.setText(sim.healthCount(Person.health.Infected));
                         countRecovered.setText(sim.healthCount(Person.health.Recovered));
+                        countDead.setText(sim.healthCount(Person.health.Dead));
                     }
 
                     //60 fps

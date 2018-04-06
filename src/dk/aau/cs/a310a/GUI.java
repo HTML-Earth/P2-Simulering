@@ -8,6 +8,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.GridPane;
@@ -16,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -103,12 +106,14 @@ public class GUI extends Application {
         Label recoveredLabel = new Label("Recovered:");
         Label appliedLabel = new Label("Population applied!");
         Label resetLabel = new Label("Simulation reset!");
+        Label titleLabel = new Label("Super Awesome Title");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
         recoveredLabel.setTextFill(Color.WHITE);
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         resetLabel.setTextFill(Color.ORANGE);
+        titleLabel.setTextFill(Color.WHITE);
 
         susceptibleLabel.setTranslateX(-300);
         susceptibleLabel.setTranslateY(-197+50);
@@ -126,6 +131,14 @@ public class GUI extends Application {
         resetLabel.setTranslateX(200);
         resetLabel.setTranslateY(150);
         resetLabel.setFont(Font.font(20));
+
+        titleLabel.setAlignment(Pos.CENTER);
+        titleLabel.setTranslateY(-240);
+        titleLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 70));
+
+        DropShadow dropShadow = new DropShadow();
+
+        titleLabel.setEffect(dropShadow);
 
 
         //Button factory
@@ -153,7 +166,7 @@ public class GUI extends Application {
 
         // Event til at fjerne menu og blur og derefter starte simulationen
         runButton.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel);
+            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel, titleLabel);
             root.getChildren().add(showMenu);
             resetSim.setDisable(false);
             simWindow.setEffect(null);
@@ -181,7 +194,7 @@ public class GUI extends Application {
 
         //Events til menuknap
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, applySettings, resetSim);
+            root.getChildren().addAll(menuRec, runButton, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, applySettings, resetSim, titleLabel);
             root.getChildren().remove(showMenu);
             runButton.setDisable(true);
             simWindow.setEffect(boxblur);
@@ -247,7 +260,7 @@ public class GUI extends Application {
 
         root.getChildren().addAll(info, simWindow, menuRec, runButton, susceptibleAmount,
                 infectedAmount, recoveredAmount, applySettings, resetSim,
-                susceptibleLabel, recoveredLabel, infectedLabel, comboBox);
+                susceptibleLabel, recoveredLabel, infectedLabel, comboBox, titleLabel);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");

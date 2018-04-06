@@ -28,7 +28,7 @@ public class GUI extends Application {
 
 
     //booleans
-    boolean removed = false;
+    boolean isApplyLabelRemoved = false;
 
     //Simulator objekt
     Simulator sim;
@@ -185,7 +185,7 @@ public class GUI extends Application {
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
-            removed = false;
+            isApplyLabelRemoved = false;
         });
 
         // Event til at anvende og checke indtastede værdier
@@ -195,12 +195,15 @@ public class GUI extends Application {
             int recovered = Integer.parseInt(recoveredAmount.getText());
             if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles < 1000 && infected < 1000 && recovered < 1000) {
                 runButton.setDisable(false);
+                sim.stopSimulation();
                 sim.initialiseSimulation(susceptibles,infected,recovered);
+                runButton.setText("Start");
+                gc.drawImage(visualMap,0,0,800,600);
             }
-            if (!removed) {
-                root.getChildren().remove(resetLabel);
+            if (!isApplyLabelRemoved) {
+                // root.getChildren().remove(resetLabel);
                 root.getChildren().add(appliedLabel);
-                removed = true;
+                isApplyLabelRemoved = true;
             }
 
 
@@ -210,7 +213,6 @@ public class GUI extends Application {
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().addAll(menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, menuButttonsBottomRight);
             root.getChildren().remove(showMenu);
-            runButton.setDisable(true);
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);
             sim.pauseSimulation();

@@ -129,6 +129,7 @@ public class GUI extends Application {
         resetSim.setFont(Font.font(20));
         resetSim.setTranslateX(200);
         resetSim.setTranslateY(260);
+        resetSim.setDisable(true);
 
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));

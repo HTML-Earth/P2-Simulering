@@ -29,7 +29,9 @@ public class Simulator {
     boolean simulationHasBeenInitialised;
     boolean simulationIsActive;
 
-    List<Vector> housePositions;
+    List<Vector> homePositions;
+    List<Vector> workPositions;
+    List<Vector> hospitalPositions;
 
     public Simulator() throws IOException {
         //Gør denne simulator globalt tilgængelig
@@ -45,7 +47,7 @@ public class Simulator {
         people = new ArrayList<>();
 
         //Find alle huse på kortet
-        findHouses();
+        findBuildings();
 
         initialiseSimulation();
 
@@ -53,8 +55,10 @@ public class Simulator {
         simulationIsActive = false;
     }
 
-    void findHouses() {
-        housePositions = new ArrayList<>();
+    void findBuildings() {
+        homePositions = new ArrayList<>();
+        workPositions = new ArrayList<>();
+        hospitalPositions = new ArrayList<>();
 
         for (int x = 0; x < pixelMap.getWidth(); x++) {
             for (int y = 0; y < pixelMap.getHeight(); y++) {
@@ -63,9 +67,18 @@ public class Simulator {
                 int g = (argb>>8)&0xFF;
                 int b = (argb>>0)&0xFF;
 
+                Vector housePos = new Vector(x * 20 + 10,y * 20 + 10);
+
                 if (r == 87 && g == 87 && b == 87) {
-                    Vector housePos = new Vector(x * 20,y * 20);
-                    housePositions.add(housePos);
+                    homePositions.add(housePos);
+                }
+
+                if (r == 116 && g == 165 && b == 255) {
+                    workPositions.add(housePos);
+                }
+
+                if (r == 255 && g == 255 && b == 255) {
+                    hospitalPositions.add(housePos);
                 }
             }
         }
@@ -75,9 +88,9 @@ public class Simulator {
         Random rand = new Random();
         for (int i = 0; i < amount; i++) {
             int randAge = rand.nextInt(80) + 20;
-            int randomHouse = rand.nextInt(housePositions.size());
+            int randomHouse = rand.nextInt(homePositions.size());
 
-            Person person = new Person(randAge, health, housePositions.get(randomHouse));
+            Person person = new Person(randAge, health, homePositions.get(randomHouse), homePositions.get(randomHouse));
 
             //Tilføj person til liste
             people.add(person);
@@ -151,6 +164,24 @@ public class Simulator {
             p.updateMovement();
             p.updateDisease(time);
         }
+    }
+
+    public Vector getHospitalPosition()
+    {
+        if (hospitalPositions.size() > 0) {
+            return hospitalPositions.get(rand.nextInt(hospitalPositions.size()));
+        }
+        else
+            return new Vector(0,0);
+    }
+
+    public Vector getWorkPosition()
+    {
+        if (workPositions.size() > 0) {
+            return workPositions.get(rand.nextInt(workPositions.size()));
+        }
+        else
+            return new Vector(0,0);
     }
 
     public List<Person> getPeople() {

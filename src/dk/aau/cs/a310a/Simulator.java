@@ -29,6 +29,8 @@ public class Simulator {
     boolean simulationHasBeenInitialised;
     boolean simulationIsActive;
 
+    List<Vector> housePositions;
+
     public Simulator() throws IOException {
         //Gør denne simulator globalt tilgængelig
         theSimulator = this;
@@ -42,19 +44,40 @@ public class Simulator {
         //Lav tomme lister af 'Person'
         people = new ArrayList<>();
 
+        //Find alle huse på kortet
+        findHouses();
+
         initialiseSimulation();
 
         simulationHasBeenInitialised = true;
         simulationIsActive = false;
     }
 
+    void findHouses() {
+        housePositions = new ArrayList<>();
+
+        for (int x = 0; x < pixelMap.getWidth(); x++) {
+            for (int y = 0; y < pixelMap.getHeight(); y++) {
+                int argb = pixelMap.getRGB(x,y);
+                int r = (argb>>16)&0xFF;
+                int g = (argb>>8)&0xFF;
+                int b = (argb>>0)&0xFF;
+
+                if (r == 87 && g == 87 && b == 87) {
+                    Vector housePos = new Vector(x * 20,y * 20);
+                    housePositions.add(housePos);
+                }
+            }
+        }
+    }
+
     public void addPeople(int amount, Person.health health) {
         Random rand = new Random();
         for (int i = 0; i < amount; i++) {
             int randAge = rand.nextInt(80) + 20;
-            double randX = rand.nextDouble() * 700 + 50;
-            double randY = rand.nextDouble() * 500 + 50;
-            Person person = new Person(randAge, health, new Vector(randX, randY));
+            int randomHouse = rand.nextInt(housePositions.size());
+
+            Person person = new Person(randAge, health, housePositions.get(randomHouse));
 
             //Tilføj person til liste
             people.add(person);

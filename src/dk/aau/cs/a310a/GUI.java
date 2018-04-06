@@ -59,7 +59,7 @@ public class GUI extends Application {
         boxblur.setIterations(3);
 
 
-        //Tilføj knapper til menuen
+        //Menu - Tilføj knapper til menuen
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
         final ComboBox<ComboItem> comboBox = new ComboBox<>();
 
@@ -87,18 +87,15 @@ public class GUI extends Application {
         recoveredAmount.setMaxWidth(80);
         recoveredAmount.setTranslateX(-220);
         recoveredAmount.setTranslateY(-200+150);
-        //labels til beskrivelse af opsætningsbokse
 
-
+        //Labels til beskrivelse af opsætningsbokse
         Label susceptibleLabel = new Label("Susceptible:");
         Label infectedLabel = new Label("Infected:");
         Label recoveredLabel = new Label("Recovered:");
 
-
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
         recoveredLabel.setTextFill(Color.WHITE);
-
 
         susceptibleLabel.setTranslateX(-300);
         susceptibleLabel.setTranslateY(-197+50);
@@ -108,8 +105,6 @@ public class GUI extends Application {
 
         recoveredLabel.setTranslateX(-300);
         recoveredLabel.setTranslateY(-197+150);
-
-
 
         //Button factory
         Button showMenu = new Button("Menu");
@@ -173,17 +168,7 @@ public class GUI extends Application {
             sim.stopSimulation();
         });
 
-        //Canvas og Bob Ross til at tegne på det
-        Canvas canvas = new Canvas(800, 600);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        PixelWriter pw = gc.getPixelWriter();
-        BobRoss bob = new BobRoss();
-
-        // TextArea til at udskrive data fra people listen.
-        TextArea personData = new TextArea();
-        personData.setFont(Font.font(12));
-        personData.setTranslateY(300);
-
+        //Livestatistikker
         //Label
         Label countSusceptible = new Label(sim.healthCount(Person.health.Recovered));
         Label countInfected = new Label(sim.healthCount(Person.health.Infected));
@@ -206,18 +191,30 @@ public class GUI extends Application {
         info.add(stringDead, 3, 0);
         info.add(countDead, 3, 1);
 
+        //Personer - information
+        // TextArea til at udskrive data fra people listen.
+        TextArea personData = new TextArea();
+        personData.setFont(Font.font(12));
+        personData.setTranslateY(300);
+
         //Tilføj personer fra starten
         personData.setEditable(false);
         for (Person p : sim.getPeople()) {
             personData.setText(personData.getText() + "\n " + p);
         }
 
+        //Kort/billede over befolkningen
+        //Canvas og Bob Ross til at tegne på det
+        Canvas canvas = new Canvas(800, 600);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        PixelWriter pw = gc.getPixelWriter();
+        BobRoss bob = new BobRoss();
+
         // HBox, canvas og stackpane tilføjes til programvinduet.
         simWindow.getChildren().add(canvas);
         simWindow.getChildren().add(personData);
-        info.setEffect(boxblur);
-
         simWindow.setEffect(boxblur);
+        info.setEffect(boxblur);
 
         root.getChildren().add(info);
         root.getChildren().add(simWindow);

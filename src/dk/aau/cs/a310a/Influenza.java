@@ -32,6 +32,7 @@ public class Influenza {
         return amountCured;
     }
 
+    /*
     //Sætter personen/objektets 'health' til at være 'infected'
     public void infectPerson(List<Person> people, int start, int end) {
         for (int i = start; i < end; i++) {
@@ -41,6 +42,7 @@ public class Influenza {
                 break;
         }
     }
+    */
 
     public void infectPerson(Person person){
         person.setDisease(this);

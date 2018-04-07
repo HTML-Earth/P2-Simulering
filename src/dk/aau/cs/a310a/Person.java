@@ -33,7 +33,6 @@ public class Person {
                 if(timeInfected == 0)
                     timeInfected = currentTime;
 
-                influenzaRecover(currentTime);
                 for (Person p : Simulator.theSimulator.people) {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
@@ -47,6 +46,8 @@ public class Person {
                         }
                     }
                 }
+
+                influenzaRecover(currentTime);
                 break;
             case Recovered:
                 break;
@@ -140,8 +141,8 @@ public class Person {
         int timeBeforeRecover = rand.nextInt(6) + 4;
 
         if(timer - timeInfected > timeBeforeRecover) {
-            //Chance for at dø
-            if (rand.nextDouble() < 0.01)
+            //Risiko for at dø
+            if (rand.nextDouble() < disease.getDeathRisk(age))
                 setCurrentHealth(health.Dead);
             else
                 setCurrentHealth(health.Recovered);

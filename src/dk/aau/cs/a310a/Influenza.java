@@ -7,6 +7,7 @@ public class Influenza {
     private int amountCured; //Gamma
     private double infectionRange;
     private double infectionRisk;
+    private double baseDeathRisk;
 
     public enum influenzaType {A, B}
 
@@ -20,12 +21,14 @@ public class Influenza {
                 this.amountCured = 2;
                 this.infectionRange = 30;
                 this.infectionRisk = 0.5;
+                this.baseDeathRisk = 0.001;
                 break;
             case B:
                 this.baseSpread = 3;
                 this.amountCured = 1;
                 this.infectionRange = 20;
                 this.infectionRisk = 0.4;
+                this.baseDeathRisk = 0.001;
                 break;
         }
     }
@@ -44,6 +47,13 @@ public class Influenza {
 
     public double getInfectionRisk() {
         return infectionRisk;
+    }
+
+    public double getDeathRisk(int age) {
+        if (age < 80)
+            return baseDeathRisk;
+        else
+            return baseDeathRisk * (double)age * 0.5;
     }
 
     //Sætter personen/objektets 'health' til at være 'infected'

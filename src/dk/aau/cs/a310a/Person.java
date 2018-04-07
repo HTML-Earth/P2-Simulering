@@ -1,9 +1,6 @@
 package dk.aau.cs.a310a;
 
-import com.sun.source.doctree.EndElementTree;
-
 import java.util.Random;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class Person {
     public enum health {Susceptible, Infected, Recovered, Dead};
@@ -13,16 +10,18 @@ public class Person {
     private int age;
     public double timeInfected = 0;
     private Vector position;
-    private Vector target;
+    private Vector destination;
 
     private Vector homePosition;
+
+    private double destinationReachedRange = 10;
 
     public Person(int age, health currentHealth, Vector position, Vector homePosition) {
         this.age = age;
         this.currentHealth = currentHealth;
         this.position = position;
         this.homePosition = homePosition;
-        this.target = homePosition;
+        this.destination = homePosition;
     }
 
     public void updateDisease(double currentTime, double deltaTime) {
@@ -39,9 +38,9 @@ public class Person {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
                         //Tjek om personerne er tæt på hinanden
-                        if (Vector.distance(this.position,p.getPosition()) < 30){
+                        if (Vector.distance(this.position,p.getPosition()) < disease.getInfectionRange()){
                             //Risiko for infektion
-                            if (Simulator.theSimulator.rand.nextDouble() < 0.5 * deltaTime){
+                            if (Simulator.theSimulator.rand.nextDouble() < disease.getInfectionRisk() * deltaTime){
                                 //Inficer den anden person
                                 disease.infectPerson(p);
                             }
@@ -60,7 +59,7 @@ public class Person {
         if (currentHealth == health.Dead)
             return;
 
-        if (Vector.distance(position, target) < 10) {
+        if (Vector.distance(position, destination) < destinationReachedRange) {
 
             double goToWorkChance = 0;
             double stayHomeChance = 0;
@@ -85,21 +84,21 @@ public class Person {
             }
 
             if (Simulator.theSimulator.rand.nextDouble() < goToWorkChance) {
-                setTarget(Simulator.theSimulator.getWorkPosition());
+                setDestination(Simulator.theSimulator.getWorkPosition());
             }
             else if (Simulator.theSimulator.rand.nextDouble() < stayHomeChance) {
-                setTarget(homePosition);
+                setDestination(homePosition);
             }
             else if (Simulator.theSimulator.rand.nextDouble() < goToHospitalChance) {
-                setTarget(Simulator.theSimulator.getHospitalPosition());
+                setDestination(Simulator.theSimulator.getHospitalPosition());
             }
             else {
                 double targetX = position.x + Simulator.theSimulator.rand.nextDouble() * 100 - 50;
                 double targetY = position.y + Simulator.theSimulator.rand.nextDouble() * 100 - 50;
-                setTarget(new Vector(targetX, targetY));
+                setDestination(new Vector(targetX, targetY));
             }
         }
-        position = Vector.lerp(position, target, deltaTime);
+        position = Vector.lerp(position, destination, deltaTime);
     }
 
     public int getAge() {
@@ -114,8 +113,8 @@ public class Person {
         this.position = position;
     }
 
-    public void setTarget(Vector target) {
-        this.target = target;
+    public void setDestination(Vector destination) {
+        this.destination = destination;
     }
 
     public health getCurrentHealth() {

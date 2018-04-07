@@ -5,6 +5,8 @@ import java.util.List;
 public class Influenza {
     private int baseSpread;  //Beta
     private int amountCured; //Gamma
+    private double infectionRange;
+    private double infectionRisk;
 
     public enum influenzaType {A, B}
 
@@ -16,10 +18,14 @@ public class Influenza {
             case A:
                 this.baseSpread = 4;
                 this.amountCured = 2;
+                this.infectionRange = 30;
+                this.infectionRisk = 0.5;
                 break;
             case B:
                 this.baseSpread = 3;
                 this.amountCured = 1;
+                this.infectionRange = 20;
+                this.infectionRisk = 0.4;
                 break;
         }
     }
@@ -30,6 +36,14 @@ public class Influenza {
 
     public int getAmountCured() {
         return amountCured;
+    }
+
+    public double getInfectionRange() {
+        return infectionRange;
+    }
+
+    public double getInfectionRisk() {
+        return infectionRisk;
     }
 
     //Sætter personen/objektets 'health' til at være 'infected'

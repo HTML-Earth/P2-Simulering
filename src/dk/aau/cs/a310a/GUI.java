@@ -29,7 +29,7 @@ public class GUI extends Application {
 
 
     //booleans
-    boolean isApplyLabelRemoved = false;
+    boolean applyLabelIsActive = false;
 
     //Simulator objekt
     Simulator sim;
@@ -200,10 +200,6 @@ public class GUI extends Application {
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
 
-        Button resetSim = new Button("Reset");
-        resetSim.setFont(Font.font(20));
-        resetSim.setDisable(true);
-
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));
 
@@ -215,11 +211,13 @@ public class GUI extends Application {
         runButton.setOnMouseClicked(event -> {
             root.getChildren().remove(menu);
             root.getChildren().add(showMenu);
-            resetSim.setDisable(false);
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
-            isApplyLabelRemoved = false;
+            if (applyLabelIsActive) {
+                menu.getChildren().remove(appliedLabel);
+                applyLabelIsActive = false;
+            }
         });
 
         // Event til at anvende og checke indtastede værdier
@@ -234,9 +232,9 @@ public class GUI extends Application {
                 runButton.setText("Start");
                 gc.drawImage(visualMap,0,0,800,600);
             }
-            if (!isApplyLabelRemoved) {
+            if (!applyLabelIsActive) {
                 menu.getChildren().add(appliedLabel);
-                isApplyLabelRemoved = true;
+                applyLabelIsActive = true;
             }
 
 
@@ -250,16 +248,6 @@ public class GUI extends Application {
             info.setEffect(boxblur);
             sim.pauseSimulation();
             runButton.setText("Continue");
-        });
-
-        //Event til at genstarte simulation
-        resetSim.setOnMouseClicked(event -> {
-            sim.stopSimulation();
-            gc.drawImage(visualMap,0,0,800,600);
-            resetSim.setDisable(true);
-            menu.getChildren().remove(appliedLabel);
-            menu.getChildren().add(resetLabel);
-            runButton.setText("Start");
         });
 
         //Grids

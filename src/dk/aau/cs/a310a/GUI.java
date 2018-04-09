@@ -116,6 +116,7 @@ public class GUI extends Application {
         Label appliedLabel = new Label("Population applied!");
         Label resetLabel = new Label("Simulation reset!");
         Label titleLabel = new Label("Super Awesome Title");
+        Label sirLabel = new Label("SIR-options");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
@@ -123,6 +124,7 @@ public class GUI extends Application {
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         resetLabel.setTextFill(Color.ORANGE);
         titleLabel.setTextFill(Color.WHITE);
+        sirLabel.setTextFill(Color.WHITE);
 
         susceptibleLabel.setTranslateX(-300);
         susceptibleLabel.setTranslateY(-197+50);
@@ -145,9 +147,14 @@ public class GUI extends Application {
         titleLabel.setTranslateY(-240);
         titleLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 70));
 
+        sirLabel.setTranslateX(-260);
+        sirLabel.setTranslateY(-180);
+        sirLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
+
         DropShadow dropShadow = new DropShadow();
 
         titleLabel.setEffect(dropShadow);
+        sirLabel.setEffect(dropShadow);
 
 
         //Button factory
@@ -183,7 +190,7 @@ public class GUI extends Application {
         runButton.setOnMouseClicked(event -> {
             root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount,
                     infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel,
-                    appliedLabel, resetLabel, titleLabel, menuButttonsBottomRight);
+                    appliedLabel, resetLabel, titleLabel, sirLabel, menuButttonsBottomRight);
             root.getChildren().add(showMenu);
             resetSim.setDisable(false);
             simWindow.setEffect(null);
@@ -216,7 +223,7 @@ public class GUI extends Application {
         //Events til menuknap
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().addAll(menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount,
-                    susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, menuButttonsBottomRight);
+                    susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, sirLabel, menuButttonsBottomRight);
             root.getChildren().remove(showMenu);
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);
@@ -288,7 +295,7 @@ public class GUI extends Application {
 
         root.getChildren().addAll(info, simWindow, menuRec, susceptibleAmount,
                 infectedAmount, recoveredAmount,
-                susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, menuButttonsBottomRight);
+                susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, sirLabel, menuButttonsBottomRight);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");

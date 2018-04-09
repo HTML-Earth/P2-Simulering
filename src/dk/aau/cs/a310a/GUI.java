@@ -235,8 +235,7 @@ public class GUI extends Application {
                 gc.drawImage(visualMap,0,0,800,600);
             }
             if (!isApplyLabelRemoved) {
-                // root.getChildren().remove(resetLabel);
-                root.getChildren().add(appliedLabel);
+                menu.getChildren().add(appliedLabel);
                 isApplyLabelRemoved = true;
             }
 
@@ -258,8 +257,8 @@ public class GUI extends Application {
             sim.stopSimulation();
             gc.drawImage(visualMap,0,0,800,600);
             resetSim.setDisable(true);
-            root.getChildren().remove(appliedLabel);
-            root.getChildren().add(resetLabel);
+            menu.getChildren().remove(appliedLabel);
+            menu.getChildren().add(resetLabel);
             runButton.setText("Start");
         });
 

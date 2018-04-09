@@ -181,7 +181,9 @@ public class GUI extends Application {
 
         // Event til starte simulering og fjerne menu og blur
         runButton.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel, appliedLabel, resetLabel, titleLabel, menuButttonsBottomRight);
+            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount,
+                    infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel,
+                    appliedLabel, resetLabel, titleLabel, menuButttonsBottomRight);
             root.getChildren().add(showMenu);
             resetSim.setDisable(false);
             simWindow.setEffect(null);
@@ -213,7 +215,8 @@ public class GUI extends Application {
 
         //Events til menuknap
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount, susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, menuButttonsBottomRight);
+            root.getChildren().addAll(menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount,
+                    susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, menuButttonsBottomRight);
             root.getChildren().remove(showMenu);
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);

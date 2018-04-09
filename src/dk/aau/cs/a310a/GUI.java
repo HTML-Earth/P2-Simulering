@@ -15,6 +15,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -49,17 +50,17 @@ public class GUI extends Application {
     }
 
     public void start(Stage stage) {
-
         //Vindue titel
         stage.setTitle("Zombe");
 
-        //vindue ikon
+        //Vindue ikon
         stage.getIcons().add(new Image("file:resources/zombe.png"));
 
-        HBox simWindow = new HBox();
+        //ROOT STACKPANE
         StackPane root = new StackPane();
-        GridPane info = new GridPane();
-        GridPane menuButttonsBottomRight = new GridPane();
+
+        //SIMULERINGSVINDUE
+        HBox simWindow = new HBox();
 
         //Canvas og Bob Ross til at tegne på det
         Canvas canvas = new Canvas(800, 600);
@@ -67,14 +68,61 @@ public class GUI extends Application {
         PixelWriter pw = gc.getPixelWriter();
         BobRoss bob = new BobRoss();
 
+        //SIDEPANEL
+        VBox sidePanel = new VBox();
 
-        // Rektangel hvor menuens knapper placeres og blurring
-        Rectangle menuRec = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
+        //Infoboks med Livestatistikker i hjørnet
+        GridPane info = new GridPane();
+
+        //Infoboks labels
+        Label stringSusceptible = new Label("Susceptible: " + sim.healthCount(Person.health.Susceptible));
+        Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
+        Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
+        Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
+        Label stringEpidemic = new Label("Chance of epidemic" + "\n" + influenzaA.calculateR0(1,1.0));
+
+        //styling af labels
+        Styler styler = new Styler();
+        styler.StyleLabel(stringSusceptible);
+        styler.StyleLabel(stringRecovered);
+        styler.StyleLabel(stringInfected);
+        styler.StyleLabel(stringDead);
+
+        info.add(stringSusceptible, 0, 0);
+        info.add(stringInfected, 0, 1);
+        info.add(stringRecovered, 0, 2);
+        info.add(stringDead, 0, 3);
+        info.add(stringEpidemic, 0, 4);
+
+        //Information om personer
+        Label personData = new Label();
+        personData.setFont(Font.font(12));
+        personData.setTranslateY(300);
+
+        //Tilføj personer fra starten
+        for (Person p : sim.getPeople()) {
+            personData.setText(personData.getText() + "\n " + p);
+        }
+
+        //info og persondata tilføjes til sidepanel
+        sidePanel.getChildren().addAll(info,personData);
+
+        //Canvas og sidepanel tilføjes til simwindow
+        simWindow.getChildren().addAll(canvas, sidePanel);
+        simWindow.setAlignment(Pos.BOTTOM_LEFT);
+
+        //Simwindow bliver blurred
         BoxBlur boxblur = new BoxBlur();
         boxblur.setHeight(5);
         boxblur.setWidth(5);
         boxblur.setIterations(3);
+        simWindow.setEffect(boxblur);
 
+        //MENU
+        StackPane menu = new StackPane();
+
+        //Sort baggrund til menu
+        Rectangle menuBackground = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
         //Menu - Tilføj knapper
         //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
@@ -91,7 +139,6 @@ public class GUI extends Application {
         comboBox.setTranslateX(-300);
         comboBox.setTranslateY(200);
 
-
         // Textfield til at skrive befolkning
         TextField susceptibleAmount = new TextField("100");
         susceptibleAmount.setMaxWidth(80);
@@ -107,7 +154,6 @@ public class GUI extends Application {
         recoveredAmount.setMaxWidth(80);
         recoveredAmount.setTranslateX(-220);
         recoveredAmount.setTranslateY(-200+150);
-
 
         // Menu - labels til beskrivelse
         Label susceptibleLabel = new Label("Susceptible:");
@@ -149,7 +195,6 @@ public class GUI extends Application {
 
         titleLabel.setEffect(dropShadow);
 
-
         //Button factory
         Button showMenu = new Button("Menu");
         showMenu.setFont(Font.font(20));
@@ -158,32 +203,17 @@ public class GUI extends Application {
         Button resetSim = new Button("Reset");
         resetSim.setFont(Font.font(20));
         resetSim.setDisable(true);
-        /*
-        resetSim.setTranslateX(150);
-        resetSim.setTranslateY(260);
-        */
 
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));
-        /*
-        applySettings.setTranslateX(250);
-        applySettings.setTranslateY(260);
-        */
 
         Button runButton = new Button("Start");
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
-        /*
-        runButton.setFont(Font.font(20));
-        runButton.setTranslateX(350);
-        runButton.setTranslateY(260);
-        */
 
         // Event til starte simulering og fjerne menu og blur
         runButton.setOnMouseClicked(event -> {
-            root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount,
-                    infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel,
-                    appliedLabel, resetLabel, titleLabel, menuButttonsBottomRight);
+            root.getChildren().remove(menu);
             root.getChildren().add(showMenu);
             resetSim.setDisable(false);
             simWindow.setEffect(null);
@@ -215,8 +245,7 @@ public class GUI extends Application {
 
         //Events til menuknap
         showMenu.setOnMouseClicked(event -> {
-            root.getChildren().addAll(menuRec, comboBox, susceptibleAmount, recoveredAmount, infectedAmount,
-                    susceptibleLabel, recoveredLabel, infectedLabel, titleLabel, menuButttonsBottomRight);
+            root.getChildren().add(menu);
             root.getChildren().remove(showMenu);
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);
@@ -234,69 +263,23 @@ public class GUI extends Application {
             runButton.setText("Start");
         });
 
-
-
-
-        //Livestatistikker
-        //Label
-        Label stringSusceptible = new Label("Susceptible: " + sim.healthCount(Person.health.Susceptible));
-        Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
-        Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
-        Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
-        Label stringEpidemic = new Label("Chance of epidemic" + "\n" + influenzaA.calculateR0(1,1.0));
-
-        //styling af labels
-        Styler styler = new Styler();
-        styler.StyleLabel(stringSusceptible);
-        styler.StyleLabel(stringRecovered);
-        styler.StyleLabel(stringInfected);
-        styler.StyleLabel(stringDead);
-
         //Grids
-        //menuButttonsBottomRight.setTranslateX(400);
-        //menuButttonsBottomRight.setTranslateY(20);
+        GridPane menuButttonsBottomRight = new GridPane();
         menuButttonsBottomRight.add(applySettings, 0, 0);
         menuButttonsBottomRight.add(runButton, 1, 0);
         menuButttonsBottomRight.setTranslateX(800);
         menuButttonsBottomRight.setTranslateY(600);
 
-        info.setTranslateX(820);
-        info.setTranslateY(20);
-        info.add(stringSusceptible, 0, 0);
-        info.add(stringInfected, 0, 1);
-        info.add(stringRecovered, 0, 2);
-        info.add(stringDead, 0, 3);
-        info.add(stringEpidemic, 0, 4);
+        menu.getChildren().addAll(menuBackground, susceptibleAmount, infectedAmount, recoveredAmount,susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, menuButttonsBottomRight);
 
-        //Information om personer
-        //TextArea til at udskrive data fra people listen.
-        TextArea personData = new TextArea();
-        personData.setFont(Font.font(12));
-        personData.setTranslateY(300);
-
-        //Tilføj personer fra starten
-        personData.setEditable(false);
-        for (Person p : sim.getPeople()) {
-            personData.setText(personData.getText() + "\n " + p);
-        }
-
-        // HBox, canvas og stackpane tilføjes til programvinduet.
-        simWindow.getChildren().addAll(canvas, personData);
-        simWindow.setAlignment(Pos.BOTTOM_LEFT);
-        info.setEffect(boxblur);
-        simWindow.setEffect(boxblur);
-
-        root.getChildren().addAll(info, simWindow, menuRec, susceptibleAmount,
-                infectedAmount, recoveredAmount,
-                susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, menuButttonsBottomRight);
+        //Tilføj simwindow og menu til root stackpane
+        root.getChildren().addAll(simWindow, menu);
 
         //Load og vis baggrundsbilledet
         visualMap = new Image("city_upscaled.png");
         gc.drawImage(visualMap,0,0,800,600);
 
         final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */
-        //final long startNanoTime = System.nanoTime();
-
 
         new AnimationTimer() {
             double previousTime = System.nanoTime();

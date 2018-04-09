@@ -94,6 +94,9 @@ public class GUI extends Application {
         info.add(stringDead, 0, 3);
         info.add(stringEpidemic, 0, 4);
 
+        //Scrollpane med persondata
+        ScrollPane scrollPane = new ScrollPane();
+
         //Information om personer
         Label personData = new Label();
         personData.setFont(Font.font(12));
@@ -104,8 +107,10 @@ public class GUI extends Application {
             personData.setText(personData.getText() + "\n " + p);
         }
 
-        //info og persondata tilføjes til sidepanel
-        sidePanel.getChildren().addAll(info,personData);
+        scrollPane.setContent(personData);
+
+        //info og scrollpane tilføjes til sidepanel
+        sidePanel.getChildren().addAll(info,scrollPane);
 
         //Canvas og sidepanel tilføjes til simwindow
         simWindow.getChildren().addAll(canvas, sidePanel);

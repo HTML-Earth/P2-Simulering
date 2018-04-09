@@ -162,14 +162,6 @@ public class GUI extends Application {
         showMenu.setFont(Font.font(20));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
 
-        Button resetSim = new Button("Reset");
-        resetSim.setFont(Font.font(20));
-        resetSim.setDisable(true);
-        /*
-        resetSim.setTranslateX(150);
-        resetSim.setTranslateY(260);
-        */
-
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));
         /*
@@ -189,10 +181,9 @@ public class GUI extends Application {
         // Event til starte simulering og fjerne menu og blur
         runButton.setOnMouseClicked(event -> {
             root.getChildren().removeAll(runButton, menuRec, comboBox, susceptibleAmount, recoveredAmount,
-                    infectedAmount, applySettings, resetSim, susceptibleLabel, recoveredLabel, infectedLabel,
+                    infectedAmount, applySettings, susceptibleLabel, recoveredLabel, infectedLabel,
                     appliedLabel, resetLabel, titleLabel, sirLabel, menuButttonsBottomRight);
             root.getChildren().add(showMenu);
-            resetSim.setDisable(false);
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
@@ -229,16 +220,6 @@ public class GUI extends Application {
             info.setEffect(boxblur);
             sim.pauseSimulation();
             runButton.setText("Continue");
-        });
-
-        //Event til at genstarte simulation
-        resetSim.setOnMouseClicked(event -> {
-            sim.stopSimulation();
-            gc.drawImage(visualMap,0,0,800,600);
-            resetSim.setDisable(true);
-            root.getChildren().remove(appliedLabel);
-            root.getChildren().add(resetLabel);
-            runButton.setText("Start");
         });
 
 

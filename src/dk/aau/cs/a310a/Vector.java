@@ -31,4 +31,8 @@ public class Vector {
         double distance = Math.sqrt(Math.pow(b.x - a.x, 2)+Math.pow(b.y-a.y,2));
         return distance;
     }
+
+    public static Vector gridToScreen(Vector gridPosition) {
+        return new Vector(gridPosition.x * 20 + 10, gridPosition.y * 20 + 10);
+    }
 }

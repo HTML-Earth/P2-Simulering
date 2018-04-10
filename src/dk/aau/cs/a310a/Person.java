@@ -30,7 +30,7 @@ public class Person {
         this.homePosition = homePosition;
         this.destination = homePosition;
 
-        this.screenPosition = gridToScreen(homePosition);
+        this.screenPosition = Vector.gridToScreen(homePosition);
         this.nextScreenPosition = this.screenPosition;
     }
 
@@ -123,7 +123,7 @@ public class Person {
         else if (position.y > destination.y)
             position.y--;
 
-        nextScreenPosition = gridToScreen(position);
+        nextScreenPosition = Vector.gridToScreen(position);
     }
 
     public void updateScreenPosition(double t) {
@@ -139,7 +139,7 @@ public class Person {
     }
 
     public Vector getDestination() {
-        return gridToScreen(destination);
+        return Vector.gridToScreen(destination);
     }
 
     public Vector getGridPosition() {
@@ -179,10 +179,6 @@ public class Person {
             else
                 setCurrentHealth(health.Recovered);
         }
-    }
-
-    public static Vector gridToScreen(Vector gridPosition) {
-        return new Vector(gridPosition.x * 20 + 10, gridPosition.y * 20 + 10);
     }
 
     //Metoden som kaldes når man printer objektet

@@ -11,10 +11,10 @@ public class Simulator {
     public static Simulator theSimulator;
 
     //Området der simuleres på
-    BufferedImage pixelMap;
+    private BufferedImage pixelMap;
 
     //Sygdom
-    Influenza influenzaA;
+    private Influenza influenzaA;
 
     //Lister over personer
     public List<Person> people;
@@ -23,12 +23,15 @@ public class Simulator {
     public Random rand;
 
     //Simuleringsvariabler
-    boolean simulationHasBeenInitialised;
-    boolean simulationIsActive;
+    private boolean simulationHasBeenInitialised;
+    private boolean simulationIsActive;
 
-    List<Vector> homePositions;
-    List<Vector> workPositions;
-    List<Vector> hospitalPositions;
+    private double tickTime = 0.2;
+    private double lastTick = 0;
+
+    private List<Vector> homePositions;
+    private List<Vector> workPositions;
+    private List<Vector> hospitalPositions;
 
     public Simulator() throws IOException {
         //Gør denne simulator globalt tilgængelig
@@ -62,7 +65,7 @@ public class Simulator {
                 int g = (argb>>8)&0xFF;
                 int b = (argb>>0)&0xFF;
 
-                Vector housePos = new Vector(x * 20 + 10,y * 20 + 10);
+                Vector housePos = new Vector(x,y);
 
                 if (r == 87 && g == 87 && b == 87) {
                     homePositions.add(housePos);
@@ -85,7 +88,7 @@ public class Simulator {
             int randAge = rand.nextInt(80) + 20;
             int randomHouse = rand.nextInt(homePositions.size());
 
-            Person person = new Person(randAge, health, homePositions.get(randomHouse), homePositions.get(randomHouse));
+            Person person = new Person(randAge, health, homePositions.get(randomHouse));
 
             //Tilføj person til liste
             people.add(person);
@@ -149,6 +152,10 @@ public class Simulator {
         return simulationIsActive;
     }
 
+    public double getTickTime () {
+        return tickTime;
+    }
+
     public void simulate(double currentTime, double deltaTime) {
         if (!simulationIsActive)
             return;
@@ -162,11 +169,28 @@ public class Simulator {
         }
         */
 
-        //Opdater positionen og helbredet for personen
-        for (Person p : people) {
-            p.updateMovement(deltaTime);
-            p.updateDisease(currentTime, deltaTime);
+        if (currentTime > lastTick + tickTime) {
+            //Opdater positionen og helbredet for personen
+            for (Person p : people) {
+                p.updateDisease(currentTime);
+                p.updateDestination();
+                p.updateMovement();
+            }
+            lastTick = currentTime;
         }
+
+        for (Person p : people) {
+            p.updateScreenPosition(currentTime - lastTick);
+        }
+    }
+
+    public Vector getHomePosition()
+    {
+        if (homePositions.size() > 0) {
+            return homePositions.get(rand.nextInt(homePositions.size()));
+        }
+        else
+            return new Vector(40,0);
     }
 
     public Vector getHospitalPosition()
@@ -175,7 +199,7 @@ public class Simulator {
             return hospitalPositions.get(rand.nextInt(hospitalPositions.size()));
         }
         else
-            return new Vector(0,0);
+            return new Vector(40,30);
     }
 
     public Vector getWorkPosition()
@@ -184,7 +208,7 @@ public class Simulator {
             return workPositions.get(rand.nextInt(workPositions.size()));
         }
         else
-            return new Vector(0,0);
+            return new Vector(0,30);
     }
 
     public List<Person> getPeople() {

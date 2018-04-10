@@ -94,4 +94,10 @@ public class BobRoss {
             gc.fillPolygon(xPoints,yPoints,12);
         }
     }
+
+    public void drawDestination(Vector position, Vector destination, GraphicsContext gc) {
+        gc.setFill(Color.LIGHTGREEN);
+        gc.strokeLine(position.x,position.y,destination.x,destination.y);
+        gc.fillOval(destination.x-4,destination.y-4,8,8);
+    }
 }

@@ -19,14 +19,14 @@ public class Influenza {
             case A:
                 this.baseSpread = 4;
                 this.amountCured = 2;
-                this.infectionRange = 30;
+                this.infectionRange = 3;
                 this.infectionRisk = 0.5;
                 this.baseDeathRisk = 0.001;
                 break;
             case B:
                 this.baseSpread = 3;
                 this.amountCured = 1;
-                this.infectionRange = 20;
+                this.infectionRange = 2;
                 this.infectionRisk = 0.4;
                 this.baseDeathRisk = 0.001;
                 break;

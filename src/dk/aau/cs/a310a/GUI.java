@@ -168,6 +168,7 @@ public class GUI extends Application {
         Label appliedLabel = new Label("Population applied!");
         Label resetLabel = new Label("Simulation reset!");
         Label titleLabel = new Label("Super Awesome Title");
+        Label sirLabel = new Label("SIR-Options:");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
@@ -175,6 +176,7 @@ public class GUI extends Application {
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         resetLabel.setTextFill(Color.ORANGE);
         titleLabel.setTextFill(Color.WHITE);
+        sirLabel.setTextFill(Color.WHITE);
 
         susceptibleLabel.setTranslateX(-300);
         susceptibleLabel.setTranslateY(-197+50);
@@ -197,9 +199,14 @@ public class GUI extends Application {
         titleLabel.setTranslateY(-240);
         titleLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 70));
 
+        sirLabel.setTranslateX(-260);
+        sirLabel.setTranslateY(-180);
+        sirLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
+
         DropShadow dropShadow = new DropShadow();
 
         titleLabel.setEffect(dropShadow);
+        sirLabel.setEffect(dropShadow);
 
         //Button factory
         Button showMenu = new Button("Menu");
@@ -263,7 +270,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(800);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, susceptibleAmount, infectedAmount, recoveredAmount,susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, susceptibleAmount, infectedAmount, recoveredAmount,susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, sirLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

@@ -1,5 +1,6 @@
 package dk.aau.cs.a310a;
 
+import javax.sound.midi.Soundbank;
 import java.util.Random;
 
 public class Person {
@@ -8,23 +9,32 @@ public class Person {
     private health currentHealth;
     private Influenza disease;
     private int age;
+
+    //tidspunkt hvor personen blev inficeret
     public double timeInfected = 0;
+
+    //positioner
     private Vector position;
     private Vector destination;
-
     private Vector homePosition;
 
-    private double destinationReachedRange = 10;
+    private Vector screenPosition;
+    private Vector nextScreenPosition;
 
-    public Person(int age, health currentHealth, Vector position, Vector homePosition) {
+    private double destinationReachedRange = 1;
+
+    public Person(int age, health currentHealth, Vector homePosition) {
         this.age = age;
         this.currentHealth = currentHealth;
-        this.position = position;
+        this.position = homePosition;
         this.homePosition = homePosition;
         this.destination = homePosition;
+
+        this.screenPosition = gridToScreen(homePosition);
+        this.nextScreenPosition = this.screenPosition;
     }
 
-    public void updateDisease(double currentTime, double deltaTime) {
+    public void updateDisease(double currentTime) {
         switch (currentHealth) {
             case Susceptible:
                 break;
@@ -37,9 +47,9 @@ public class Person {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
                         //Tjek om personerne er tæt på hinanden
-                        if (Vector.distance(this.position,p.getPosition()) < disease.getInfectionRange()){
+                        if (Vector.distance(this.position,p.getGridPosition()) < disease.getInfectionRange()){
                             //Risiko for infektion
-                            if (Simulator.theSimulator.rand.nextDouble() < disease.getInfectionRisk() * deltaTime){
+                            if (Simulator.theSimulator.rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime()){
                                 //Inficer den anden person
                                 disease.infectPerson(p);
                             }
@@ -56,7 +66,7 @@ public class Person {
         }
     }
 
-    public void updateMovement(double deltaTime) {
+    public void updateDestination() {
         if (currentHealth == health.Dead)
             return;
 
@@ -94,12 +104,30 @@ public class Person {
                 setDestination(Simulator.theSimulator.getHospitalPosition());
             }
             else {
-                double targetX = position.x + Simulator.theSimulator.rand.nextDouble() * 100 - 50;
-                double targetY = position.y + Simulator.theSimulator.rand.nextDouble() * 100 - 50;
-                setDestination(new Vector(targetX, targetY));
+                setDestination(Simulator.theSimulator.getHomePosition());
             }
         }
-        position = Vector.lerp(position, destination, deltaTime);
+    }
+
+    public void updateMovement() {
+        if (currentHealth == health.Dead)
+            return;
+
+        if (position.x < destination.x)
+            position.x++;
+        else if (position.x > destination.x)
+            position.x--;
+
+        if (position.y < destination.y)
+            position.y++;
+        else if (position.y > destination.y)
+            position.y--;
+
+        nextScreenPosition = gridToScreen(position);
+    }
+
+    public void updateScreenPosition(double t) {
+        screenPosition = Vector.lerp(screenPosition, nextScreenPosition, t);
     }
 
     public int getAge() {
@@ -107,11 +135,15 @@ public class Person {
     }
 
     public Vector getPosition() {
-        return position;
+        return screenPosition;
     }
 
-    public void setPosition(Vector position) {
-        this.position = position;
+    public Vector getDestination() {
+        return gridToScreen(destination);
+    }
+
+    public Vector getGridPosition() {
+        return position;
     }
 
     public void setDestination(Vector destination) {
@@ -149,8 +181,12 @@ public class Person {
         }
     }
 
+    public static Vector gridToScreen(Vector gridPosition) {
+        return new Vector(gridPosition.x * 20 + 10, gridPosition.y * 20 + 10);
+    }
+
     //Metoden som kaldes når man printer objektet
     public String toString() {
-        return getCurrentHealth() + "\t Age:" + age + "\t X:" + (int)position.x + "\t Y:" + (int)position.y;
+        return getCurrentHealth() + "\t Age:" + age + "\t X:" + (int)screenPosition.x + "\t Y:" + (int)screenPosition.y;
     }
 }

@@ -73,6 +73,7 @@ public class GUI extends Application {
 
         //Infoboks med Livestatistikker i hjørnet
         GridPane info = new GridPane();
+        info.setMinHeight(150);
 
         //Infoboks labels
         Label stringSusceptible = new Label("Susceptible: " + sim.healthCount(Person.health.Susceptible));
@@ -100,7 +101,6 @@ public class GUI extends Application {
         //Information om personer
         Label personData = new Label();
         personData.setFont(Font.font(12));
-        personData.setTranslateY(300);
 
         //Tilføj personer fra starten
         for (Person p : sim.getPeople()) {
@@ -111,6 +111,7 @@ public class GUI extends Application {
 
         //info og scrollpane tilføjes til sidepanel
         sidePanel.getChildren().addAll(info,scrollPane);
+        sidePanel.setMinWidth(400);
 
         //Canvas og sidepanel tilføjes til simwindow
         simWindow.getChildren().addAll(canvas, sidePanel);

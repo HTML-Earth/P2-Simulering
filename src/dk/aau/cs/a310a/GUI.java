@@ -340,7 +340,8 @@ public class GUI extends Application {
 
                     //Tegn alle personer og print deres info
                     for (Person p : sim.getPeople()) {
-                        bob.drawDestination(p.getPosition(), p.getDestination(), gc);
+                        if (p.getCurrentHealth() != Person.health.Dead)
+                            bob.drawDestination(p.getPosition(), p.getDestination(), gc);
                         bob.drawPerson(p.getPosition(),p.getCurrentHealth(),gc);
                         personData.setText(personData.getText() + "\n " + p);
                         stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));

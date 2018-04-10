@@ -149,18 +149,23 @@ public class GUI extends Application {
 
         NumberTextField susceptibleAmount = new NumberTextField("100");
         susceptibleAmount.setMaxWidth(80);
-        susceptibleAmount.setTranslateX(-220);
-        susceptibleAmount.setTranslateY(-200+50);
 
         NumberTextField infectedAmount = new NumberTextField("1");
         infectedAmount.setMaxWidth(80);
-        infectedAmount.setTranslateX(-220);
-        infectedAmount.setTranslateY(-200+100);
 
         NumberTextField recoveredAmount = new NumberTextField("0");
         recoveredAmount.setMaxWidth(80);
-        recoveredAmount.setTranslateX(-220);
-        recoveredAmount.setTranslateY(-200+150);
+
+        NumberTextField vaccinePercent = new NumberTextField("0");
+        vaccinePercent.setMaxWidth(40);
+        NumberTextField sanitizerPercent = new NumberTextField("0");
+        sanitizerPercent.setMaxWidth(40);
+        NumberTextField coverMouthPercent = new NumberTextField("0");
+        coverMouthPercent.setMaxWidth(40);
+        NumberTextField stayHomePercent = new NumberTextField("0");
+        stayHomePercent.setMaxWidth(40);
+
+
 
 
 
@@ -172,6 +177,12 @@ public class GUI extends Application {
         Label resetLabel = new Label("Simulation reset!");
         Label titleLabel = new Label("Zombe");
         Label sirLabel = new Label("SIR-Options:");
+        Label spreadLabel = new Label("Spread-modifiers:");
+        Label whatPerLabel = new Label("What percentage:");
+        Label isVaccinatedLabel = new Label(" - is vaccinated?");
+        Label useSanitizersLabel = new Label(" - use handsanitizers?");
+        Label coverMouthLabel = new Label(" - cover mouth when coughing?");
+        Label stayAtHomeLabel = new Label(" - stays at home after symptoms?");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
@@ -180,15 +191,12 @@ public class GUI extends Application {
         resetLabel.setTextFill(Color.ORANGE);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
-
-        susceptibleLabel.setTranslateX(-300);
-        susceptibleLabel.setTranslateY(-197+50);
-
-        infectedLabel.setTranslateX(-300);
-        infectedLabel.setTranslateY(-197+100);
-
-        recoveredLabel.setTranslateX(-300);
-        recoveredLabel.setTranslateY(-197+150);
+        spreadLabel.setTextFill(Color.WHITE);
+        whatPerLabel.setTextFill(Color.WHITE);
+        isVaccinatedLabel.setTextFill(Color.WHITE);
+        useSanitizersLabel.setTextFill(Color.WHITE);
+        coverMouthLabel.setTextFill(Color.WHITE);
+        stayAtHomeLabel.setTextFill(Color.WHITE);
 
         appliedLabel.setTranslateX(200);
         appliedLabel.setTranslateY(150);
@@ -206,10 +214,15 @@ public class GUI extends Application {
         sirLabel.setTranslateY(-180);
         sirLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
 
+        spreadLabel.setTranslateX(-260 + 400);
+        spreadLabel.setTranslateY(-180);
+        spreadLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
+
         DropShadow dropShadow = new DropShadow();
 
         titleLabel.setEffect(dropShadow);
         sirLabel.setEffect(dropShadow);
+        spreadLabel.setEffect(dropShadow);
 
         //Button factory
         Button showMenu = new Button("Menu");
@@ -267,13 +280,36 @@ public class GUI extends Application {
         });
 
         //Grids
+        GridPane menuLabels = new GridPane();
+        menuLabels.add(susceptibleLabel, 0 , 0);
+        menuLabels.add(susceptibleAmount, 1, 0);
+        menuLabels.add(whatPerLabel,2,0);
+        menuLabels.add(infectedLabel, 0, 1);
+        menuLabels.add(infectedAmount, 1, 1);
+        menuLabels.add(recoveredLabel, 0,2);
+        menuLabels.add(recoveredAmount, 1, 2);
+        menuLabels.add(isVaccinatedLabel, 2, 1);
+        menuLabels.add(useSanitizersLabel, 2, 2);
+        menuLabels.add(coverMouthLabel, 2, 3);
+        menuLabels.add(stayAtHomeLabel, 2, 4);
+        menuLabels.add(vaccinePercent, 3, 1);
+        menuLabels.add(sanitizerPercent, 3, 2);
+        menuLabels.add(coverMouthPercent, 3, 3);
+        menuLabels.add(stayHomePercent, 3, 4);
+        for(int i = 1; i < 5; i++) {
+            Label percentLabel = new Label("%");
+            menuLabels.add(percentLabel, 4, i);
+            percentLabel.setTextFill(Color.WHITE);
+        }
+        menuLabels.setAlignment(Pos.CENTER);
+
         GridPane menuButttonsBottomRight = new GridPane();
         menuButttonsBottomRight.add(applySettings, 0, 0);
         menuButttonsBottomRight.add(runButton, 1, 0);
         menuButttonsBottomRight.setTranslateX(800);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, susceptibleAmount, infectedAmount, recoveredAmount,susceptibleLabel, infectedLabel, recoveredLabel, comboBox, titleLabel, sirLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabels, comboBox, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

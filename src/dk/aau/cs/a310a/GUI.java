@@ -146,20 +146,23 @@ public class GUI extends Application {
         comboBox.setTranslateY(200);
 
         // Textfield til at skrive befolkning
-        TextField susceptibleAmount = new TextField("100");
+
+        NumberTextField susceptibleAmount = new NumberTextField("100");
         susceptibleAmount.setMaxWidth(80);
         susceptibleAmount.setTranslateX(-220);
         susceptibleAmount.setTranslateY(-200+50);
 
-        TextField infectedAmount = new TextField("1");
+        NumberTextField infectedAmount = new NumberTextField("1");
         infectedAmount.setMaxWidth(80);
         infectedAmount.setTranslateX(-220);
         infectedAmount.setTranslateY(-200+100);
 
-        TextField recoveredAmount = new TextField("0");
+        NumberTextField recoveredAmount = new NumberTextField("0");
         recoveredAmount.setMaxWidth(80);
         recoveredAmount.setTranslateX(-220);
         recoveredAmount.setTranslateY(-200+150);
+
+
 
         // Menu - labels til beskrivelse
         Label susceptibleLabel = new Label("Susceptible:");
@@ -167,7 +170,7 @@ public class GUI extends Application {
         Label recoveredLabel = new Label("Recovered:");
         Label appliedLabel = new Label("Population applied!");
         Label resetLabel = new Label("Simulation reset!");
-        Label titleLabel = new Label("Super Awesome Title");
+        Label titleLabel = new Label("Zombe");
         Label sirLabel = new Label("SIR-Options:");
 
         susceptibleLabel.setTextFill(Color.WHITE);

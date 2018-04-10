@@ -70,6 +70,7 @@ public class GUI extends Application {
 
         //SIDEPANEL
         VBox sidePanel = new VBox();
+        sidePanel.setMinWidth(400);
 
         //Infoboks med Livestatistikker i hjørnet
         GridPane info = new GridPane();
@@ -111,7 +112,6 @@ public class GUI extends Application {
 
         //info og scrollpane tilføjes til sidepanel
         sidePanel.getChildren().addAll(info,scrollPane);
-        sidePanel.setMinWidth(400);
 
         //Canvas og sidepanel tilføjes til simwindow
         simWindow.getChildren().addAll(canvas, sidePanel);

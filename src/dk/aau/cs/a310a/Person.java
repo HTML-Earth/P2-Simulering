@@ -1,6 +1,6 @@
 package dk.aau.cs.a310a;
 
-import javax.sound.midi.Soundbank;
+import java.util.List;
 import java.util.Random;
 
 public class Person {
@@ -13,22 +13,37 @@ public class Person {
     //tidspunkt hvor personen blev inficeret
     public double timeInfected = 0;
 
-    //positioner
-    private Vector position;
-    private Vector destination;
-    private Vector homePosition;
+    private boolean hasDestination;
 
+    private int placeTimeLeft = 0;
+    private int sameDest = 0;
+
+    private String debugText;
+
+    //midlertidige positioner
+    private GridPosition position;
+    private GridPosition destination;
+
+    //permanente positioner
+    private GridPosition home;
+
+    //display positioner
     private Vector screenPosition;
     private Vector nextScreenPosition;
 
-    private double destinationReachedRange = 1;
+    //RNG
+    private Random rand;
 
-    public Person(int age, health currentHealth, Vector homePosition) {
+    public Person(int age, health currentHealth, GridPosition homePosition) {
+        rand = new Random();
+
         this.age = age;
         this.currentHealth = currentHealth;
+
         this.position = homePosition;
-        this.homePosition = homePosition;
         this.destination = homePosition;
+
+        this.home = homePosition;
 
         this.screenPosition = Vector.gridToScreen(homePosition);
         this.nextScreenPosition = this.screenPosition;
@@ -47,9 +62,9 @@ public class Person {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
                         //Tjek om personerne er tæt på hinanden
-                        if (Vector.distance(this.position,p.getGridPosition()) < disease.getInfectionRange()){
+                        if (GridPosition.distance(this.position,p.getGridPosition()) < disease.getInfectionRange()){
                             //Risiko for infektion
-                            if (Simulator.theSimulator.rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime()){
+                            if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime()){
                                 //Inficer den anden person
                                 disease.infectPerson(p);
                             }
@@ -70,42 +85,47 @@ public class Person {
         if (currentHealth == health.Dead)
             return;
 
-        if (Vector.distance(position, destination) < destinationReachedRange) {
+        if (hasDestination)
+            return;
 
-            double goToWorkChance = 0;
-            double stayHomeChance = 0;
-            double goToHospitalChance = 0;
+        if (placeTimeLeft > 0) {
+            placeTimeLeft--;
+            return;
+        }
 
-            switch (currentHealth) {
-                case Susceptible:
-                    goToWorkChance = 0.4;
-                    stayHomeChance = 0.1;
-                    goToHospitalChance = 0.01;
-                    break;
-                case Infected:
-                    goToWorkChance = 0.3;
-                    stayHomeChance = 0.8;
-                    goToHospitalChance = 0.9;
-                    break;
-                case Recovered:
-                    goToWorkChance = 0.5;
-                    stayHomeChance = 0.1;
-                    goToHospitalChance = 0.001;
-                    break;
-            }
+        double goToWorkChance = 0;
+        double stayHomeChance = 0;
+        double goToHospitalChance = 0;
 
-            if (Simulator.theSimulator.rand.nextDouble() < goToWorkChance) {
-                setDestination(Simulator.theSimulator.getWorkPosition());
-            }
-            else if (Simulator.theSimulator.rand.nextDouble() < stayHomeChance) {
-                setDestination(homePosition);
-            }
-            else if (Simulator.theSimulator.rand.nextDouble() < goToHospitalChance) {
-                setDestination(Simulator.theSimulator.getHospitalPosition());
-            }
-            else {
-                setDestination(Simulator.theSimulator.getHomePosition());
-            }
+        switch (currentHealth) {
+            case Susceptible:
+                goToWorkChance = 0.4;
+                stayHomeChance = 0.1;
+                goToHospitalChance = 0.01;
+                break;
+            case Infected:
+                goToWorkChance = 0.3;
+                stayHomeChance = 0.8;
+                goToHospitalChance = 0.9;
+                break;
+            case Recovered:
+                goToWorkChance = 0.5;
+                stayHomeChance = 0.1;
+                goToHospitalChance = 0.001;
+                break;
+        }
+
+        if (rand.nextDouble() < goToWorkChance) {
+            setDestination(Simulator.placeType.Work);
+        }
+        else if (rand.nextDouble() < stayHomeChance) {
+            setDestination(home);
+        }
+        else if (rand.nextDouble() < goToHospitalChance) {
+            setDestination(Simulator.placeType.Hospital);
+        }
+        else {
+            setDestination(Simulator.placeType.House);
         }
     }
 
@@ -113,17 +133,28 @@ public class Person {
         if (currentHealth == health.Dead)
             return;
 
+        if (!hasDestination)
+            return;
+
+        debugText = "";
+
         if (position.x < destination.x)
             position.x++;
         else if (position.x > destination.x)
             position.x--;
-
-        if (position.y < destination.y)
+        else if (position.y < destination.y)
             position.y++;
         else if (position.y > destination.y)
             position.y--;
+        else
+            debugText = "!!!";
 
         nextScreenPosition = Vector.gridToScreen(position);
+
+        if (position.x == destination.x && position.y == destination.y) {
+            hasDestination = false;
+            placeTimeLeft = 5;
+        }
     }
 
     public void updateScreenPosition(double t) {
@@ -142,12 +173,53 @@ public class Person {
         return Vector.gridToScreen(destination);
     }
 
-    public Vector getGridPosition() {
+    public GridPosition getGridPosition() {
         return position;
     }
 
-    public void setDestination(Vector destination) {
+    public void setDestination (Simulator.placeType place) {
+        List<GridPosition> places;
+
+        switch (place) {
+            case House:
+                places = Simulator.theSimulator.getHouses();
+                break;
+            case Work:
+                places = Simulator.theSimulator.getWorkplaces();
+                break;
+            case Hospital:
+                places = Simulator.theSimulator.getHospitals();
+                break;
+            default:
+                System.out.println("invalid place type");
+                return;
+        }
+
+        if (places.size() < 1) {
+            System.out.println("no places found");
+        }
+        else {
+            setDestination(places.get(rand.nextInt(places.size())));
+        }
+    }
+
+    public void setDestination(GridPosition destination) {
+        if (hasDestination) {
+            System.out.println("already have destination");
+            return;
+        }
+        if (this.destination.x == destination.x && this.destination.y == destination.y) {
+            sameDest++;
+            return;
+        }
+
+        sameDest = 0;
         this.destination = destination;
+        hasDestination = true;
+    }
+
+    public boolean hasDestination() {
+        return hasDestination;
     }
 
     public health getCurrentHealth() {
@@ -169,7 +241,6 @@ public class Person {
     }
 
     public void influenzaRecover(double timer) {
-        Random rand = new Random();
         int timeBeforeRecover = rand.nextInt(6) + 4;
 
         if(timer - timeInfected > timeBeforeRecover) {
@@ -181,8 +252,15 @@ public class Person {
         }
     }
 
+    public String getDebugText() {
+        if (hasDestination)
+            return "" + GridPosition.distance(position,destination) + debugText;
+        else
+            return "[" + placeTimeLeft + debugText + "]";
+    }
+
     //Metoden som kaldes når man printer objektet
     public String toString() {
-        return getCurrentHealth() + "\t Age:" + age + "\t X:" + (int)screenPosition.x + "\t Y:" + (int)screenPosition.y;
+        return getCurrentHealth() + "\t Age:" + age + "\t X:" + position.x + "\t Y:" + position.y;
     }
 }

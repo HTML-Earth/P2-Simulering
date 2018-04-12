@@ -59,7 +59,10 @@ public class BobRoss {
         crossPointsY[11] = 0.0;
     }
 
-    public void drawPerson(Vector position, Person.health health, GraphicsContext gc) {
+    public void drawPerson(Person person, GraphicsContext gc) {
+        Person.health health = person.getCurrentHealth();
+        Vector position = person.getPosition();
+
         Color color = Color.BLACK;
         switch (health) {
             case Susceptible:
@@ -80,6 +83,13 @@ public class BobRoss {
         if (health != Person.health.Dead) {
             //Tegn cirkel
             gc.fillOval(position.x-8,position.y-8,16,16);
+
+            gc.setFill(Color.BLACK);
+            gc.fillText(person.getDebugText(), position.x - 8, position.y - 8);
+
+            if (person.hasDestination()) {
+                drawDestination(person.getPosition(), person.getDestination(), gc);
+            }
         }
         else {
             double[] xPoints = new double[12];

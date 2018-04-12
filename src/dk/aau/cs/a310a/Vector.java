@@ -32,7 +32,7 @@ public class Vector {
         return distance;
     }
 
-    public static Vector gridToScreen(Vector gridPosition) {
+    public static Vector gridToScreen(GridPosition gridPosition) {
         return new Vector(gridPosition.x * 20 + 10, gridPosition.y * 20 + 10);
     }
 }

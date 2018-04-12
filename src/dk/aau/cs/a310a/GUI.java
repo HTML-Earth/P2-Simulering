@@ -163,9 +163,6 @@ public class GUI extends Application {
         stayHomePercent.setMaxWidth(40);
 
 
-
-
-
         // Menu - labels til beskrivelse
         Label susceptibleLabel = new Label("Susceptible:");
         Label infectedLabel = new Label("Infected:");
@@ -244,6 +241,13 @@ public class GUI extends Application {
         Button runButton = new Button("Start");
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
+
+        //Tooltip for <1000 personer
+        Tooltip lessthan1000 = new Tooltip("Vælg antal mellem 1 - 999");
+        Tooltip.install(susceptibleAmount, lessthan1000);
+        Tooltip.install(infectedAmount, lessthan1000);
+        Tooltip.install(recoveredAmount, lessthan1000);
+
 
         // Event til starte simulering og fjerne menu og blur
         runButton.setOnMouseClicked(event -> {

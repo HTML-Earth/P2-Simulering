@@ -183,6 +183,8 @@ public class GUI extends Application {
         Label useSanitizersLabel = new Label(" - use handsanitizers?");
         Label coverMouthLabel = new Label(" - cover mouth when coughing?");
         Label stayAtHomeLabel = new Label(" - stays at home after symptoms?");
+        Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
+        Label population0Label = new Label("Error: Susceptibles and infected cam't be 0");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
@@ -197,6 +199,8 @@ public class GUI extends Application {
         useSanitizersLabel.setTextFill(Color.WHITE);
         coverMouthLabel.setTextFill(Color.WHITE);
         stayAtHomeLabel.setTextFill(Color.WHITE);
+        tooBigPopulationLabel.setTextFill(Color.RED);
+        population0Label.setTextFill(Color.RED);
 
         appliedLabel.setTranslateX(200);
         appliedLabel.setTranslateY(150);
@@ -217,6 +221,14 @@ public class GUI extends Application {
         spreadLabel.setTranslateX(-260 + 400);
         spreadLabel.setTranslateY(-180);
         spreadLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
+
+        tooBigPopulationLabel.setTranslateX(200);
+        tooBigPopulationLabel.setTranslateY(150);
+        tooBigPopulationLabel.setFont(Font.font(20));
+
+        population0Label.setTranslateX(200);
+        population0Label.setTranslateY(150);
+        population0Label.setFont(Font.font(20));
 
         DropShadow dropShadow = new DropShadow();
 
@@ -260,13 +272,18 @@ public class GUI extends Application {
                 sim.initialiseSimulation(susceptibles,infected,recovered);
                 runButton.setText("Start");
                 gc.drawImage(visualMap,0,0,800,600);
-            }
-            if (!applyLabelIsActive) {
+                menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
                 menu.getChildren().add(appliedLabel);
                 applyLabelIsActive = true;
             }
-
-
+            else if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles >= 1000 || infected >= 1000 || recovered >= 1000) {
+                menu.getChildren().remove(population0Label);
+                menu.getChildren().add(tooBigPopulationLabel);
+            }
+            else {
+                menu.getChildren().remove(tooBigPopulationLabel);
+                menu.getChildren().add(population0Label);
+            }
         });
 
         //Events til menuknap

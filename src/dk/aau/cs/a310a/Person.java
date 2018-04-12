@@ -208,7 +208,7 @@ public class Person {
             System.out.println("already have destination");
             return;
         }
-        if (this.destination.x == destination.x && this.destination.y == destination.y) {
+        if (position.x == destination.x && position.y == destination.y) {
             sameDest++;
             return;
         }

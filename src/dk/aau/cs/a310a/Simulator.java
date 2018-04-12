@@ -19,7 +19,7 @@ public class Simulator {
     private Influenza influenzaA;
 
     //Lister over personer
-    public List<Person> people;
+    public ArrayList<Person> people;
 
     //RNG
     public Random rand;
@@ -31,9 +31,9 @@ public class Simulator {
     private double tickTime = 0.2;
     private double lastTick = 0;
 
-    private List<GridPosition> houses;
-    private List<GridPosition> workplaces;
-    private List<GridPosition> hospitals;
+    private ArrayList<GridPosition> houses;
+    private ArrayList<GridPosition> workplaces;
+    private ArrayList<GridPosition> hospitals;
 
     public Simulator() throws IOException {
         //Gør denne simulator globalt tilgængelig
@@ -67,18 +67,18 @@ public class Simulator {
                 int g = (argb>>8)&0xFF;
                 int b = (argb>>0)&0xFF;
 
-                GridPosition housePos = new GridPosition(x,y);
+                GridPosition pos = new GridPosition(x,y);
 
                 if (r == 87 && g == 87 && b == 87) {
-                    houses.add(housePos);
+                    houses.add(pos);
                 }
 
                 if (r == 116 && g == 165 && b == 255) {
-                    workplaces.add(housePos);
+                    workplaces.add(pos);
                 }
 
                 if (r == 255 && g == 255 && b == 255) {
-                    hospitals.add(housePos);
+                    hospitals.add(pos);
                 }
             }
         }
@@ -162,15 +162,6 @@ public class Simulator {
         if (!simulationIsActive)
             return;
 
-        /*Inficer og opdater variabler til inficering af personer
-        //influenzaA.infectPerson(people, start, end);
-        if (i < people.size()) {
-            i++;
-            start++;
-            end *= influenzaA.getBaseSpread() + 1;
-        }
-        */
-
         if (currentTime > lastTick + tickTime) {
             //Opdater positionen og helbredet for personen
             for (Person p : people) {
@@ -182,6 +173,7 @@ public class Simulator {
         }
 
         for (Person p : people) {
+            //opdater skærmpositioner
             p.updateScreenPosition(currentTime - lastTick);
         }
     }

@@ -321,10 +321,10 @@ public class GUI extends Application {
         emptyCol.setMinWidth(250);
         menuLabels.add(emptyCol, 2, 1);
 
-        //Tilføj ? til flere rækker
+        //Tilføj % til flere rækker
         for(int i = 1; i < 5; i++) {
             Label percentLabel = new Label("%");
-            menuLabels.add(percentLabel, 4, i);
+            menuLabels.add(percentLabel, 5, i);
             percentLabel.setTextFill(Color.WHITE);
         }
 

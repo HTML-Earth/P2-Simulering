@@ -12,10 +12,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -297,29 +294,41 @@ public class GUI extends Application {
         });
 
         //Grids
+        //Grid til textfield variabler
         GridPane menuLabels = new GridPane();
-        menuLabels.add(susceptibleLabel, 0 , 0);
+        menuLabels.setTranslateX(260);
+        menuLabels.setTranslateY(240);
+        styler.StyleGrid(menuLabels);
+
+        menuLabels.add(susceptibleLabel, 0, 0);
         menuLabels.add(susceptibleAmount, 1, 0);
-        menuLabels.add(whatPerLabel,2,0);
+        menuLabels.add(whatPerLabel,3,0);
         menuLabels.add(infectedLabel, 0, 1);
         menuLabels.add(infectedAmount, 1, 1);
         menuLabels.add(recoveredLabel, 0,2);
         menuLabels.add(recoveredAmount, 1, 2);
-        menuLabels.add(isVaccinatedLabel, 2, 1);
-        menuLabels.add(useSanitizersLabel, 2, 2);
-        menuLabels.add(coverMouthLabel, 2, 3);
-        menuLabels.add(stayAtHomeLabel, 2, 4);
-        menuLabels.add(vaccinePercent, 3, 1);
-        menuLabels.add(sanitizerPercent, 3, 2);
-        menuLabels.add(coverMouthPercent, 3, 3);
-        menuLabels.add(stayHomePercent, 3, 4);
+        menuLabels.add(isVaccinatedLabel, 3, 1);
+        menuLabels.add(useSanitizersLabel, 3, 2);
+        menuLabels.add(coverMouthLabel, 3, 3);
+        menuLabels.add(stayAtHomeLabel, 3, 4);
+        menuLabels.add(vaccinePercent, 4, 1);
+        menuLabels.add(sanitizerPercent, 4, 2);
+        menuLabels.add(coverMouthPercent, 4, 3);
+        menuLabels.add(stayHomePercent, 4, 4);
+
+        //Tilføj tom plads i grid
+        Pane emptyCol = new Pane();
+        emptyCol.setMinWidth(250);
+        menuLabels.add(emptyCol, 2, 1);
+
+        //Tilføj ? til flere rækker
         for(int i = 1; i < 5; i++) {
             Label percentLabel = new Label("%");
             menuLabels.add(percentLabel, 4, i);
             percentLabel.setTextFill(Color.WHITE);
         }
-        menuLabels.setAlignment(Pos.CENTER);
 
+        //Apply og start knap
         GridPane menuButttonsBottomRight = new GridPane();
         menuButttonsBottomRight.add(applySettings, 0, 0);
         menuButttonsBottomRight.add(runButton, 1, 0);

@@ -1,0 +1,5 @@
+/* Gridstyle */
+.grid {
+    -fx-vgap: 10;
+    -fx-hgap: 5;
+}

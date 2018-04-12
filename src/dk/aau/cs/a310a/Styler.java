@@ -10,7 +10,7 @@ public class Styler {
     }
 
     public void StyleGrid(GridPane y) {
-        y.getStylesheets().add(getClass().getResource("LabelStyle.css").toExternalForm());
+        y.getStylesheets().add(getClass().getResource("GridStyle.css").toExternalForm());
         y.getStyleClass().add("grid");
     }
 }

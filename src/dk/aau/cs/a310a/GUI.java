@@ -11,6 +11,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -82,6 +83,7 @@ public class GUI extends Application {
 
         //styling af labels
         Styler styler = new Styler();
+
         styler.StyleLabel(stringSusceptible);
         styler.StyleLabel(stringRecovered);
         styler.StyleLabel(stringInfected);
@@ -243,10 +245,14 @@ public class GUI extends Application {
         runButton.setFont(Font.font(20));
 
         //Tooltip for <1000 personer
-        Tooltip lessthan1000 = new Tooltip("Vælg antal mellem 1 - 999");
+        Tooltip lessthan1000 = new Tooltip("A number between 1 - 999");
+        Tooltip tipInclude0 = new Tooltip("A number between 0 - 999");
+
+        lessthan1000.setStyle("-fx-background-color: purple");
+
         Tooltip.install(susceptibleAmount, lessthan1000);
         Tooltip.install(infectedAmount, lessthan1000);
-        Tooltip.install(recoveredAmount, lessthan1000);
+        Tooltip.install(recoveredAmount, tipInclude0);
 
 
         // Event til starte simulering og fjerne menu og blur

@@ -1,11 +1,27 @@
 package dk.aau.cs.a310a;
 
+import java.util.ArrayList;
+
 public class GridPosition {
     public int x, y;
 
     public GridPosition(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static ArrayList<GridPosition> getNeighbours (GridPosition pos) {
+        ArrayList<GridPosition> neighbours = new ArrayList<>();
+
+        for (int x = pos.x - 1; x <= pos.x + 1; x++) {
+            for (int y = pos.y - 1; y <= pos.y + 1; y++) {
+                if (x >= 0 && x <= 40 && y >= 0 && y <= 30 && x != pos.x && y != pos.y) {
+                    neighbours.add(new GridPosition(x,y));
+                }
+            }
+        }
+
+        return neighbours;
     }
 
     public static GridPosition add(GridPosition a, GridPosition b) {

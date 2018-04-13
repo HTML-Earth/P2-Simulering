@@ -1,7 +1,7 @@
 package dk.aau.cs.a310a;
 
-import java.util.List;
-import java.util.Random;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Person {
     public enum health {Susceptible, Infected, Recovered, Dead};
@@ -23,6 +23,8 @@ public class Person {
     //midlertidige positioner
     private GridPosition position;
     private GridPosition destination;
+
+    private ArrayDeque<GridPosition> currentPath;
 
     //permanente positioner
     private GridPosition home;
@@ -136,7 +138,6 @@ public class Person {
         if (!hasDestination)
             return;
 
-        debugText = "";
 
         if (position.x < destination.x)
             position.x++;
@@ -148,6 +149,18 @@ public class Person {
             position.y--;
         else
             debugText = "!!!";
+
+        /*
+        if (currentPath == null || currentPath.size() < 1)
+            return;
+
+        debugText = currentPath.size() + "";
+
+        position.x = currentPath.getFirst().x;
+        position.y = currentPath.getFirst().y;
+
+        currentPath.remove(currentPath.getFirst());
+        */
 
         nextScreenPosition = Vector.gridToScreen(position);
 
@@ -212,7 +225,42 @@ public class Person {
             sameDest++;
             return;
         }
+        /*
 
+        //BREADTH FIRST SEARCH
+        ArrayDeque<GridPosition> frontier = new ArrayDeque<GridPosition>();
+        frontier.add(position);
+
+        HashMap<GridPosition, GridPosition> cameFrom = new HashMap<>();
+        cameFrom.put(position, null);
+
+        while(!frontier.isEmpty()) {
+            GridPosition current = frontier.getFirst();
+
+            if (current == destination)
+                break;
+
+            for (GridPosition next : GridPosition.getNeighbours(current)) {
+                if (!cameFrom.containsKey(next)) {
+                    frontier.add(next);
+                    cameFrom.put(next, current);
+                }
+            }
+        }
+
+        //FOLLOW PATH
+
+        GridPosition current = destination;
+        ArrayDeque<GridPosition> path = new ArrayDeque<>();
+
+        while (current.x != position.x && current.y != position.y) {
+            path.add(current);
+            current = cameFrom.get(current);
+        }
+        path.add(position);
+
+        currentPath = path;
+        */
         sameDest = 0;
         this.destination = destination;
         hasDestination = true;

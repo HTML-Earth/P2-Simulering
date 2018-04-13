@@ -3,16 +3,17 @@ package dk.aau.cs.a310a;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Simulator {
     public static Simulator theSimulator;
 
-    public enum placeType {House, Work, Hospital};
+    public enum placeType {House, Work, Hospital, Road, Grass};
 
     //Området der simuleres på
+    private HashMap<GridPosition, placeType> grid;
+
+    //Billede der definerer området
     private BufferedImage pixelMap;
 
     //Sygdom
@@ -42,6 +43,9 @@ public class Simulator {
         //Random number generator
         rand = new Random();
 
+        //Lav simuleringsområdet
+        grid = new HashMap<GridPosition, placeType>();
+
         //Load billede der bruges til simulering
         pixelMap = ImageIO.read(getClass().getResource("/city.png"));
 
@@ -49,39 +53,59 @@ public class Simulator {
         people = new ArrayList<>();
 
         //Find alle huse på kortet
-        findBuildings();
+        scanMap();
 
         simulationHasBeenInitialised = false;
         simulationIsActive = false;
     }
 
-    void findBuildings() {
+    void scanMap() {
         houses = new ArrayList<>();
         workplaces = new ArrayList<>();
         hospitals = new ArrayList<>();
 
         for (int x = 0; x < pixelMap.getWidth(); x++) {
             for (int y = 0; y < pixelMap.getHeight(); y++) {
-                int argb = pixelMap.getRGB(x,y);
-                int r = (argb>>16)&0xFF;
-                int g = (argb>>8)&0xFF;
-                int b = (argb>>0)&0xFF;
+                int argb = pixelMap.getRGB(x, y);
+                int r = (argb >> 16) & 0xFF;
+                int g = (argb >> 8) & 0xFF;
+                int b = (argb >> 0) & 0xFF;
 
-                GridPosition pos = new GridPosition(x,y);
+                GridPosition pos = new GridPosition(x, y);
 
+                //Grass
+                if (r == 192 && g == 224 && b == 150) {
+                    grid.put(pos, placeType.Grass);
+                }
+
+                //Road
+                if (r == 162 && g == 160 && b == 160) {
+                    grid.put(pos, placeType.Road);
+                }
+
+                //House
                 if (r == 87 && g == 87 && b == 87) {
+                    grid.put(pos, placeType.House);
                     houses.add(pos);
                 }
 
+                //Work
                 if (r == 116 && g == 165 && b == 255) {
+                    grid.put(pos, placeType.Work);
                     workplaces.add(pos);
                 }
 
+                //Hospital
                 if (r == 255 && g == 255 && b == 255) {
+                    grid.put(pos, placeType.Hospital);
                     hospitals.add(pos);
                 }
             }
         }
+    }
+
+    public placeType getPlaceType(GridPosition pos) {
+        return grid.get(pos);
     }
 
     public void addPeople(int amount, Person.health health) {
@@ -99,8 +123,8 @@ public class Simulator {
 
     public String healthCount(Person.health health) {
         int count = 0;
-        for(Person p : people) {
-            if(p.getCurrentHealth() == health) {
+        for (Person p : people) {
+            if (p.getCurrentHealth() == health) {
                 count += 1;
             }
         }
@@ -130,8 +154,8 @@ public class Simulator {
         simulationHasBeenInitialised = true;
     }
 
-    public void startSimulation(){
-        if (!simulationHasBeenInitialised){
+    public void startSimulation() {
+        if (!simulationHasBeenInitialised) {
             System.out.println("Please initialise first");
         }
         simulationIsActive = true;
@@ -144,17 +168,17 @@ public class Simulator {
     public void stopSimulation() {
         simulationIsActive = false;
         simulationHasBeenInitialised = false;
-        for (Person p : people){
+        for (Person p : people) {
             p = null;
         }
         people.clear();
     }
 
-    public boolean isSimulationActive () {
+    public boolean isSimulationActive() {
         return simulationIsActive;
     }
 
-    public double getTickTime () {
+    public double getTickTime() {
         return tickTime;
     }
 
@@ -178,18 +202,15 @@ public class Simulator {
         }
     }
 
-    public List<GridPosition> getHouses()
-    {
+    public List<GridPosition> getHouses() {
         return houses;
     }
 
-    public List<GridPosition> getHospitals()
-    {
+    public List<GridPosition> getHospitals() {
         return hospitals;
     }
 
-    public List<GridPosition> getWorkplaces()
-    {
+    public List<GridPosition> getWorkplaces() {
         return workplaces;
     }
 

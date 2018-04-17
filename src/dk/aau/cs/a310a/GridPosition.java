@@ -15,7 +15,7 @@ public class GridPosition {
 
         for (int x = pos.x - 1; x <= pos.x + 1; x++) {
             for (int y = pos.y - 1; y <= pos.y + 1; y++) {
-                if (x >= 0 && x <= 40 && y >= 0 && y <= 30 && x != pos.x && y != pos.y) {
+                if (x >= 0 && x <= 40 && y >= 0 && y <= 30 && (x == pos.x || y == pos.y)) {
                     neighbours.add(new GridPosition(x,y));
                 }
             }
@@ -42,5 +42,25 @@ public class GridPosition {
     public static int distance(GridPosition a, GridPosition b) {
         double distance = Math.sqrt(Math.pow(b.x - a.x, 2)+Math.pow(b.y-a.y,2));
         return (int)distance;
+    }
+
+    @Override
+    public String toString() {
+        return x + "," + y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof GridPosition))
+            return false;
+        if (obj == this)
+            return true;
+        return this.x == ((GridPosition)obj).x && this.y == ((GridPosition)obj).y;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.x * 1000 + this.y;
     }
 }

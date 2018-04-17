@@ -16,9 +16,8 @@ public class Person {
     private boolean hasDestination;
 
     private int placeTimeLeft = 0;
-    private int sameDest = 0;
 
-    private String debugText;
+    private String debugText = "";
 
     //midlertidige positioner
     private GridPosition position;
@@ -138,7 +137,7 @@ public class Person {
         if (!hasDestination)
             return;
 
-
+        /*
         if (position.x < destination.x)
             position.x++;
         else if (position.x > destination.x)
@@ -149,20 +148,20 @@ public class Person {
             position.y--;
         else
             debugText = "!!!";
-
-        /*
-        if (currentPath == null || currentPath.size() < 1)
+*/
+        if (currentPath == null || currentPath.size() < 1) {
+            System.out.println("NO PATH");
             return;
+        }
 
-        debugText = currentPath.size() + "";
+        position.x = currentPath.getLast().x;
+        position.y = currentPath.getLast().y;
 
-        position.x = currentPath.getFirst().x;
-        position.y = currentPath.getFirst().y;
+        currentPath.remove(currentPath.getLast());
 
-        currentPath.remove(currentPath.getFirst());
-        */
 
         nextScreenPosition = Vector.gridToScreen(position);
+
 
         if (position.x == destination.x && position.y == destination.y) {
             hasDestination = false;
@@ -221,11 +220,9 @@ public class Person {
             System.out.println("already have destination");
             return;
         }
-        if (position.x == destination.x && position.y == destination.y) {
-            sameDest++;
+        if (position == destination) {
             return;
         }
-        /*
 
         //BREADTH FIRST SEARCH
         ArrayDeque<GridPosition> frontier = new ArrayDeque<GridPosition>();
@@ -234,36 +231,44 @@ public class Person {
         HashMap<GridPosition, GridPosition> cameFrom = new HashMap<>();
         cameFrom.put(position, null);
 
-        while(!frontier.isEmpty()) {
-            GridPosition current = frontier.getFirst();
+        System.out.println("Starting from " + position);
 
-            if (current == destination)
+        while(!frontier.isEmpty()) {
+            GridPosition current = frontier.removeFirst();
+            if (current == destination) {
+                System.out.println("same");
                 break;
+            }
 
             for (GridPosition next : GridPosition.getNeighbours(current)) {
-                if (!cameFrom.containsKey(next)) {
+                if (!cameFrom.containsKey(next) && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
                     frontier.add(next);
                     cameFrom.put(next, current);
                 }
             }
         }
+        System.out.println("sout");
 
         //FOLLOW PATH
 
         GridPosition current = destination;
         ArrayDeque<GridPosition> path = new ArrayDeque<>();
 
-        while (current.x != position.x && current.y != position.y) {
-            path.add(current);
-            current = cameFrom.get(current);
+        int i = 0;
+        while (current != position && i < 200) {
+            i++;
+            if (current != null) {
+                path.add(current);
+                current = cameFrom.get(current);
+            }
         }
         path.add(position);
 
         currentPath = path;
-        */
-        sameDest = 0;
+
         this.destination = destination;
         hasDestination = true;
+
     }
 
     public boolean hasDestination() {
@@ -302,9 +307,13 @@ public class Person {
 
     public String getDebugText() {
         if (hasDestination)
-            return "" + GridPosition.distance(position,destination) + debugText;
+            return "" + currentPath.size() + " " + debugText;
         else
-            return "[" + placeTimeLeft + debugText + "]";
+            return "[" + placeTimeLeft + "] " + debugText;
+    }
+
+    public ArrayDeque<GridPosition> getCurrentPath() {
+        return currentPath;
     }
 
     //Metoden som kaldes når man printer objektet

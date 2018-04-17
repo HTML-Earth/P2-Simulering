@@ -25,10 +25,6 @@ import java.util.Random;
 
 public class GUI extends Application {
 
-
-    //booleans
-    boolean applyLabelIsActive = false;
-
     //Simulator objekt
     Simulator sim;
 
@@ -243,8 +239,8 @@ public class GUI extends Application {
 
         // Event til starte simulering og fjerne menu og blur
 
-        ButtonCalls lol = new ButtonCalls();
-        lol.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, applyLabelIsActive, appliedLabel);
+        ButtonCalls buttonMethod = new ButtonCalls();
+        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);
 
         // Event til at anvende og checke indtastede værdier
         applySettings.setOnMouseClicked(event -> {
@@ -262,7 +258,6 @@ public class GUI extends Application {
                     menu.getChildren().remove(appliedLabel);
                 }
                 menu.getChildren().add(appliedLabel);
-                applyLabelIsActive = true;
 
             }
             else if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles >= 1000 || infected >= 1000 || recovered >= 1000) {

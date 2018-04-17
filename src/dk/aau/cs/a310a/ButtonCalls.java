@@ -8,7 +8,7 @@ import javafx.scene.layout.StackPane;
 
 public class ButtonCalls {
 
-    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, GridPane info, Simulator sim, boolean applyLabelIsActive, Label appliedLabel) {
+    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, GridPane info, Simulator sim, Label appliedLabel) {
         run.setOnMouseClicked(event -> {
             root.getChildren().remove(menu);
             menu.getChildren().remove(appliedLabel);

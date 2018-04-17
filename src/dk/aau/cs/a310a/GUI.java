@@ -130,20 +130,6 @@ public class GUI extends Application {
         Rectangle menuBackground = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
         //Menu - Tilføj knapper
-        //Combobox af typen ComboboxItem, objekter af ComboboxItem tilføjes til menuen
-        final ComboBox<ComboItem> comboBox = new ComboBox<>();
-
-        comboBox.getItems().addAll(
-                new ComboItem("Alle hoster i ærmet", 0.0),
-                new ComboItem("Ingen hoster i ærmet", 1.0),
-                new ComboItem("Folk bliver oftere hjemme", 2.0),
-                new ComboItem("Vacciner", 3.0)
-        );
-        //Standard value til combobox
-        comboBox.setValue(new ComboItem("Alle hoster i ærmet", 0.0));
-        comboBox.setTranslateX(-300);
-        comboBox.setTranslateY(200);
-
         // Textfield til at skrive befolkning
 
         NumberTextField susceptibleAmount = new NumberTextField("100");
@@ -248,7 +234,7 @@ public class GUI extends Application {
         Tooltip lessthan1000 = new Tooltip("A number between 1 - 999");
         Tooltip tipInclude0 = new Tooltip("A number between 0 - 999");
 
-        lessthan1000.setStyle("-fx-background-color: purple");
+        lessthan1000.setStyle("-fx-background-color: Grey");
 
         Tooltip.install(susceptibleAmount, lessthan1000);
         Tooltip.install(infectedAmount, lessthan1000);
@@ -256,17 +242,9 @@ public class GUI extends Application {
 
 
         // Event til starte simulering og fjerne menu og blur
-        runButton.setOnMouseClicked(event -> {
-            root.getChildren().remove(menu);
-            root.getChildren().add(showMenu);
-            simWindow.setEffect(null);
-            info.setEffect(null);
-            sim.startSimulation();
-            if (applyLabelIsActive) {
-                menu.getChildren().remove(appliedLabel);
-                applyLabelIsActive = false;
-            }
-        });
+
+        ButtonCalls lol = new ButtonCalls();
+        lol.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, applyLabelIsActive, appliedLabel);
 
         // Event til at anvende og checke indtastede værdier
         applySettings.setOnMouseClicked(event -> {
@@ -280,8 +258,12 @@ public class GUI extends Application {
                 runButton.setText("Start");
                 gc.drawImage(visualMap,0,0,800,600);
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
+                if (menu.getChildren().contains(appliedLabel)) {
+                    menu.getChildren().remove(appliedLabel);
+                }
                 menu.getChildren().add(appliedLabel);
                 applyLabelIsActive = true;
+
             }
             else if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles >= 1000 || infected >= 1000 || recovered >= 1000) {
                 menu.getChildren().remove(population0Label);
@@ -345,7 +327,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(800);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, menuLabels, comboBox, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

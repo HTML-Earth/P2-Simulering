@@ -231,12 +231,9 @@ public class Person {
         HashMap<GridPosition, GridPosition> cameFrom = new HashMap<>();
         cameFrom.put(position, null);
 
-        System.out.println("Starting from " + position);
-
         while(!frontier.isEmpty()) {
             GridPosition current = frontier.removeFirst();
             if (current == destination) {
-                System.out.println("same");
                 break;
             }
 
@@ -247,7 +244,6 @@ public class Person {
                 }
             }
         }
-        System.out.println("sout");
 
         //FOLLOW PATH
 

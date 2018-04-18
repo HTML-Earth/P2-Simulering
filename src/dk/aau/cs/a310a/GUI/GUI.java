@@ -125,18 +125,19 @@ public class GUI extends Application {
         //Sort baggrund til menu
         Rectangle menuBackground = new Rectangle(900, 600, Color.rgb(50, 50, 50, 0.95));
 
-        //Menu - Tilføj knapper
-        // Textfield til at skrive befolkning
+        //Metoder til knapper og GUI
+        ButtonCalls buttonMethod = new ButtonCalls();
 
+        //Effct til labels
+        DropShadow dropShadow = new DropShadow();
+
+        // Textfield til at skrive befolkning
         NumberTextField susceptibleAmount = new NumberTextField("100");
         susceptibleAmount.setMaxWidth(80);
-
         NumberTextField infectedAmount = new NumberTextField("1");
         infectedAmount.setMaxWidth(80);
-
         NumberTextField recoveredAmount = new NumberTextField("0");
         recoveredAmount.setMaxWidth(80);
-
         NumberTextField vaccinePercent = new NumberTextField("0");
         vaccinePercent.setMaxWidth(40);
         NumberTextField sanitizerPercent = new NumberTextField("0");
@@ -152,7 +153,6 @@ public class GUI extends Application {
         Label infectedLabel = new Label("Infected:");
         Label recoveredLabel = new Label("Recovered:");
         Label appliedLabel = new Label("Population applied!");
-        Label resetLabel = new Label("Simulation reset!");
         Label titleLabel = new Label("Zombe");
         Label sirLabel = new Label("SIR-Options:");
         Label spreadLabel = new Label("Spread-modifiers:");
@@ -168,7 +168,6 @@ public class GUI extends Application {
         infectedLabel.setTextFill(Color.WHITE);
         recoveredLabel.setTextFill(Color.WHITE);
         appliedLabel.setTextFill(Color.LIGHTGREEN);
-        resetLabel.setTextFill(Color.ORANGE);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
         spreadLabel.setTextFill(Color.WHITE);
@@ -180,39 +179,15 @@ public class GUI extends Application {
         tooBigPopulationLabel.setTextFill(Color.RED);
         population0Label.setTextFill(Color.RED);
 
-        appliedLabel.setTranslateX(200);
-        appliedLabel.setTranslateY(150);
-        appliedLabel.setFont(Font.font(20));
 
-        resetLabel.setTranslateX(200);
-        resetLabel.setTranslateY(150);
-        resetLabel.setFont(Font.font(20));
+        buttonMethod.cuztomizeLabel(appliedLabel, 200, 150, 20);
+        buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 200, 150, 20);
+        buttonMethod.cuztomizeLabel(population0Label, 200, 150, 20);
 
-        titleLabel.setAlignment(Pos.CENTER);
-        titleLabel.setTranslateY(-240);
-        titleLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 70));
+        buttonMethod.cuztomizeLabel(sirLabel, -260, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
+        buttonMethod.cuztomizeLabel(spreadLabel, -260 + 400, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
+        buttonMethod.cuztomizeLabel(titleLabel, 0, -240, "Georgia", 70, dropShadow, FontWeight.BOLD);
 
-        sirLabel.setTranslateX(-260);
-        sirLabel.setTranslateY(-180);
-        sirLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
-
-        spreadLabel.setTranslateX(-260 + 400);
-        spreadLabel.setTranslateY(-180);
-        spreadLabel.setFont(Font.font("Georgia", FontWeight.BOLD, 20));
-
-        tooBigPopulationLabel.setTranslateX(200);
-        tooBigPopulationLabel.setTranslateY(150);
-        tooBigPopulationLabel.setFont(Font.font(20));
-
-        population0Label.setTranslateX(200);
-        population0Label.setTranslateY(150);
-        population0Label.setFont(Font.font(20));
-
-        DropShadow dropShadow = new DropShadow();
-
-        titleLabel.setEffect(dropShadow);
-        sirLabel.setEffect(dropShadow);
-        spreadLabel.setEffect(dropShadow);
 
         //Button factory
         Button showMenu = new Button("Menu");
@@ -238,8 +213,6 @@ public class GUI extends Application {
 
 
         // Event til starte simulering og fjerne menu og blur
-
-        ButtonCalls buttonMethod = new ButtonCalls();
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);
 
         // Event til at anvende og checke indtastede værdier

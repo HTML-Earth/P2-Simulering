@@ -4,12 +4,28 @@ import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class ButtonCalls {
+
+    void cuztomizeLabel(Label label, double x, double y, double size) {
+        label.setTranslateX(x);
+        label.setTranslateY(y);
+        label.setFont(Font.font(size));
+    }
+
+    void cuztomizeLabel(Label label, double x, double y, String fontname, double size, Effect effect, FontWeight fontweight) {
+        label.setTranslateX(x);
+        label.setTranslateY(y);
+        label.setFont(Font.font(fontname, fontweight, size));
+        label.setEffect(effect);
+    }
 
     void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, GridPane info, Simulator sim, Label appliedLabel) {
         run.setOnMouseClicked(event -> {

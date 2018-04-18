@@ -1,4 +1,6 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.Simulation;
+
+import dk.aau.cs.a310a.Simulation.Person;
 
 import java.util.List;
 

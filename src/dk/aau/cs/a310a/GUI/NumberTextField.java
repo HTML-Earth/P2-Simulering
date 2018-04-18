@@ -1,4 +1,4 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.GUI;
 
 import javafx.scene.control.TextField;
 

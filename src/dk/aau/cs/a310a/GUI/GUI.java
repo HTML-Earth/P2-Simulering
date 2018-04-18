@@ -1,5 +1,8 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.GUI;
 
+import dk.aau.cs.a310a.Simulation.Influenza;
+import dk.aau.cs.a310a.Simulation.Person;
+import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -9,9 +12,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -21,7 +22,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class GUI extends Application {
 

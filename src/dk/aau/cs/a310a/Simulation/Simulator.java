@@ -1,4 +1,6 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.Simulation;
+
+import dk.aau.cs.a310a.Grid.GridPosition;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -132,7 +134,7 @@ public class Simulator {
         return value;
     }
 
-    void initialiseSimulation(int susceptibleAmount, int infectedAmount, int recoveredAmount) {
+    public void initialiseSimulation(int susceptibleAmount, int infectedAmount, int recoveredAmount) {
         //lav personer
         addPeople(susceptibleAmount + infectedAmount + recoveredAmount, Person.health.Susceptible);
 

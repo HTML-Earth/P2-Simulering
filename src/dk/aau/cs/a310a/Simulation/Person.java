@@ -1,6 +1,8 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.Simulation;
 
-import java.lang.reflect.Array;
+import dk.aau.cs.a310a.Grid.GridPosition;
+import dk.aau.cs.a310a.Grid.Vector;
+
 import java.util.*;
 
 public class Person {

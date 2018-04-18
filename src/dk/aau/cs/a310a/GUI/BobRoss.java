@@ -1,10 +1,10 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.GUI;
 
+import dk.aau.cs.a310a.Grid.GridPosition;
+import dk.aau.cs.a310a.Grid.Vector;
+import dk.aau.cs.a310a.Simulation.Person;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
-
-import java.awt.image.BufferedImage;
 
 public class BobRoss {
     double[] crossPointsX;

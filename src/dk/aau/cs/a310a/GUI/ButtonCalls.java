@@ -1,5 +1,6 @@
-package dk.aau.cs.a310a;
+package dk.aau.cs.a310a.GUI;
 
+import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;

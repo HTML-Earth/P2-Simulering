@@ -304,11 +304,12 @@ public class GUI extends Application {
                     for (Person p : sim.getPeople()) {
                         bob.drawPerson(p,gc);
                         personData.setText(personData.getText() + "\n " + p);
-                        stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
-                        stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
-                        stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
-                        stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                     }
+
+                    stringSusceptible.setText("Susceptibles: " + sim.healthCount(Person.health.Susceptible));
+                    stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
+                    stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
+                    stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                 }
 
                 previousTime = currentTime;

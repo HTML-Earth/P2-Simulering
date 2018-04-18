@@ -243,32 +243,8 @@ public class GUI extends Application {
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);
 
         // Event til at anvende og checke indtastede værdier
-        applySettings.setOnMouseClicked(event -> {
-            int susceptibles = Integer.parseInt(susceptibleAmount.getText());
-            int infected = Integer.parseInt(infectedAmount.getText());
-            int recovered = Integer.parseInt(recoveredAmount.getText());
-            if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles < 1000 && infected < 1000 && recovered < 1000) {
-                runButton.setDisable(false);
-                sim.stopSimulation();
-                sim.initialiseSimulation(susceptibles,infected,recovered);
-                runButton.setText("Start");
-                gc.drawImage(visualMap,0,0,800,600);
-                menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
-                if (menu.getChildren().contains(appliedLabel)) {
-                    menu.getChildren().remove(appliedLabel);
-                }
-                menu.getChildren().add(appliedLabel);
-
-            }
-            else if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles >= 1000 || infected >= 1000 || recovered >= 1000) {
-                menu.getChildren().remove(population0Label);
-                menu.getChildren().add(tooBigPopulationLabel);
-            }
-            else {
-                menu.getChildren().remove(tooBigPopulationLabel);
-                menu.getChildren().add(population0Label);
-            }
-        });
+        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, recoveredAmount, sim, menu,
+                tooBigPopulationLabel, population0Label, appliedLabel, gc, visualMap);
 
         //Events til menuknap
         showMenu.setOnMouseClicked(event -> {

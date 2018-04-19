@@ -85,7 +85,7 @@ public class BobRoss {
             gc.fillOval(position.x-8,position.y-8,16,16);
 
             gc.setFill(Color.BLACK);
-            gc.fillText(person.getDebugText(), position.x - 8, position.y - 8);
+            //gc.fillText(person.getDebugText(), position.x - 8, position.y - 8);
 
             if (person.hasDestination()) {
                 for (GridPosition gp: person.getCurrentPath()) {

@@ -170,8 +170,8 @@ public class GUI extends Application {
         useSanitizersLabel.setTextFill(Color.WHITE);
         coverMouthLabel.setTextFill(Color.WHITE);
         stayAtHomeLabel.setTextFill(Color.WHITE);
-        tooBigPopulationLabel.setTextFill(Color.RED);
-        population0Label.setTextFill(Color.RED);
+        tooBigPopulationLabel.setTextFill(new Color(1,0.3,0.3,1));
+        population0Label.setTextFill(new Color(1,0.3,0.3,1));
 
 
         buttonMethod.cuztomizeLabel(appliedLabel, 200, 150, 20);

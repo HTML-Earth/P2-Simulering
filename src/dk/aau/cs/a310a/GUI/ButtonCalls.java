@@ -17,6 +17,14 @@ import java.util.Stack;
 
 public class ButtonCalls {
 
+    void removeLabels (Button runButton, StackPane menu, Label appliedLabel) {
+        runButton.setDisable(true);
+
+        if (menu.getChildren().contains(appliedLabel)) {
+            menu.getChildren().remove(appliedLabel);
+        }
+    }
+
     void cuztomizeLabel(Label label, double x, double y, double size) {
         label.setTranslateX(x);
         label.setTranslateY(y);
@@ -63,24 +71,20 @@ public class ButtonCalls {
                 if (menu.getChildren().contains(tooBigPopulationLabel)) {
                     menu.getChildren().remove(tooBigPopulationLabel);
                 }
-                if (menu.getChildren().contains(appliedLabel)) {
-                    menu.getChildren().remove(appliedLabel);
-                }
                 menu.getChildren().remove(population0Label);
                 menu.getChildren().add(tooBigPopulationLabel);
+
+                removeLabels(runButton, menu, appliedLabel);
 
                 runButton.setDisable(true);
             } else {
                 if (menu.getChildren().contains(population0Label)) {
                     menu.getChildren().remove(population0Label);
                 }
-                if (menu.getChildren().contains(appliedLabel)) {
-                    menu.getChildren().remove(appliedLabel);
-                }
                 menu.getChildren().remove(tooBigPopulationLabel);
                 menu.getChildren().add(population0Label);
 
-                runButton.setDisable(true);
+                removeLabels(runButton, menu, appliedLabel);
             }
         });
 

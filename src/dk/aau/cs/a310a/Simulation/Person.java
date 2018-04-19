@@ -45,6 +45,16 @@ public class Person {
         this.age = rand.nextInt(80) + 20;
     }
 
+    void initPosition(GridPosition homePosition) {
+        this.position = homePosition;
+        this.destination = homePosition;
+
+        this.home = homePosition;
+
+        this.screenPosition = Vector.gridToScreen(homePosition);
+        this.nextScreenPosition = this.screenPosition;
+    }
+
     public void updateDisease(double currentTime) {
         switch (currentHealth) {
             case Susceptible:
@@ -153,26 +163,8 @@ public class Person {
         screenPosition = Vector.lerp(screenPosition, nextScreenPosition, t);
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    void initPosition(GridPosition homePosition) {
-        this.position = homePosition;
-        this.destination = homePosition;
-
-        this.home = homePosition;
-
-        this.screenPosition = Vector.gridToScreen(homePosition);
-        this.nextScreenPosition = this.screenPosition;
-    }
-
     public Vector getPosition() {
         return screenPosition;
-    }
-
-    public Vector getDestination() {
-        return Vector.gridToScreen(destination);
     }
 
     public GridPosition getGridPosition() {

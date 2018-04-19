@@ -1,6 +1,5 @@
 package dk.aau.cs.a310a.GUI;
 
-import dk.aau.cs.a310a.Simulation.Influenza;
 import dk.aau.cs.a310a.Simulation.Person;
 import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.animation.AnimationTimer;
@@ -28,9 +27,6 @@ public class GUI extends Application {
     //Simulator objekt
     Simulator sim;
 
-    //Influenza objekt
-    Influenza influenzaA;
-
     //Billedet i canvas
     Image visualMap;
 
@@ -40,7 +36,6 @@ public class GUI extends Application {
 
     public void init() throws IOException {
         sim = new Simulator();
-        influenzaA = new Influenza(Influenza.influenzaType.A);
     }
 
     public void start(Stage stage) {
@@ -75,7 +70,7 @@ public class GUI extends Application {
         Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
         Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
         Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
-        Label stringEpidemic = new Label("Chance of epidemic" + "\n" + influenzaA.calculateR0(1,1.0));
+        Label stringEpidemic = new Label("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
 
         //styling af labels
         Styler styler = new Styler();

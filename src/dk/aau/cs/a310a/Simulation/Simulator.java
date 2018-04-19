@@ -45,13 +45,13 @@ public class Simulator {
         //Random number generator
         rand = new Random();
 
-        //Lav simuleringsområdet
+        //Opret simuleringsområdet
         grid = new HashMap<GridPosition, placeType>();
 
         //Load billede der bruges til simulering
         pixelMap = ImageIO.read(getClass().getResource("/city.png"));
 
-        //Lav tomme lister af 'Person'
+        //Opret tomme lister af 'Person'
         people = new ArrayList<>();
 
         //Find alle huse på kortet
@@ -106,8 +106,14 @@ public class Simulator {
         }
     }
 
-    public placeType getPlaceType(GridPosition pos) {
-        return grid.get(pos);
+    public void initialiseSimulation(int susceptibleAmount, int infectedAmount) {
+        //ny influenza
+        influenzaA = new Influenza(Influenza.influenzaType.A);
+
+        //opret personer
+        addPeople(susceptibleAmount, infectedAmount);
+
+        simulationHasBeenInitialised = true;
     }
 
     public void addPeople(int susceptibles, int infecteds) {
@@ -122,27 +128,6 @@ public class Simulator {
             //Tilføj person til liste
             people.add(person);
         }
-    }
-
-    public String healthCount(Person.health health) {
-        int count = 0;
-        for (Person p : people) {
-            if (p.getCurrentHealth() == health) {
-                count += 1;
-            }
-        }
-        String value = String.valueOf(count);
-        return value;
-    }
-
-    public void initialiseSimulation(int susceptibleAmount, int infectedAmount) {
-        //ny influenza
-        influenzaA = new Influenza(Influenza.influenzaType.A);
-
-        //opret personer
-        addPeople(susceptibleAmount, infectedAmount);
-
-        simulationHasBeenInitialised = true;
     }
 
     public void startSimulation() {
@@ -165,14 +150,6 @@ public class Simulator {
         people.clear();
     }
 
-    public boolean isSimulationActive() {
-        return simulationIsActive;
-    }
-
-    public double getTickTime() {
-        return tickTime;
-    }
-
     public void simulate(double currentTime, double deltaTime) {
         if (!simulationIsActive)
             return;
@@ -193,6 +170,42 @@ public class Simulator {
         }
     }
 
+    public boolean isSimulationActive() {
+        return simulationIsActive;
+    }
+
+    public double getTickTime() {
+        return tickTime;
+    }
+
+    public String getR0(double beta, double gamma) {
+        if (influenzaA != null)
+            return influenzaA.calculateR0(beta, gamma);
+        else
+            return "";
+    }
+
+    public List<Person> getPeople() {
+        return people;
+    }
+
+    //Antal personer i helbredsgruppen
+    public String healthCount(Person.health health) {
+        int count = 0;
+        for (Person p : people) {
+            if (p.getCurrentHealth() == health) {
+                count += 1;
+            }
+        }
+        String value = String.valueOf(count);
+        return value;
+    }
+
+    //Er det græs, hus, arbejde eller hospital
+    public placeType getPlaceType(GridPosition pos) {
+        return grid.get(pos);
+    }
+
     public List<GridPosition> getHouses() {
         return houses;
     }
@@ -203,9 +216,5 @@ public class Simulator {
 
     public List<GridPosition> getWorkplaces() {
         return workplaces;
-    }
-
-    public List<Person> getPeople() {
-        return people;
     }
 }

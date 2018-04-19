@@ -4,6 +4,7 @@ import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.util.Stack;
 
 public class ButtonCalls {
 
@@ -68,6 +71,17 @@ public class ButtonCalls {
             }
         });
 
+    }
+
+    void pauseSimMenu(Button showMenu, Button runButton, StackPane root, StackPane menu, HBox simWindow, GridPane info, Simulator sim, BoxBlur boxblur) {
+        showMenu.setOnMouseClicked(event -> {
+            root.getChildren().add(menu);
+            root.getChildren().remove(showMenu);
+            simWindow.setEffect(boxblur);
+            info.setEffect(boxblur);
+            sim.pauseSimulation();
+            runButton.setText("Continue");
+        });
     }
 
 }

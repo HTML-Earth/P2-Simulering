@@ -220,14 +220,7 @@ public class GUI extends Application {
                 tooBigPopulationLabel, population0Label, appliedLabel, gc, visualMap);
 
         //Events til menuknap
-        showMenu.setOnMouseClicked(event -> {
-            root.getChildren().add(menu);
-            root.getChildren().remove(showMenu);
-            simWindow.setEffect(boxblur);
-            info.setEffect(boxblur);
-            sim.pauseSimulation();
-            runButton.setText("Continue");
-        });
+        buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);
 
         //Grids
         //Grid til textfield variabler

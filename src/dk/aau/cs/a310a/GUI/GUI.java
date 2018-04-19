@@ -197,7 +197,6 @@ public class GUI extends Application {
 
         //Tooltip for <1000 personer
         Tooltip lessthan1000 = new Tooltip("A number between 1 - 999");
-        Tooltip tipInclude0 = new Tooltip("A number between 0 - 999");
 
         lessthan1000.setStyle("-fx-background-color: Grey");
 

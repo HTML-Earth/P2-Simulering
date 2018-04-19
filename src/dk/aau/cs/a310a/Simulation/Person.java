@@ -69,11 +69,8 @@ public class Person {
                     if (p.getCurrentHealth() == health.Susceptible){
                         //Tjek om personerne er tæt på hinanden
                         if (GridPosition.distance(this.position,p.getGridPosition()) < disease.getInfectionRange()){
-                            //Risiko for infektion
-                            if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime()){
-                                //Inficer den anden person
-                                p.infect(disease);
-                            }
+                            //Prøv at inficere personen
+                            tryInfect(p);
                         }
                     }
                 }
@@ -85,6 +82,14 @@ public class Person {
             case Dead:
                 break;
         }
+    }
+
+    void tryInfect(Person p) {
+        //hvis personen bevæger sig, så er der mindre infektionsrisiko
+        double movingPenalty = (!isMoving() && !p.isMoving()) ? 1 : disease.getMovingMultiplier();
+
+        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty)
+            p.infect(disease);
     }
 
     public void updateDestination() {
@@ -249,8 +254,8 @@ public class Person {
 
     }
 
-    public boolean hasDestination() {
-        return hasDestination;
+    public boolean isMoving() {
+        return !(placeTimeLeft > 0);
     }
 
     public health getCurrentHealth() {

@@ -10,6 +10,7 @@ public class Influenza {
     private double infectionRange;
     private double infectionRisk;
     private double baseDeathRisk;
+    private double movingMultiplier;
 
     public enum influenzaType {A, B}
 
@@ -24,6 +25,7 @@ public class Influenza {
                 this.infectionRange = 3;
                 this.infectionRisk = 0.5;
                 this.baseDeathRisk = 0.001;
+                this.movingMultiplier = 0.3;
                 break;
             case B:
                 this.baseSpread = 3;
@@ -31,6 +33,7 @@ public class Influenza {
                 this.infectionRange = 2;
                 this.infectionRisk = 0.4;
                 this.baseDeathRisk = 0.001;
+                this.movingMultiplier = 0.3;
                 break;
         }
     }
@@ -56,6 +59,10 @@ public class Influenza {
             return baseDeathRisk;
         else
             return baseDeathRisk * (double)age * 0.5;
+    }
+
+    public double getMovingMultiplier() {
+        return movingMultiplier;
     }
 
     //Udregn R0 (chancen for epidemi) baseret på beta og gamme

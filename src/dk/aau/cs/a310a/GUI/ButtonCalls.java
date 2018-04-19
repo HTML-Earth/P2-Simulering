@@ -50,23 +50,37 @@ public class ButtonCalls {
             if (susceptibles > 0 && infected > 0 && susceptibles < 1000 && infected < 1000) {
                 runButton.setDisable(false);
                 sim.stopSimulation();
-                sim.initialiseSimulation(susceptibles,infected);
+                sim.initialiseSimulation(susceptibles, infected);
                 runButton.setText("Start");
-                gc.drawImage(visualMap,0,0,800,600);
+                gc.drawImage(visualMap, 0, 0, 800, 600);
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
                 if (menu.getChildren().contains(appliedLabel)) {
                     menu.getChildren().remove(appliedLabel);
                 }
                 menu.getChildren().add(appliedLabel);
 
-            }
-            else if (susceptibles > 0 && infected > 0 && susceptibles >= 1000 || infected >= 1000) {
+            } else if (susceptibles > 0 && infected > 0 && susceptibles >= 1000 || infected >= 1000) {
+                if (menu.getChildren().contains(tooBigPopulationLabel)) {
+                    menu.getChildren().remove(tooBigPopulationLabel);
+                }
+                if (menu.getChildren().contains(appliedLabel)) {
+                    menu.getChildren().remove(appliedLabel);
+                }
                 menu.getChildren().remove(population0Label);
                 menu.getChildren().add(tooBigPopulationLabel);
-            }
-            else {
+
+                runButton.setDisable(true);
+            } else {
+                if (menu.getChildren().contains(population0Label)) {
+                    menu.getChildren().remove(population0Label);
+                }
+                if (menu.getChildren().contains(appliedLabel)) {
+                    menu.getChildren().remove(appliedLabel);
+                }
                 menu.getChildren().remove(tooBigPopulationLabel);
                 menu.getChildren().add(population0Label);
+
+                runButton.setDisable(true);
             }
         });
 

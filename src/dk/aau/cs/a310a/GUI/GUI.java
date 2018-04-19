@@ -154,7 +154,7 @@ public class GUI extends Application {
         Label coverMouthLabel = new Label(" - cover mouth when coughing?");
         Label stayAtHomeLabel = new Label(" - stays at home after symptoms?");
         Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
-        Label population0Label = new Label("Error: Susceptibles and infected cam't be 0");
+        Label population0Label = new Label("Error: Susceptibles and infected can't be 0");
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);

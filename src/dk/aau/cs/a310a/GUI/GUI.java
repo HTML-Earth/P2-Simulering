@@ -70,7 +70,7 @@ public class GUI extends Application {
         Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
         Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
         Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
-        Label stringEpidemic = new Label("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
+        Label stringEpidemic = new Label("");
 
         //styling af labels
         Styler styler = new Styler();
@@ -291,6 +291,7 @@ public class GUI extends Application {
                     stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
                     stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
+                    stringEpidemic.setText("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
                 }
 
                 previousTime = currentTime;

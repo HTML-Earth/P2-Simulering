@@ -3,12 +3,23 @@ package dk.aau.cs.a310a.GUI;
 import dk.aau.cs.a310a.Grid.GridPosition;
 import dk.aau.cs.a310a.Grid.Vector;
 import dk.aau.cs.a310a.Simulation.Person;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class BobRoss {
     double[] crossPointsX;
     double[] crossPointsY;
+
+    Color susceptibleColor;
+    Color infectedColor;
+    Color recoveredColor;
+    Color deadColor;
 
     public BobRoss() {
         crossPointsX = new double[12];
@@ -57,6 +68,11 @@ public class BobRoss {
         //Middle left
         crossPointsX[11] = -0.2;
         crossPointsY[11] = 0.0;
+
+        susceptibleColor = new Color(0,1,1,0.5);
+        infectedColor    = new Color(1,0,0,0.5);
+        recoveredColor   = new Color(1,1,0,0.5);
+        deadColor        = new Color(1,0,0,0.5);
     }
 
     public void drawPerson(Person person, GraphicsContext gc) {
@@ -66,16 +82,16 @@ public class BobRoss {
         Color color = Color.BLACK;
         switch (health) {
             case Susceptible:
-                color = Color.CYAN;
+                color = susceptibleColor;
                 break;
             case Infected:
-                color = Color.RED;
+                color = infectedColor;
                 break;
             case Recovered:
-                color = Color.YELLOW;
+                color = recoveredColor;
                 break;
             case Dead:
-                color = Color.RED;
+                color = deadColor;
                 break;
         }
 
@@ -115,5 +131,26 @@ public class BobRoss {
         gc.setFill(Color.LIGHTGREEN);
         gc.strokeLine(position.x,position.y,destination.x,destination.y);
         gc.fillOval(destination.x-4,destination.y-4,8,8);
+    }
+
+    public Image resizeImage(String url, int scale) throws IOException {
+        BufferedImage pixelMap;
+        pixelMap = ImageIO.read(getClass().getResource(url));
+
+        int width = pixelMap.getWidth();
+        int height = pixelMap.getHeight();
+
+        int scaledWidth = width * scale;
+        int scaledHeight = height * scale;
+
+        BufferedImage scaledMap = new BufferedImage(scaledWidth, scaledHeight, pixelMap.getType());
+        for (int y = 0; y < scaledHeight; y++) {
+            for (int x = 0; x < scaledWidth; x++) {
+                int color = pixelMap.getRGB(x / scale,y / scale);
+                scaledMap.setRGB(x,y,color);
+            }
+        }
+
+        return SwingFXUtils.toFXImage(scaledMap, null);
     }
 }

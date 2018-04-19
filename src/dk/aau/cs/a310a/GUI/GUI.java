@@ -30,12 +30,16 @@ public class GUI extends Application {
     //Billedet i canvas
     Image visualMap;
 
+    BobRoss bob;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     public void init() throws IOException {
         sim = new Simulator();
+        bob = new BobRoss();
+        visualMap = bob.resizeImage("/city.png", 20);
     }
 
     public void start(Stage stage) {
@@ -51,11 +55,10 @@ public class GUI extends Application {
         //SIMULERINGSVINDUE
         HBox simWindow = new HBox();
 
-        //Canvas og Bob Ross til at tegne på det
+        //Canvas objekter
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
-        BobRoss bob = new BobRoss();
 
         //SIDEPANEL
         VBox sidePanel = new VBox();
@@ -257,8 +260,7 @@ public class GUI extends Application {
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);
 
-        //Load og vis baggrundsbilledet
-        visualMap = new Image("city_upscaled.png");
+        //Vis baggrundsbilledet
         gc.drawImage(visualMap,0,0,800,600);
 
         final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */

@@ -5,6 +5,8 @@ The study belongs to group dat310a.
 
 ## Guide to use of the program
 When you first open the program, you will be presented with a menu, containing several boxes which represents values used in the simulation.  
+Once values have been entered hit apply and press start to begin the simulation. You will need to hit apply in order use your values.  
+If the simulation has been started you are able to continue with what was previously the start button. If you wish to restart hit apply again.  
 The boxes are separated into two sections.
 ### SIR-Options.
 These values represent start values in terms of the amount of people to be simulated.  

@@ -16,6 +16,11 @@ public class BobRoss {
     double[] crossPointsX;
     double[] crossPointsY;
 
+    Color susceptibleColor;
+    Color infectedColor;
+    Color recoveredColor;
+    Color deadColor;
+
     public BobRoss() {
         crossPointsX = new double[12];
         crossPointsY = new double[12];
@@ -63,6 +68,11 @@ public class BobRoss {
         //Middle left
         crossPointsX[11] = -0.2;
         crossPointsY[11] = 0.0;
+
+        susceptibleColor = new Color(0,1,1,0.5);
+        infectedColor    = new Color(1,0,0,0.5);
+        recoveredColor   = new Color(1,1,0,0.5);
+        deadColor        = new Color(1,0,0,0.5);
     }
 
     public void drawPerson(Person person, GraphicsContext gc) {
@@ -72,16 +82,16 @@ public class BobRoss {
         Color color = Color.BLACK;
         switch (health) {
             case Susceptible:
-                color = Color.CYAN;
+                color = susceptibleColor;
                 break;
             case Infected:
-                color = Color.RED;
+                color = infectedColor;
                 break;
             case Recovered:
-                color = Color.YELLOW;
+                color = recoveredColor;
                 break;
             case Dead:
-                color = Color.RED;
+                color = deadColor;
                 break;
         }
 

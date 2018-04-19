@@ -86,7 +86,7 @@ public class BobRoss {
 
             gc.setFill(Color.BLACK);
             //gc.fillText(person.getDebugText(), position.x - 8, position.y - 8);
-
+            /*
             if (person.hasDestination()) {
                 for (GridPosition gp: person.getCurrentPath()) {
                     Color c = new Color(1,1,1,0.2);
@@ -95,6 +95,7 @@ public class BobRoss {
                 }
                 //drawDestination(person.getPosition(), Vector.gridToScreen(person.getCurrentPath().getLast()), gc);
             }
+            */
         }
         else {
             double[] xPoints = new double[12];

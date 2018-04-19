@@ -43,15 +43,14 @@ public class ButtonCalls {
     }
 
     void applyVariable(Button applySettings, Button runButton, NumberTextField susceptibleAmount, NumberTextField infectedAmount,
-                       NumberTextField recoveredAmount, Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, GraphicsContext gc, Image visualMap) {
+                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, GraphicsContext gc, Image visualMap) {
         applySettings.setOnMouseClicked(event -> {
             int susceptibles = Integer.parseInt(susceptibleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());
-            int recovered = Integer.parseInt(recoveredAmount.getText());
-            if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles < 1000 && infected < 1000 && recovered < 1000) {
+            if (susceptibles > 0 && infected > 0 && susceptibles < 1000 && infected < 1000) {
                 runButton.setDisable(false);
                 sim.stopSimulation();
-                sim.initialiseSimulation(susceptibles,infected,recovered);
+                sim.initialiseSimulation(susceptibles,infected);
                 runButton.setText("Start");
                 gc.drawImage(visualMap,0,0,800,600);
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
@@ -61,7 +60,7 @@ public class ButtonCalls {
                 menu.getChildren().add(appliedLabel);
 
             }
-            else if (susceptibles > 0 && infected > 0 && recovered >= 0 && susceptibles >= 1000 || infected >= 1000 || recovered >= 1000) {
+            else if (susceptibles > 0 && infected > 0 && susceptibles >= 1000 || infected >= 1000) {
                 menu.getChildren().remove(population0Label);
                 menu.getChildren().add(tooBigPopulationLabel);
             }

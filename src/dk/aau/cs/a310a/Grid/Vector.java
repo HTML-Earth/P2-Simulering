@@ -1,6 +1,11 @@
 package dk.aau.cs.a310a.Grid;
 
+import java.util.Objects;
+
 public class Vector {
+    public static final double gridScale = 20;
+    public static final double gridOffset = 10;
+
     public double x, y;
 
     public Vector(double x, double y) {
@@ -33,6 +38,20 @@ public class Vector {
     }
 
     public static Vector gridToScreen(GridPosition gridPosition) {
-        return new Vector(gridPosition.x * 20 + 10, gridPosition.y * 20 + 10);
+        return new Vector(gridPosition.x * gridScale + gridOffset, gridPosition.y * gridScale + gridOffset);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector vector = (Vector) o;
+        return Double.compare(vector.x, x) == 0 &&
+                Double.compare(vector.y, y) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

@@ -110,13 +110,14 @@ public class Simulator {
         return grid.get(pos);
     }
 
-    public void addPeople(int amount, Person.health health) {
-        Random rand = new Random();
-        for (int i = 0; i < amount; i++) {
-            int randAge = rand.nextInt(80) + 20;
+    public void addPeople(int susceptibles, int infecteds) {
+        for (int i = 0; i < susceptibles + infecteds; i++) {
             int randomHouse = rand.nextInt(houses.size());
 
-            Person person = new Person(randAge, health, houses.get(randomHouse));
+            Person person = new Person(houses.get(randomHouse));
+
+            if (i < infecteds)
+                person.infect(influenzaA);
 
             //Tilføj person til liste
             people.add(person);
@@ -134,24 +135,12 @@ public class Simulator {
         return value;
     }
 
-    public void initialiseSimulation(int susceptibleAmount, int infectedAmount, int recoveredAmount) {
-        //lav personer
-        addPeople(susceptibleAmount + infectedAmount + recoveredAmount, Person.health.Susceptible);
-
+    public void initialiseSimulation(int susceptibleAmount, int infectedAmount) {
+        //ny influenza
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
-        //inficer personer
-        if (infectedAmount > 0) {
-            for (int infected = 0; infected < infectedAmount; infected++) {
-                influenzaA.infectPerson(people.get(infected));
-            }
-        }
-
-        if (recoveredAmount > 0) {
-            for (int recovered = infectedAmount; recovered < infectedAmount + recoveredAmount; recovered++) {
-                people.get(recovered).setCurrentHealth(Person.health.Recovered);
-            }
-        }
+        //opret personer
+        addPeople(susceptibleAmount, infectedAmount);
 
         simulationHasBeenInitialised = true;
     }

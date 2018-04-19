@@ -8,7 +8,7 @@ import java.util.*;
 public class Person {
     public enum health {Susceptible, Infected, Recovered, Dead};
 
-    private health currentHealth;
+    private health currentHealth = health.Susceptible;
     private Influenza disease;
     private int age;
 
@@ -37,19 +37,12 @@ public class Person {
     //RNG
     private Random rand;
 
-    public Person(int age, health currentHealth, GridPosition homePosition) {
+    public Person(GridPosition homePosition) {
         rand = new Random();
 
-        this.age = age;
-        this.currentHealth = currentHealth;
+        initPosition(homePosition);
 
-        this.position = homePosition;
-        this.destination = homePosition;
-
-        this.home = homePosition;
-
-        this.screenPosition = Vector.gridToScreen(homePosition);
-        this.nextScreenPosition = this.screenPosition;
+        this.age = rand.nextInt(80) + 20;
     }
 
     public void updateDisease(double currentTime) {
@@ -69,7 +62,7 @@ public class Person {
                             //Risiko for infektion
                             if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime()){
                                 //Inficer den anden person
-                                disease.infectPerson(p);
+                                p.infect(disease);
                             }
                         }
                     }
@@ -139,33 +132,18 @@ public class Person {
         if (!hasDestination)
             return;
 
-        /*
-        if (position.x < destination.x)
-            position.x++;
-        else if (position.x > destination.x)
-            position.x--;
-        else if (position.y < destination.y)
-            position.y++;
-        else if (position.y > destination.y)
-            position.y--;
-        else
-            debugText = "!!!";
-*/
         if (currentPath == null || currentPath.size() < 1) {
             System.out.println("NO PATH");
             return;
         }
 
-        position.x = currentPath.getLast().x;
-        position.y = currentPath.getLast().y;
+        position = currentPath.getLast();
 
         currentPath.remove(currentPath.getLast());
 
-
         nextScreenPosition = Vector.gridToScreen(position);
 
-
-        if (position.x == destination.x && position.y == destination.y) {
+        if (position.equals(destination)) {
             hasDestination = false;
             placeTimeLeft = 5;
         }
@@ -177,6 +155,16 @@ public class Person {
 
     public int getAge() {
         return age;
+    }
+
+    void initPosition(GridPosition homePosition) {
+        this.position = homePosition;
+        this.destination = homePosition;
+
+        this.home = homePosition;
+
+        this.screenPosition = Vector.gridToScreen(homePosition);
+        this.nextScreenPosition = this.screenPosition;
     }
 
     public Vector getPosition() {
@@ -277,17 +265,8 @@ public class Person {
         return currentHealth;
     }
 
-    public void setCurrentHealth(health currentHealth) {
-        if (this.currentHealth == currentHealth)
-            return;
-        this.currentHealth = currentHealth;
-    }
-
-    public Influenza getDisease() {
-        return disease;
-    }
-
-    public void setDisease(Influenza disease) {
+    public void infect(Influenza disease) {
+        this.currentHealth = health.Infected;
         this.disease = disease;
     }
 
@@ -297,9 +276,9 @@ public class Person {
         if(timer - timeInfected > timeBeforeRecover) {
             //Risiko for at dø
             if (rand.nextDouble() < disease.getDeathRisk(age))
-                setCurrentHealth(health.Dead);
+                currentHealth = health.Dead;
             else
-                setCurrentHealth(health.Recovered);
+                currentHealth = health.Recovered;
         }
     }
 

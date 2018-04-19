@@ -13,7 +13,7 @@ public class TestPerson {
     @BeforeEach
     public void setupPerson()
     {
-        person = new Person(25, Person.health.Susceptible, new GridPosition(0,0));
+        person = new Person(new GridPosition(0,0));
     }
 
     @Test
@@ -23,6 +23,6 @@ public class TestPerson {
 
     @Test
     void TestPosition02() {
-        assertEquals(new Vector(0,0),person.getPosition());
+        assertEquals(new Vector(Vector.gridOffset,Vector.gridOffset),person.getPosition());
     }
 }

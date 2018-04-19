@@ -1,6 +1,7 @@
 package dk.aau.cs.a310a.Grid;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GridPosition {
     public int x, y;
@@ -61,6 +62,6 @@ public class GridPosition {
 
     @Override
     public int hashCode() {
-        return this.x * 1000 + this.y;
+        return Objects.hash(x, y);
     }
 }

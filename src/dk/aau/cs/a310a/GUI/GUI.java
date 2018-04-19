@@ -136,8 +136,6 @@ public class GUI extends Application {
         susceptibleAmount.setMaxWidth(80);
         NumberTextField infectedAmount = new NumberTextField("1");
         infectedAmount.setMaxWidth(80);
-        NumberTextField recoveredAmount = new NumberTextField("0");
-        recoveredAmount.setMaxWidth(80);
         NumberTextField vaccinePercent = new NumberTextField("0");
         vaccinePercent.setMaxWidth(40);
         NumberTextField sanitizerPercent = new NumberTextField("0");
@@ -151,7 +149,6 @@ public class GUI extends Application {
         // Menu - labels til beskrivelse
         Label susceptibleLabel = new Label("Susceptible:");
         Label infectedLabel = new Label("Infected:");
-        Label recoveredLabel = new Label("Recovered:");
         Label appliedLabel = new Label("Population applied!");
         Label titleLabel = new Label("Zombe");
         Label sirLabel = new Label("SIR-Options:");
@@ -166,7 +163,6 @@ public class GUI extends Application {
 
         susceptibleLabel.setTextFill(Color.WHITE);
         infectedLabel.setTextFill(Color.WHITE);
-        recoveredLabel.setTextFill(Color.WHITE);
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
@@ -209,14 +205,13 @@ public class GUI extends Application {
 
         Tooltip.install(susceptibleAmount, lessthan1000);
         Tooltip.install(infectedAmount, lessthan1000);
-        Tooltip.install(recoveredAmount, tipInclude0);
 
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);
 
         // Event til at anvende og checke indtastede værdier
-        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, recoveredAmount, sim, menu,
+        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
                 tooBigPopulationLabel, population0Label, appliedLabel, gc, visualMap);
 
         //Events til menuknap
@@ -234,8 +229,6 @@ public class GUI extends Application {
         menuLabels.add(whatPerLabel,3,0);
         menuLabels.add(infectedLabel, 0, 1);
         menuLabels.add(infectedAmount, 1, 1);
-        menuLabels.add(recoveredLabel, 0,2);
-        menuLabels.add(recoveredAmount, 1, 2);
         menuLabels.add(isVaccinatedLabel, 3, 1);
         menuLabels.add(useSanitizersLabel, 3, 2);
         menuLabels.add(coverMouthLabel, 3, 3);

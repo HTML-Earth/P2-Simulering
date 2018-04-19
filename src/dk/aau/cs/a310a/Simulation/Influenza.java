@@ -58,21 +58,6 @@ public class Influenza {
             return baseDeathRisk * (double)age * 0.5;
     }
 
-    //Sætter personen/objektets 'health' til at være 'infected'
-    public void infectPerson(List<Person> people, int start, int end) {
-        for (int i = start; i < end; i++) {
-            if (i < people.size())
-                people.get(i).setCurrentHealth(Person.health.Infected);
-            else
-                break;
-        }
-    }
-
-    public void infectPerson(Person person){
-        person.setDisease(this);
-        person.setCurrentHealth(Person.health.Infected);
-    }
-
     //Udregn R0 (chancen for epidemi) baseret på beta og gamme
     public String calculateR0(double beta, double gamma) {
         double isEpidemic = beta / gamma; //R0

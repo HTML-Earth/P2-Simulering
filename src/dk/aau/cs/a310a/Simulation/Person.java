@@ -292,6 +292,6 @@ public class Person {
 
     //Metoden som kaldes når man printer objektet
     public String toString() {
-        return getCurrentHealth() + "\t Age:" + age + "\t X:" + position.x + "\t Y:" + position.y;
+        return String.format("%1$" + -20 + "s", getCurrentHealth()) + String.format("%1$" + -20 + "s", "\t Age:" + age) + "\t X:" + position.x + "\t Y:" + position.y;
     }
 }

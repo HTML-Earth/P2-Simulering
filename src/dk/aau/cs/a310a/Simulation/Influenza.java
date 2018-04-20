@@ -23,17 +23,17 @@ public class Influenza {
                 this.baseSpread = 4;
                 this.amountCured = 2;
                 this.infectionRange = 2;
-                this.infectionRisk = 0.5;
+                this.infectionRisk = 0.3;
                 this.baseDeathRisk = 0.001;
-                this.movingMultiplier = 0.3;
+                this.movingMultiplier = 0.1;
                 break;
             case B:
                 this.baseSpread = 3;
                 this.amountCured = 1;
                 this.infectionRange = 1;
-                this.infectionRisk = 0.4;
+                this.infectionRisk = 0.2;
                 this.baseDeathRisk = 0.001;
-                this.movingMultiplier = 0.3;
+                this.movingMultiplier = 0.1;
                 break;
         }
     }

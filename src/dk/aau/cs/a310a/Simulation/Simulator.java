@@ -10,6 +10,9 @@ import java.util.*;
 public class Simulator {
     public static Simulator theSimulator;
 
+    //Tid
+    public static Clock clock;
+
     public enum placeType {House, Work, Hospital, Road, Grass};
 
     //Området der simuleres på
@@ -26,9 +29,6 @@ public class Simulator {
 
     //RNG
     public Random rand;
-
-    //Tid
-    public Clock clock;
 
     //Simuleringsvariabler
     private boolean simulationHasBeenInitialised;
@@ -116,6 +116,9 @@ public class Simulator {
         //ny influenza
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
+        //Nulstil tiden
+        clock.resetTime();
+
         //opret personer
         addPeople(susceptibleAmount, infectedAmount);
 
@@ -125,8 +128,9 @@ public class Simulator {
     public void addPeople(int susceptibles, int infecteds) {
         for (int i = 0; i < susceptibles + infecteds; i++) {
             int randomHouse = rand.nextInt(houses.size());
+            int randomWork = rand.nextInt(workplaces.size());
 
-            Person person = new Person(houses.get(randomHouse));
+            Person person = new Person(houses.get(randomHouse), workplaces.get(randomWork));
 
             if (i < infecteds)
                 person.infect(influenzaA);

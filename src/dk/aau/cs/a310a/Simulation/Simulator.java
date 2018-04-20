@@ -10,6 +10,9 @@ import java.util.*;
 public class Simulator {
     public static Simulator theSimulator;
 
+    //Tid
+    public static Clock clock;
+
     public enum placeType {House, Work, Hospital, Road, Grass};
 
     //Området der simuleres på
@@ -26,9 +29,6 @@ public class Simulator {
 
     //RNG
     public Random rand;
-
-    //Tid
-    public Clock clock;
 
     //Simuleringsvariabler
     private boolean simulationHasBeenInitialised;

@@ -13,7 +13,9 @@ public class Person {
     private int age;
 
     //tidspunkt hvor personen blev inficeret
-    public double timeInfected = 0;
+    int tickInfected = 0;
+
+    int ticksBeforeRecover = 0;
 
     private boolean hasDestination;
 
@@ -62,10 +64,6 @@ public class Person {
             case Susceptible:
                 break;
             case Infected:
-                //Check for recovery
-                if(timeInfected == 0)
-                    timeInfected = currentTime;
-
                 for (Person p : Simulator.theSimulator.people) {
                     //Tjek om personen er susceptible
                     if (p.getCurrentHealth() == health.Susceptible){
@@ -77,7 +75,7 @@ public class Person {
                     }
                 }
 
-                influenzaRecover(currentTime);
+                influenzaRecover(Simulator.clock.getCurrentTick());
                 break;
             case Recovered:
                 break;
@@ -128,6 +126,16 @@ public class Person {
                 break;
         }
 
+        int curHour = Simulator.clock.currentTime.hours;
+        if (6 < curHour && curHour < 15) {
+            setDestination(work);
+        }
+
+        if (15 < curHour) {
+            setDestination(home);
+        }
+
+        /*
         if (rand.nextDouble() < goToWorkChance) {
             setDestination(work);
         }
@@ -139,7 +147,7 @@ public class Person {
         }
         else {
             setDestination(Simulator.placeType.House);
-        }
+        }*/
     }
 
     public void updateMovement() {
@@ -267,12 +275,12 @@ public class Person {
     public void infect(Influenza disease) {
         this.currentHealth = health.Infected;
         this.disease = disease;
+        this.tickInfected = Simulator.clock.getCurrentTick();
+        this.ticksBeforeRecover = rand.nextInt(430) + 144;
     }
 
-    public void influenzaRecover(double timer) {
-        int timeBeforeRecover = rand.nextInt(6) + 4;
-
-        if(timer - timeInfected > timeBeforeRecover) {
+    public void influenzaRecover(int currentTick) {
+        if(currentTick - tickInfected > ticksBeforeRecover) {
             //Risiko for at dø
             if (rand.nextDouble() < disease.getDeathRisk(age))
                 currentHealth = health.Dead;

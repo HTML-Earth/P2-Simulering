@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -19,14 +22,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 public class GUI extends Application {
 
     //Simulator objekt
     Simulator sim;
+
 
     public static LiveLineChart lineChart;
 
@@ -57,6 +64,9 @@ public class GUI extends Application {
 
         //SIMULERINGSVINDUE
         HBox simWindow = new HBox();
+
+        // filechooser
+        final FileChooser fileChooser = new FileChooser();
 
         //Canvas objekter
         Canvas canvas = new Canvas(800, 600);
@@ -205,6 +215,8 @@ public class GUI extends Application {
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
 
+        Button imageButton = new Button("Upload custom image");
+
         //Tooltip for <1000 personer
         Tooltip lessthan1000 = new Tooltip("A number between 1 - 999");
 
@@ -223,6 +235,19 @@ public class GUI extends Application {
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);
+
+        // Events til Uploadknap
+        imageButton.setOnMouseClicked(event ->{
+            File file = fileChooser.showOpenDialog(stage);
+            if (file != null) {
+                try {
+                    visualMap = bob.resizeImage(file.getPath().toString(), 20);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+                });
 
         //Grids
         //Grid til textfield variabler i menu
@@ -243,6 +268,7 @@ public class GUI extends Application {
         menuLabels.add(sanitizerPercent, 4, 2);
         menuLabels.add(coverMouthPercent, 4, 3);
         menuLabels.add(stayHomePercent, 4, 4);
+        menuLabels.add(imageButton, 0, 4);
 
 
         styler.StyleGrid(menuLabels);

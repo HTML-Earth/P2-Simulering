@@ -38,7 +38,7 @@ public class Simulator {
     private double tickTime = 0.2;
     private double lastTick = 0;
 
-    private int lastGraphUpdate = -144;
+    private int lastGraphUpdate;
 
     private ArrayList<GridPosition> houses;
     private ArrayList<GridPosition> workplaces;
@@ -124,7 +124,7 @@ public class Simulator {
 
         //Nulstril Graf
         GUI.lineChart.resetLineChart();
-        lastGraphUpdate=-144;
+        lastGraphUpdate = -GUI.lineChart.ticksPerPoint;
 
         //opret personer
         addPeople(susceptibleAmount, infectedAmount);
@@ -179,7 +179,7 @@ public class Simulator {
                 p.updateMovement();
             }
 
-            if (clock.getCurrentTick() > lastGraphUpdate + 144) {
+            if (clock.getCurrentTick() > lastGraphUpdate + GUI.lineChart.ticksPerPoint) {
                 GUI.lineChart.updateLineChart();
                 lastGraphUpdate = clock.getCurrentTick();
             }

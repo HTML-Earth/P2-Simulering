@@ -1,0 +1,13 @@
+/* Chartstyle */
+.chart-series-line {
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
+}
+
+.default-color0.chart-series-line { -fx-stroke: CYAN; }
+.default-color1.chart-series-line { -fx-stroke: RED; }
+.default-color2.chart-series-line { -fx-stroke: YELLOW; }
+
+.default-color0.chart-line-symbol { -fx-background-color: CYAN, white; }
+.default-color1.chart-line-symbol { -fx-background-color: RED, white; }
+.default-color2.chart-line-symbol { -fx-background-color: YELLOW, white; }

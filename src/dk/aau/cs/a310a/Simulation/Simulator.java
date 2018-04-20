@@ -167,6 +167,7 @@ public class Simulator {
                 p.updateDestination();
                 p.updateMovement();
             }
+            clock.tick();
             lastTick = currentTime;
         }
 
@@ -185,7 +186,7 @@ public class Simulator {
     }
 
     public String getSimulationTime() {
-        return clock.getSimulationTime();
+        return clock.getTimeString();
     }
 
     public String getR0(double beta, double gamma) {

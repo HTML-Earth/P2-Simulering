@@ -19,6 +19,10 @@ public class Clock {
         currentTime.addMinutes(10);
     }
 
+    public int getGraphTime() {
+        return currentTime.days;
+    }
+
     public String getTimeString() {
         return "Day " + currentTime.dayString() + " [" + currentTime.hourString() + ":" + currentTime.minuteString() + "]";
     }

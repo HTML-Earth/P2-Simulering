@@ -1,5 +1,6 @@
 package dk.aau.cs.a310a.Simulation;
 
+import dk.aau.cs.a310a.GUI.GUI;
 import dk.aau.cs.a310a.Grid.GridPosition;
 
 import javax.imageio.ImageIO;
@@ -36,6 +37,8 @@ public class Simulator {
 
     private double tickTime = 0.2;
     private double lastTick = 0;
+
+    private int lastGraphUpdate = -144;
 
     private ArrayList<GridPosition> houses;
     private ArrayList<GridPosition> workplaces;
@@ -171,6 +174,12 @@ public class Simulator {
                 p.updateDestination();
                 p.updateMovement();
             }
+
+            if (clock.getCurrentTick() > lastGraphUpdate + 144) {
+                GUI.lineChart.updateLineChart();
+                lastGraphUpdate = clock.getCurrentTick();
+            }
+
             clock.tick();
             lastTick = currentTime;
         }
@@ -205,15 +214,14 @@ public class Simulator {
     }
 
     //Antal personer i helbredsgruppen
-    public String healthCount(Person.health health) {
+    public int healthCount(Person.health health) {
         int count = 0;
         for (Person p : people) {
             if (p.getCurrentHealth() == health) {
                 count += 1;
             }
         }
-        String value = String.valueOf(count);
-        return value;
+        return count;
     }
 
     //Er det græs, hus, arbejde eller hospital

@@ -28,6 +28,8 @@ public class GUI extends Application {
     //Simulator objekt
     Simulator sim;
 
+    public static LiveLineChart lineChart;
+
     //Billedet i canvas
     Image visualMap;
 
@@ -94,7 +96,7 @@ public class GUI extends Application {
         info.add(stringEpidemic, 0, 4);
         info.add(stringTimeOfDay, 1, 0);
 
-        LiveLineChart lineChart = new LiveLineChart();
+        lineChart = new LiveLineChart();
         simWindow.getChildren().add(lineChart.createLineChart());
 
         //Scrollpane med persondata
@@ -300,7 +302,6 @@ public class GUI extends Application {
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                     stringEpidemic.setText("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
                     stringTimeOfDay.setText(sim.getSimulationTime());
-                    lineChart.updateLineChart();
                 }
 
                 previousTime = currentTime;

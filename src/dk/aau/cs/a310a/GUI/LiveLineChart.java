@@ -30,19 +30,16 @@ public class LiveLineChart {
     }
 
     public void updateLineChart() {
-        int tick = Simulator.clock.getCurrentTick();
-        String susceptible = Simulator.theSimulator.healthCount(Person.health.Susceptible);
-        String infected = Simulator.theSimulator.healthCount(Person.health.Infected);
-        String recovered = Simulator.theSimulator.healthCount(Person.health.Recovered);
-        sSeries.getData().add(new XYChart.Data(tick, susceptible));
-        iSeries.getData().add(new XYChart.Data(tick, infected));
-        rSeries.getData().add(new XYChart.Data(tick, recovered));
-        lineChart.setData(chartData);
+        Integer tick = Simulator.clock.getCurrentTick();
+        int susceptible = Simulator.theSimulator.healthCount(Person.health.Susceptible);
+        int infected = Simulator.theSimulator.healthCount(Person.health.Infected);
+        int recovered = Simulator.theSimulator.healthCount(Person.health.Recovered);
+        sSeries.getData().add(new XYChart.Data(tick.toString(), susceptible));
+        iSeries.getData().add(new XYChart.Data(tick.toString(), infected));
+        rSeries.getData().add(new XYChart.Data(tick.toString(), recovered));
     }
 
     private ObservableList<XYChart.Series<String, Double>> getChartData() {
-        double sValue = 10;
-        double iValue = 20;
         ObservableList<XYChart.Series<String, Double>> answer = FXCollections
                 .observableArrayList();
         sSeries = new XYChart.Series<String, Double>();

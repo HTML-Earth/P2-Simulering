@@ -122,6 +122,10 @@ public class Simulator {
         //Nulstil tiden
         clock.resetTime();
 
+        //Nulstril Graf
+        GUI.lineChart.resetLineChart();
+        lastGraphUpdate=-144;
+
         //opret personer
         addPeople(susceptibleAmount, infectedAmount);
 

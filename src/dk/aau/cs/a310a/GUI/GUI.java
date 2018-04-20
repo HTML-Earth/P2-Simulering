@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
@@ -116,9 +117,11 @@ public class GUI extends Application {
 
         //Graf med statistikker
         lineChart = new LiveLineChart();
+        LineChart chart = lineChart.createLineChart();
+        styler.StyleChart(chart);
 
         //Graf og canvas tilføjes til main panel
-        mainPanel.getChildren().addAll(lineChart.createLineChart(), canvas);
+        mainPanel.getChildren().addAll(chart, canvas);
 
         //info og scrollpane tilføjes til sidepanel
         sidePanel.getChildren().addAll(info,scrollPane);

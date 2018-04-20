@@ -63,6 +63,10 @@ public class GUI extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         PixelWriter pw = gc.getPixelWriter();
 
+        //MAINPANEL
+        VBox mainPanel = new VBox();
+        mainPanel.setMinWidth(400);
+
         //SIDEPANEL
         VBox sidePanel = new VBox();
         sidePanel.setMinWidth(400);
@@ -96,18 +100,12 @@ public class GUI extends Application {
         info.add(stringEpidemic, 0, 4);
         info.add(stringTimeOfDay, 1, 0);
 
-        lineChart = new LiveLineChart();
-        simWindow.getChildren().add(lineChart.createLineChart());
-
         //Scrollpane med persondata
         ScrollPane scrollPane = new ScrollPane();
 
         //Information om personer
         Label personData = new Label();
         personData.setFont(Font.font(12));
-
-        //graph med statistikker
-
 
         //Tilføj personer fra starten
         for (Person p : sim.getPeople()) {
@@ -116,11 +114,17 @@ public class GUI extends Application {
 
         scrollPane.setContent(personData);
 
+        //Graf med statistikker
+        lineChart = new LiveLineChart();
+
+        //Graf og canvas tilføjes til main panel
+        mainPanel.getChildren().addAll(lineChart.createLineChart(), canvas);
+
         //info og scrollpane tilføjes til sidepanel
         sidePanel.getChildren().addAll(info,scrollPane);
 
-        //Canvas og sidepanel tilføjes til simwindow
-        simWindow.getChildren().addAll(canvas, sidePanel);
+        //Main panel og side panel tilføjes til simwindow
+        simWindow.getChildren().addAll(mainPanel, sidePanel);
         simWindow.setAlignment(Pos.BOTTOM_LEFT);
 
         //Simwindow bliver blurred

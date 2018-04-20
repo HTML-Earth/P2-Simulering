@@ -27,6 +27,9 @@ public class Simulator {
     //RNG
     public Random rand;
 
+    //Tid
+    public Clock clock;
+
     //Simuleringsvariabler
     private boolean simulationHasBeenInitialised;
     private boolean simulationIsActive;
@@ -44,6 +47,9 @@ public class Simulator {
 
         //Random number generator
         rand = new Random();
+
+        //Tid
+        clock = new Clock();
 
         //Opret simuleringsområdet
         grid = new HashMap<GridPosition, placeType>();
@@ -176,6 +182,10 @@ public class Simulator {
 
     public double getTickTime() {
         return tickTime;
+    }
+
+    public String getSimulationTime() {
+        return clock.getSimulationTime();
     }
 
     public String getR0(double beta, double gamma) {

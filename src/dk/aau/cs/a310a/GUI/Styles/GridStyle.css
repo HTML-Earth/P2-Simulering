@@ -2,5 +2,11 @@
 .grid {
     -fx-vgap: 10;
     -fx-hgap: 5;
-    -fx-font-size: 14;
+}
+
+.label {
+
+    -fx-text-fill: WHITE;
+    -fx-font-family: Georgia;
+    -fx-font-size: 16;
 }

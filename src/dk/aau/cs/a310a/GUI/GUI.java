@@ -164,17 +164,10 @@ public class GUI extends Application {
         Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
         Label population0Label = new Label("Error: Susceptibles and infected can't be 0");
 
-        susceptibleLabel.setTextFill(Color.WHITE);
-        infectedLabel.setTextFill(Color.WHITE);
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
         spreadLabel.setTextFill(Color.WHITE);
-        whatPerLabel.setTextFill(Color.WHITE);
-        isVaccinatedLabel.setTextFill(Color.WHITE);
-        useSanitizersLabel.setTextFill(Color.WHITE);
-        coverMouthLabel.setTextFill(Color.WHITE);
-        stayAtHomeLabel.setTextFill(Color.WHITE);
         tooBigPopulationLabel.setTextFill(new Color(1,0.3,0.3,1));
         population0Label.setTextFill(new Color(1,0.3,0.3,1));
 
@@ -224,7 +217,6 @@ public class GUI extends Application {
         GridPane menuLabels = new GridPane();
         menuLabels.setTranslateX(260);
         menuLabels.setTranslateY(240);
-        styler.StyleGrid(menuLabels);
 
         menuLabels.add(susceptibleLabel, 0, 0);
         menuLabels.add(susceptibleAmount, 1, 0);
@@ -239,6 +231,9 @@ public class GUI extends Application {
         menuLabels.add(sanitizerPercent, 4, 2);
         menuLabels.add(coverMouthPercent, 4, 3);
         menuLabels.add(stayHomePercent, 4, 4);
+
+
+        styler.StyleGrid(menuLabels);
 
         //Tilføj tom plads i grid
         Pane emptyCol = new Pane();

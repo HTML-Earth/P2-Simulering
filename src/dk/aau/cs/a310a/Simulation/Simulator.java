@@ -116,6 +116,9 @@ public class Simulator {
         //ny influenza
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
+        //Nulstil tiden
+        clock.resetTime();
+
         //opret personer
         addPeople(susceptibleAmount, infectedAmount);
 

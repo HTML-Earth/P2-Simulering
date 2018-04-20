@@ -29,6 +29,7 @@ public class Person {
 
     //permanente positioner
     private GridPosition home;
+    private GridPosition work;
 
     //display positioner
     private Vector screenPosition;
@@ -37,10 +38,11 @@ public class Person {
     //RNG
     private Random rand;
 
-    public Person(GridPosition homePosition) {
+    public Person(GridPosition homePosition, GridPosition workPosition) {
         rand = new Random();
 
         initPosition(homePosition);
+        this.work = workPosition;
 
         this.age = rand.nextInt(80) + 20;
     }
@@ -127,7 +129,7 @@ public class Person {
         }
 
         if (rand.nextDouble() < goToWorkChance) {
-            setDestination(Simulator.placeType.Work);
+            setDestination(work);
         }
         else if (rand.nextDouble() < stayHomeChance) {
             setDestination(home);

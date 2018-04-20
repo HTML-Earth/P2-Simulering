@@ -13,7 +13,7 @@ public class TestPerson {
     @BeforeEach
     public void setupPerson()
     {
-        person = new Person(new GridPosition(0,0));
+        person = new Person(new GridPosition(0,0), new GridPosition(10,10));
     }
 
     @Test

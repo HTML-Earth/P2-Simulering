@@ -125,8 +125,9 @@ public class Simulator {
     public void addPeople(int susceptibles, int infecteds) {
         for (int i = 0; i < susceptibles + infecteds; i++) {
             int randomHouse = rand.nextInt(houses.size());
+            int randomWork = rand.nextInt(workplaces.size());
 
-            Person person = new Person(houses.get(randomHouse));
+            Person person = new Person(houses.get(randomHouse), workplaces.get(randomWork));
 
             if (i < infecteds)
                 person.infect(influenzaA);

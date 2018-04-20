@@ -15,6 +15,7 @@ public class LiveLineChart {
     ObservableList<XYChart.Series<String, Double>> chartData;
     XYChart.Series<String, Double> sSeries;
     XYChart.Series<String, Double> iSeries;
+    XYChart.Series<String, Double> rSeries;
 
     public LineChart createLineChart() {
         CategoryAxis xAxis = new CategoryAxis();
@@ -29,7 +30,13 @@ public class LiveLineChart {
     }
 
     public void updateLineChart() {
-        sSeries.getData().add(new XYChart.Data(0,Simulator.theSimulator.healthCount(Person.health.Susceptible)));
+        int tick = Simulator.clock.getCurrentTick();
+        String susceptible = Simulator.theSimulator.healthCount(Person.health.Susceptible);
+        String infected = Simulator.theSimulator.healthCount(Person.health.Infected);
+        String recovered = Simulator.theSimulator.healthCount(Person.health.Recovered);
+        sSeries.getData().add(new XYChart.Data(tick, susceptible));
+        iSeries.getData().add(new XYChart.Data(tick, infected));
+        rSeries.getData().add(new XYChart.Data(tick, recovered));
         lineChart.setData(chartData);
     }
 
@@ -40,16 +47,12 @@ public class LiveLineChart {
                 .observableArrayList();
         sSeries = new XYChart.Series<String, Double>();
         iSeries = new XYChart.Series<String, Double>();
+        rSeries = new XYChart.Series<String, Double>();
         sSeries.setName("Susceptible");
         iSeries.setName("Infected");
+        rSeries.setName("Recovered");
 
-        for (int i = 2001; i < 2021; i++) {
-            sSeries.getData().add(new XYChart.Data(Integer.toString(i), sValue));
-            sValue = sValue + Math.random() * 100 - 50;
-            iSeries.getData().add(new XYChart.Data(Integer.toString(i), iValue));
-            iValue = iValue + Math.random() * 100 - 50;
-        }
-        answer.addAll(sSeries, iSeries);
+        answer.addAll(sSeries, iSeries, rSeries);
         return answer;
     }
 }

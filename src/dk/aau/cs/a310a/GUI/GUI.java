@@ -95,7 +95,7 @@ public class GUI extends Application {
         info.add(stringTimeOfDay, 1, 0);
 
         LiveLineChart lineChart = new LiveLineChart();
-        info.add(lineChart.createLineChart(),0,1);
+        simWindow.getChildren().add(lineChart.createLineChart());
 
         //Scrollpane med persondata
         ScrollPane scrollPane = new ScrollPane();
@@ -260,7 +260,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(800);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight,);
+        menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

@@ -29,6 +29,12 @@ public class LiveLineChart {
         return lineChart;
     }
 
+    public void resetLineChart() {
+        sSeries.getData().clear();
+        iSeries.getData().clear();
+        rSeries.getData().clear();
+    }
+
     public void updateLineChart() {
         Integer tick = Simulator.clock.getCurrentTick();
         int susceptible = Simulator.theSimulator.healthCount(Person.health.Susceptible);

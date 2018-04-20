@@ -1,5 +1,6 @@
 package dk.aau.cs.a310a.GUI;
 
+import dk.aau.cs.a310a.Simulation.Clock;
 import dk.aau.cs.a310a.Simulation.Person;
 import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.animation.AnimationTimer;
@@ -68,12 +69,14 @@ public class GUI extends Application {
         GridPane info = new GridPane();
         info.setMinHeight(150);
 
-        //Infoboks labels
+        //Infoboks labels i simWindow
         Label stringSusceptible = new Label("Susceptible: " + sim.healthCount(Person.health.Susceptible));
         Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
         Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
         Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
         Label stringEpidemic = new Label("");
+        Label stringTimeOfDay = new Label();
+
 
         //styling af labels
         Styler styler = new Styler();
@@ -82,12 +85,14 @@ public class GUI extends Application {
         styler.StyleLabel(stringRecovered);
         styler.StyleLabel(stringInfected);
         styler.StyleLabel(stringDead);
+        styler.StyleLabel(stringTimeOfDay);
 
         info.add(stringSusceptible, 0, 0);
         info.add(stringInfected, 0, 1);
         info.add(stringRecovered, 0, 2);
         info.add(stringDead, 0, 3);
         info.add(stringEpidemic, 0, 4);
+        info.add(stringTimeOfDay, 1, 0);
 
         //Scrollpane med persondata
         ScrollPane scrollPane = new ScrollPane();
@@ -215,7 +220,7 @@ public class GUI extends Application {
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);
 
         //Grids
-        //Grid til textfield variabler
+        //Grid til textfield variabler i menu
         GridPane menuLabels = new GridPane();
         menuLabels.setTranslateX(260);
         menuLabels.setTranslateY(240);
@@ -293,6 +298,7 @@ public class GUI extends Application {
                     stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                     stringEpidemic.setText("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
+                    stringTimeOfDay.setText(sim.getSimulationTime());
                 }
 
                 previousTime = currentTime;

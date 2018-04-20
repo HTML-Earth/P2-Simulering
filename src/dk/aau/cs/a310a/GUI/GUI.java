@@ -94,12 +94,18 @@ public class GUI extends Application {
         info.add(stringEpidemic, 0, 4);
         info.add(stringTimeOfDay, 1, 0);
 
+        LiveLineChart lineChart = new LiveLineChart();
+        info.add(lineChart.createLineChart(),0,1);
+
         //Scrollpane med persondata
         ScrollPane scrollPane = new ScrollPane();
 
         //Information om personer
         Label personData = new Label();
         personData.setFont(Font.font(12));
+
+        //graph med statistikker
+
 
         //Tilføj personer fra starten
         for (Person p : sim.getPeople()) {
@@ -259,7 +265,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(800);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight,);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);
@@ -299,6 +305,7 @@ public class GUI extends Application {
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
                     stringEpidemic.setText("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
                     stringTimeOfDay.setText(sim.getSimulationTime());
+                    lineChart.updateLineChart();
                 }
 
                 previousTime = currentTime;

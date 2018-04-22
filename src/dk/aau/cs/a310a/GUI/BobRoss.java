@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class BobRoss {
@@ -20,6 +21,9 @@ public class BobRoss {
     Color infectedColor;
     Color recoveredColor;
     Color deadColor;
+
+    Image background;
+    GraphicsContext gc;
 
     public BobRoss() {
         crossPointsX = new double[12];
@@ -73,6 +77,24 @@ public class BobRoss {
         infectedColor    = new Color(1,0,0,0.5);
         recoveredColor   = new Color(1,1,0,0.5);
         deadColor        = new Color(1,0,0,0.5);
+    }
+
+    public void setGraphicsContext(GraphicsContext gc) {
+        this.gc = gc;
+    }
+
+    public void setBackground(Image bg) {
+        background = bg;
+        drawBackground();
+    }
+
+    public void drawBackground() {
+        if (gc == null)
+            return;
+        if (background == null)
+            return;
+
+        gc.drawImage(background,0,0,800,600);
     }
 
     public void drawPerson(Person person, GraphicsContext gc) {
@@ -133,9 +155,15 @@ public class BobRoss {
         gc.fillOval(destination.x-4,destination.y-4,8,8);
     }
 
-    public Image resizeImage(String url, int scale) throws IOException {
+    public Image resizeImage(String resourceUrl, int scale) throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource(resourceUrl).getFile());
+        return resizeImage(file, scale);
+    }
+
+    public Image resizeImage(File img, int scale) throws IOException {
         BufferedImage pixelMap;
-        pixelMap = ImageIO.read(getClass().getResource(url));
+        pixelMap = ImageIO.read(img);
 
         int width = pixelMap.getWidth();
         int height = pixelMap.getHeight();

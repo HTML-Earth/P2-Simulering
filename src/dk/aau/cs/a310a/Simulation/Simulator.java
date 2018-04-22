@@ -5,6 +5,7 @@ import dk.aau.cs.a310a.Grid.GridPosition;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -44,7 +45,7 @@ public class Simulator {
     private ArrayList<GridPosition> workplaces;
     private ArrayList<GridPosition> hospitals;
 
-    public Simulator() throws IOException {
+    public Simulator() {
         //Gør denne simulator globalt tilgængelig
         theSimulator = this;
 
@@ -54,25 +55,34 @@ public class Simulator {
         //Tid
         clock = new Clock();
 
-        //Opret simuleringsområdet
-        grid = new HashMap<GridPosition, placeType>();
-
-        //Load billede der bruges til simulering
-        pixelMap = ImageIO.read(getClass().getResource("/city.png"));
-
         //Opret tomme lister af 'Person'
         people = new ArrayList<>();
-
-        //Find alle huse på kortet
-        scanMap();
 
         simulationHasBeenInitialised = false;
         simulationIsActive = false;
     }
 
-    void scanMap() {
+    public boolean importMap(String resourceUrl) throws IOException {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource(resourceUrl).getFile());
+        return importMap(file);
+    }
+
+    public boolean importMap(File map) throws IOException {
+        //Load billede der bruges til simulering
+        pixelMap = ImageIO.read(map);
+
+        //Opret simuleringsområdet
+        HashMap<GridPosition, placeType> oldGrid = grid;
+        grid = new HashMap<GridPosition, placeType>();
+
+        ArrayList<GridPosition> oldHouses = houses;
         houses = new ArrayList<>();
+
+        ArrayList<GridPosition> oldWorkplaces = workplaces;
         workplaces = new ArrayList<>();
+
+        ArrayList<GridPosition> oldHospitals = hospitals;
         hospitals = new ArrayList<>();
 
         for (int x = 0; x < pixelMap.getWidth(); x++) {
@@ -113,6 +123,17 @@ public class Simulator {
                 }
             }
         }
+
+        if (houses.size() < 1) {
+            System.out.println("Invalid image (missing houses)");
+            grid = oldGrid;
+            houses = oldHouses;
+            workplaces = oldWorkplaces;
+            hospitals = oldHospitals;
+            return false;
+        }
+
+        return true;
     }
 
     public void initialiseSimulation(int susceptibleAmount, int infectedAmount) {

@@ -32,11 +32,10 @@ import java.io.IOException;
 
 public class GUI extends Application {
 
+    public static LiveLineChart lineChart;
+
     //Simulator objekt
     Simulator sim;
-
-
-    public static LiveLineChart lineChart;
 
     //Billedet i canvas
     Image visualMap;
@@ -49,8 +48,11 @@ public class GUI extends Application {
 
     public void init() throws IOException {
         sim = new Simulator();
+        sim.importMap("city.png");
+
         bob = new BobRoss();
-        visualMap = bob.resizeImage("/city.png", 20);
+        visualMap = bob.resizeImage("city.png", 20);
+        bob.setBackground(visualMap);
     }
 
     public void start(Stage stage) {
@@ -72,7 +74,7 @@ public class GUI extends Application {
         //Canvas objekter
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        PixelWriter pw = gc.getPixelWriter();
+        bob.setGraphicsContext(gc);
 
         //MAINPANEL
         VBox mainPanel = new VBox();
@@ -234,7 +236,7 @@ public class GUI extends Application {
 
         // Event til at anvende og checke indtastede værdier
         buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, gc, visualMap);
+                tooBigPopulationLabel, population0Label, appliedLabel, bob);
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);
@@ -244,13 +246,15 @@ public class GUI extends Application {
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
                 try {
-                    visualMap = bob.resizeImage(file.getPath().toString(), 20);
+                    if (sim.importMap(file)) {
+                        visualMap = bob.resizeImage(file, 20);
+                        bob.setBackground(visualMap);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-
-                });
+        });
 
         //Grids
         //Grid til textfield variabler i menu
@@ -301,7 +305,7 @@ public class GUI extends Application {
         root.getChildren().addAll(simWindow, menu);
 
         //Vis baggrundsbilledet
-        gc.drawImage(visualMap,0,0,800,600);
+        bob.drawBackground();
 
         final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */
 
@@ -318,7 +322,7 @@ public class GUI extends Application {
 
                 if (sim.isSimulationActive()) {
                     //Vis baggrund (hvilket overskriver forrige frame
-                    gc.drawImage(visualMap,0,0,800,600);
+                    bob.drawBackground();
 
                     //Reset personData tekst
                     personData.setText("");

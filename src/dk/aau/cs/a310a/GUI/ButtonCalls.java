@@ -51,7 +51,7 @@ public class ButtonCalls {
     }
 
     void applyVariable(Button applySettings, Button runButton, NumberTextField susceptibleAmount, NumberTextField infectedAmount,
-                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, GraphicsContext gc, Image visualMap) {
+                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, BobRoss bob) {
         applySettings.setOnMouseClicked(event -> {
             int susceptibles = Integer.parseInt(susceptibleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());
@@ -60,7 +60,7 @@ public class ButtonCalls {
                 sim.stopSimulation();
                 sim.initialiseSimulation(susceptibles, infected);
                 runButton.setText("Start");
-                gc.drawImage(visualMap, 0, 0, 800, 600);
+                bob.drawBackground();
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
                 if (menu.getChildren().contains(appliedLabel)) {
                     menu.getChildren().remove(appliedLabel);

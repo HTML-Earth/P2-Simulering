@@ -2,6 +2,7 @@ package dk.aau.cs.a310a.Simulation;
 
 import dk.aau.cs.a310a.GUI.GUI;
 import dk.aau.cs.a310a.Grid.GridPosition;
+import javafx.scene.control.Alert;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -125,7 +126,8 @@ public class Simulator {
         }
 
         if (houses.size() < 1) {
-            System.out.println("Invalid image (missing houses)");
+            GUI.theGUI.displayMessage(Alert.AlertType.ERROR, "YIKES", "Invalid image", "Image is missing houses.\n" +
+                    "Houses are rgb(87,87,87)");
             grid = oldGrid;
             houses = oldHouses;
             workplaces = oldWorkplaces;
@@ -134,7 +136,8 @@ public class Simulator {
         }
 
         if (workplaces.size() < 1) {
-            System.out.println("Invalid image (missing workplaces)");
+            GUI.theGUI.displayMessage(Alert.AlertType.ERROR, "YIKES", "Invalid image", "Image is missing workplaces\n" +
+                    "Workplaces are rgb(116,165,255)");
             grid = oldGrid;
             houses = oldHouses;
             workplaces = oldWorkplaces;

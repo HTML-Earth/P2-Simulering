@@ -32,6 +32,8 @@ public class GUI extends Application {
 
     public static LiveLineChart lineChart;
 
+    public static GUI theGUI;
+
     //Simulator objekt
     Simulator sim;
 
@@ -45,6 +47,7 @@ public class GUI extends Application {
     }
 
     public void init() throws IOException {
+        theGUI = this;
         sim = new Simulator();
         sim.importMap("city.png");
 
@@ -349,4 +352,11 @@ public class GUI extends Application {
         stage.show();
     }
 
+    public void displayMessage(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.show();
+    }
 }

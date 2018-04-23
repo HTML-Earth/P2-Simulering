@@ -280,7 +280,7 @@ public class GUI extends Application {
 
         //Tilføj tom plads i grid
         Pane emptyCol = new Pane();
-        emptyCol.setMinWidth(250);
+        emptyCol.setMinWidth(175);
         menuLabels.add(emptyCol, 2, 1);
 
         //Tilføj % til flere rækker

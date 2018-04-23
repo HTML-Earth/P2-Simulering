@@ -20,7 +20,7 @@ public class Influenza {
                 this.amountCured = 2;
                 this.infectionRange = 2;
                 this.infectionRisk = 0.3;
-                this.baseDeathRisk = 0.001;
+                this.baseDeathRisk = 0.002;
                 this.movingMultiplier = 0.1;
                 break;
             case B:
@@ -28,7 +28,7 @@ public class Influenza {
                 this.amountCured = 1;
                 this.infectionRange = 1;
                 this.infectionRisk = 0.2;
-                this.baseDeathRisk = 0.001;
+                this.baseDeathRisk = 0.002;
                 this.movingMultiplier = 0.1;
                 break;
         }
@@ -51,10 +51,10 @@ public class Influenza {
     }
 
     public double getDeathRisk(int age) {
-        if (age < 80)
+        if (age < 65)
             return baseDeathRisk;
         else
-            return baseDeathRisk * (double)age * 0.5;
+            return baseDeathRisk * 4;
     }
 
     public double getMovingMultiplier() {

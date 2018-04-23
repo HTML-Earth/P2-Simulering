@@ -329,7 +329,7 @@ public class GUI extends Application {
 
                     //Tegn alle personer og print deres info
                     for (Person p : sim.getPeople()) {
-                        bob.drawPerson(p,gc);
+                        bob.drawPerson(p);
                         personData.setText(personData.getText() + "\n " + p);
                     }
 

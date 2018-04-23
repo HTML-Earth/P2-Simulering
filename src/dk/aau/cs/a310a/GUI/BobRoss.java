@@ -14,8 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class BobRoss {
-    double[] crossPointsX;
-    double[] crossPointsY;
+    Vector[] crossPoints;
 
     Color susceptibleColor;
     Color infectedColor;
@@ -25,53 +24,38 @@ public class BobRoss {
     Image background;
     GraphicsContext gc;
 
+    boolean debugMode = false;
+
     public BobRoss() {
-        crossPointsX = new double[12];
-        crossPointsY = new double[12];
+        crossPoints = new Vector[12];
 
         //Top Left
-        crossPointsX[0] = -1.0;
-        crossPointsY[0] = -1.0;
-
-        crossPointsX[1] = -0.8;
-        crossPointsY[1] = -1.0;
+        crossPoints[0] = new Vector(-1.0,-1.0);
+        crossPoints[1] = new Vector(-0.8,-1.0);
 
         //Middle up
-        crossPointsX[2] = 0.0;
-        crossPointsY[2] = -0.2;
+        crossPoints[2] = new Vector(0.0,-0.2);
 
         //Top right
-        crossPointsX[3] = 0.8;
-        crossPointsY[3] = -1.0;
-
-        crossPointsX[4] = 1.0;
-        crossPointsY[4] = -1.0;
+        crossPoints[3] = new Vector(0.8,-1.0);
+        crossPoints[4] = new Vector(1.0,-1.0);
 
         //Middle right
-        crossPointsX[5] = 0.2;
-        crossPointsY[5] = 0.0;
+        crossPoints[5] = new Vector(0.2,0.0);
 
         //Bottom right
-        crossPointsX[6] = 1.0;
-        crossPointsY[6] = 1.0;
-
-        crossPointsX[7] = 0.8;
-        crossPointsY[7] = 1.0;
+        crossPoints[6] = new Vector(1.0,1.0);
+        crossPoints[7] = new Vector(0.8,1.0);
 
         //Middle down
-        crossPointsX[8] = 0.0;
-        crossPointsY[8] = 0.2;
+        crossPoints[8] = new Vector(0.0,0.2);
 
         //Bottom left
-        crossPointsX[9] = -0.8;
-        crossPointsY[9] = 1.0;
-
-        crossPointsX[10] = -1.0;
-        crossPointsY[10] = 1.0;
+        crossPoints[9] = new Vector(-0.8,1.0);
+        crossPoints[10] = new Vector(-1.0,1.0);
 
         //Middle left
-        crossPointsX[11] = -0.2;
-        crossPointsY[11] = 0.0;
+        crossPoints[11] = new Vector(-0.2,0.0);
 
         susceptibleColor = new Color(0,1,1,0.5);
         infectedColor    = new Color(1,0,0,0.5);
@@ -97,7 +81,7 @@ public class BobRoss {
         gc.drawImage(background,0,0,800,600);
     }
 
-    public void drawPerson(Person person, GraphicsContext gc) {
+    public void drawPerson(Person person) {
         Person.health health = person.getCurrentHealth();
         Vector position = person.getPosition();
 
@@ -123,25 +107,28 @@ public class BobRoss {
             gc.fillOval(position.x-8,position.y-8,16,16);
 
             gc.setFill(Color.BLACK);
-            //gc.fillText(person.getDebugText(), position.x - 8, position.y - 8);
-            /*
-            if (person.hasDestination()) {
-                for (GridPosition gp: person.getCurrentPath()) {
-                    Color c = new Color(1,1,1,0.2);
-                    gc.setFill(c);
-                    gc.fillOval(Vector.gridToScreen(gp).x-2,Vector.gridToScreen(gp).y-2,4,4);
+            if (debugMode) {
+                gc.fillText(person.getDebugText(), position.x - 8, position.y - 8);
+
+                if (person.getCurrentPath() != null && person.getCurrentPath().size() > 0) {
+                    for (GridPosition gp: person.getCurrentPath()) {
+                        Color c = new Color(1,1,1,0.2);
+                        gc.setFill(c);
+                        gc.fillOval(Vector.gridToScreen(gp).x-2,Vector.gridToScreen(gp).y-2,4,4);
+                    }
+                    drawDestination(person.getPosition(), Vector.gridToScreen(person.getCurrentPath().getLast()));
                 }
-                //drawDestination(person.getPosition(), Vector.gridToScreen(person.getCurrentPath().getLast()), gc);
             }
-            */
+
+
         }
         else {
             double[] xPoints = new double[12];
             double[] yPoints = new double[12];
 
             for (int i = 0; i < 12; i++) {
-                xPoints[i] = position.x + crossPointsX[i] * 8;
-                yPoints[i] = position.y + crossPointsY[i] * 8;
+                xPoints[i] = position.x + crossPoints[i].x * 8;
+                yPoints[i] = position.y + crossPoints[i].y * 8;
             }
 
             //Tegn kryds
@@ -149,7 +136,7 @@ public class BobRoss {
         }
     }
 
-    public void drawDestination(Vector position, Vector destination, GraphicsContext gc) {
+    public void drawDestination(Vector position, Vector destination) {
         gc.setFill(Color.LIGHTGREEN);
         gc.strokeLine(position.x,position.y,destination.x,destination.y);
         gc.fillOval(destination.x-4,destination.y-4,8,8);

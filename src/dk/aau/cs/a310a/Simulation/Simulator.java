@@ -112,13 +112,13 @@ public class Simulator {
                 }
 
                 //Work
-                if (r == 0 && g == 0 && b == 255) {
+                if (r == 0 && g == 0 && b > 240) {
                     grid.put(pos, placeType.Work);
                     workplaces.add(pos);
                 }
 
                 //Hospital
-                if (r == 255 && g == 0 && b == 0) {
+                if (r > 240 && g == 0 && b == 0) {
                     grid.put(pos, placeType.Hospital);
                     hospitals.add(pos);
                 }

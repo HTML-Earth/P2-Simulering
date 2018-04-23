@@ -3,6 +3,7 @@ package dk.aau.cs.a310a.GUI;
 import dk.aau.cs.a310a.Grid.GridPosition;
 import dk.aau.cs.a310a.Grid.Vector;
 import dk.aau.cs.a310a.Simulation.Person;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

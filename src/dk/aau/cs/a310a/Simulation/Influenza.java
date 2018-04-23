@@ -1,9 +1,5 @@
 package dk.aau.cs.a310a.Simulation;
 
-import dk.aau.cs.a310a.Simulation.Person;
-
-import java.util.List;
-
 public class Influenza {
     private int baseSpread;  //Beta
     private int amountCured; //Gamma

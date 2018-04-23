@@ -1,11 +1,9 @@
 package dk.aau.cs.a310a.GUI;
 
-
 import dk.aau.cs.a310a.Simulation.Person;
 import dk.aau.cs.a310a.Simulation.Simulator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;

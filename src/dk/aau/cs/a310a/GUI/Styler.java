@@ -2,7 +2,6 @@ package dk.aau.cs.a310a.GUI;
 
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 
 public class Styler {

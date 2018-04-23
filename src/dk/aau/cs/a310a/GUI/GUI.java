@@ -211,7 +211,7 @@ public class GUI extends Application {
 
         //Button factory
         Button showMenu = new Button("Menu");
-        showMenu.setFont(Font.font(20));
+        showMenu.setFont(Font.font(14));
         StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
 
         Button applySettings = new Button("Apply");

@@ -197,14 +197,14 @@ public class BobRoss {
                 }
 
                 //Work
-                if (r == 0 && g == 0 && b == 255) {
+                if (r == 0 && g == 0 && b > 240) {
                     newColor = 116;
                     newColor = (newColor << 8) + 165;
                     newColor = (newColor << 8) + 255;
                 }
 
                 //Hospital
-                if (r == 255 && g == 0 && b == 0) {
+                if (r > 240 && g == 0 && b == 0) {
                     newColor = 255;
                     newColor = (newColor << 8) + 255;
                     newColor = (newColor << 8) + 255;

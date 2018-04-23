@@ -133,6 +133,15 @@ public class Simulator {
             return false;
         }
 
+        if (workplaces.size() < 1) {
+            System.out.println("Invalid image (missing workplaces)");
+            grid = oldGrid;
+            houses = oldHouses;
+            workplaces = oldWorkplaces;
+            hospitals = oldHospitals;
+            return false;
+        }
+
         return true;
     }
 

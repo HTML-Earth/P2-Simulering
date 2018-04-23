@@ -96,29 +96,29 @@ public class Simulator {
                 GridPosition pos = new GridPosition(x, y);
 
                 //Grass
-                if (r == 192 && g == 224 && b == 150) {
+                if (r == 255 && g == 255 && b == 255) {
                     grid.put(pos, placeType.Grass);
                 }
 
                 //Road
-                if (r == 162 && g == 160 && b == 160) {
+                if (r == 128 && g == 128 && b == 128) {
                     grid.put(pos, placeType.Road);
                 }
 
                 //House
-                if (r == 87 && g == 87 && b == 87) {
+                if (r == 0 && g == 0 && b == 0) {
                     grid.put(pos, placeType.House);
                     houses.add(pos);
                 }
 
                 //Work
-                if (r == 116 && g == 165 && b == 255) {
+                if (r == 0 && g == 0 && b == 255) {
                     grid.put(pos, placeType.Work);
                     workplaces.add(pos);
                 }
 
                 //Hospital
-                if (r == 255 && g == 255 && b == 255) {
+                if (r == 255 && g == 0 && b == 0) {
                     grid.put(pos, placeType.Hospital);
                     hospitals.add(pos);
                 }
@@ -127,7 +127,7 @@ public class Simulator {
 
         if (houses.size() < 1) {
             GUI.theGUI.displayMessage(Alert.AlertType.ERROR, "YIKES", "Invalid image", "Image is missing houses.\n" +
-                    "Houses are rgb(87,87,87)");
+                    "Houses are rgb(0,0,0)");
             grid = oldGrid;
             houses = oldHouses;
             workplaces = oldWorkplaces;
@@ -137,7 +137,7 @@ public class Simulator {
 
         if (workplaces.size() < 1) {
             GUI.theGUI.displayMessage(Alert.AlertType.ERROR, "YIKES", "Invalid image", "Image is missing workplaces\n" +
-                    "Workplaces are rgb(116,165,255)");
+                    "Workplaces are rgb(0,0,255)");
             grid = oldGrid;
             houses = oldHouses;
             workplaces = oldWorkplaces;

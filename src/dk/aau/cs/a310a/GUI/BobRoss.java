@@ -22,6 +22,12 @@ public class BobRoss {
     Color recoveredColor;
     Color deadColor;
 
+    Color grassColor;
+    Color roadColor;
+    Color houseColor;
+    Color workColor;
+    Color hospitalColor;
+
     Image background;
     GraphicsContext gc;
 
@@ -163,7 +169,47 @@ public class BobRoss {
         for (int y = 0; y < scaledHeight; y++) {
             for (int x = 0; x < scaledWidth; x++) {
                 int color = pixelMap.getRGB(x / scale,y / scale);
-                scaledMap.setRGB(x,y,color);
+                int newColor = color;
+
+                int r = (color >> 16) & 0xFF;
+                int g = (color >> 8) & 0xFF;
+                int b = (color >> 0) & 0xFF;
+
+                //Grass
+                if (r == 255 && g == 255 && b == 255) {
+                    newColor = 192;
+                    newColor = (newColor << 8) + 224;
+                    newColor = (newColor << 8) + 150;
+                }
+
+                //Road
+                if (r == 128 && g == 128 && b == 128) {
+                    newColor = 160;
+                    newColor = (newColor << 8) + 160;
+                    newColor = (newColor << 8) + 160;
+                }
+
+                //House
+                if (r == 0 && g == 0 && b == 0) {
+                    newColor = 87;
+                    newColor = (newColor << 8) + 87;
+                    newColor = (newColor << 8) + 87;
+                }
+
+                //Work
+                if (r == 0 && g == 0 && b == 255) {
+                    newColor = 116;
+                    newColor = (newColor << 8) + 165;
+                    newColor = (newColor << 8) + 255;
+                }
+
+                //Hospital
+                if (r == 255 && g == 0 && b == 0) {
+                    newColor = 255;
+                    newColor = (newColor << 8) + 255;
+                    newColor = (newColor << 8) + 255;
+                }
+                scaledMap.setRGB(x,y,newColor);
             }
         }
 

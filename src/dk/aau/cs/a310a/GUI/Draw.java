@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class BobRoss {
+public class Draw {
     Vector[] crossPoints;
 
     Color susceptibleColor;
@@ -33,7 +33,7 @@ public class BobRoss {
 
     boolean debugMode = false;
 
-    public BobRoss() {
+    public Draw() {
         crossPoints = new Vector[12];
 
         //Top Left

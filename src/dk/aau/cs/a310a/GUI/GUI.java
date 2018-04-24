@@ -40,7 +40,7 @@ public class GUI extends Application {
     //Billedet i canvas
     Image visualMap;
 
-    BobRoss bob;
+    Draw picture;
 
     public static void main(String[] args) {
         launch(args);
@@ -51,9 +51,9 @@ public class GUI extends Application {
         sim = new Simulator();
         sim.importMap("city.png");
 
-        bob = new BobRoss();
-        visualMap = bob.resizeImage("city.png", 20);
-        bob.setBackground(visualMap);
+        picture = new Draw();
+        visualMap = picture.resizeImage("city.png", 20);
+        picture.setBackground(visualMap);
     }
 
     public void start(Stage stage) {
@@ -75,7 +75,7 @@ public class GUI extends Application {
         //Canvas objekter
         Canvas canvas = new Canvas(800, 600);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        bob.setGraphicsContext(gc);
+        picture.setGraphicsContext(gc);
 
         //MAINPANEL
         VBox mainPanel = new VBox();
@@ -237,7 +237,7 @@ public class GUI extends Application {
 
         // Event til at anvende og checke indtastede værdier
         buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, bob);
+                tooBigPopulationLabel, population0Label, appliedLabel, picture);
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);
@@ -248,8 +248,8 @@ public class GUI extends Application {
             if (file != null) {
                 try {
                     if (sim.importMap(file)) {
-                        visualMap = bob.resizeImage(file, 20);
-                        bob.setBackground(visualMap);
+                        visualMap = picture.resizeImage(file, 20);
+                        picture.setBackground(visualMap);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -306,7 +306,7 @@ public class GUI extends Application {
         root.getChildren().addAll(simWindow, menu);
 
         //Vis baggrundsbilledet
-        bob.drawBackground();
+        picture.drawBackground();
 
         final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */
 
@@ -323,14 +323,14 @@ public class GUI extends Application {
 
                 if (sim.isSimulationActive()) {
                     //Vis baggrund (hvilket overskriver forrige frame
-                    bob.drawBackground();
+                    picture.drawBackground();
 
                     //Reset personData tekst
                     personData.setText("");
 
                     //Tegn alle personer og print deres info
                     for (Person p : sim.getPeople()) {
-                        bob.drawPerson(p);
+                        picture.drawPerson(p);
                         personData.setText(personData.getText() + "\n " + p);
                     }
 

@@ -48,7 +48,7 @@ public class ButtonCalls {
     }
 
     void applyVariable(Button applySettings, Button runButton, NumberTextField susceptibleAmount, NumberTextField infectedAmount,
-                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, BobRoss bob) {
+                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, Draw bob) {
         applySettings.setOnMouseClicked(event -> {
             int susceptibles = Integer.parseInt(susceptibleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());

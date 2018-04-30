@@ -37,7 +37,7 @@ public class Simulator {
     private boolean simulationHasBeenInitialised;
     private boolean simulationIsActive;
 
-    private double tickTime = 0.2;
+    private double tickTime = 0.05;
     private double lastTick = 0;
 
     private int lastGraphUpdate;
@@ -205,6 +205,7 @@ public class Simulator {
             return;
 
         if (currentTime > lastTick + tickTime) {
+            int currentTick = clock.getCurrentTick();
             //Opdater positionen og helbredet for personen
             for (Person p : people) {
                 p.updateDisease(currentTime);
@@ -212,9 +213,9 @@ public class Simulator {
                 p.updateMovement();
             }
 
-            if (clock.getCurrentTick() > lastGraphUpdate + GUI.lineChart.ticksPerPoint) {
+            if (currentTick > lastGraphUpdate + GUI.lineChart.ticksPerPoint) {
                 GUI.lineChart.updateLineChart();
-                lastGraphUpdate = clock.getCurrentTick();
+                lastGraphUpdate = currentTick;
             }
 
             clock.tick();
@@ -223,7 +224,7 @@ public class Simulator {
 
         for (Person p : people) {
             //opdater skærmpositioner
-            p.updateScreenPosition(currentTime - lastTick);
+            p.updateScreenPosition((currentTime - lastTick)/tickTime);
         }
     }
 

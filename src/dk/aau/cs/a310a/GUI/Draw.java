@@ -31,7 +31,7 @@ public class Draw {
     Image background;
     GraphicsContext gc;
 
-    boolean debugMode = false;
+    boolean debugMode = true;
 
     public Draw() {
         crossPoints = new Vector[12];

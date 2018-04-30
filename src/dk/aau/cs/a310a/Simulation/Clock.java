@@ -1,6 +1,8 @@
 package dk.aau.cs.a310a.Simulation;
 
 public class Clock {
+    int minsPerTick = 10;
+
     int currentTick;
     Time currentTime;
 
@@ -16,7 +18,12 @@ public class Clock {
 
     public void tick() {
         currentTick++;
-        currentTime.addMinutes(10);
+        currentTime.addMinutes(minsPerTick);
+    }
+
+    public int ticksUntil(int hour) {
+        int totalMinutes = currentTime.hours * 60 + currentTime.minutes;
+        return (totalMinutes - (hour * 60)) / minsPerTick;
     }
 
     public int getGraphTime() {

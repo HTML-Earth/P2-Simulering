@@ -19,7 +19,9 @@ public class Person {
 
     private boolean hasDestination;
 
-    private int placeTimeLeft = 0;
+    private int workHour = 8;
+    private int homeHour = 15;
+    private int distanceToWork;
 
     private String debugText = "";
 
@@ -45,6 +47,8 @@ public class Person {
 
         initPosition(homePosition);
         this.work = workPosition;
+
+        distanceToWork = GridPosition.getPath(homePosition, workPosition).size();
 
         this.age = rand.nextInt(80) + 20;
     }
@@ -99,11 +103,6 @@ public class Person {
         if (hasDestination)
             return;
 
-        if (placeTimeLeft > 0) {
-            placeTimeLeft--;
-            return;
-        }
-
         double goToWorkChance = 0;
         double stayHomeChance = 0;
         double goToHospitalChance = 0;
@@ -126,13 +125,16 @@ public class Person {
                 break;
         }
 
-        int curHour = Simulator.clock.currentTime.hours;
-        if (6 < curHour && curHour < 15) {
-            setDestination(work);
+        if (position == home) {
+            if (Simulator.clock.ticksUntil(workHour) + distanceToWork == 0) {
+                setDestination(work);
+            }
         }
 
-        if (15 < curHour) {
-            setDestination(home);
+        if (position == work) {
+            if (Simulator.clock.ticksUntil(homeHour) + distanceToWork == 0) {
+                setDestination(home);
+            }
         }
 
         /*
@@ -170,7 +172,6 @@ public class Person {
 
         if (position.equals(destination)) {
             hasDestination = false;
-            placeTimeLeft = 5;
         }
     }
 
@@ -228,7 +229,7 @@ public class Person {
     }
 
     public boolean isMoving() {
-        return !(placeTimeLeft > 0);
+        return !(position.equals(destination));
     }
 
     public health getCurrentHealth() {
@@ -253,10 +254,10 @@ public class Person {
     }
 
     public String getDebugText() {
-        if (hasDestination)
+        /*if (hasDestination && currentPath != null)
             return "" + currentPath.size() + " " + debugText;
-        else
-            return "[" + placeTimeLeft + "] " + debugText;
+        else return debugText;*/
+        return "" + distanceToWork;
     }
 
     public ArrayDeque<GridPosition> getCurrentPath() {

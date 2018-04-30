@@ -1,6 +1,10 @@
 package dk.aau.cs.a310a.Grid;
 
+import dk.aau.cs.a310a.Simulation.Simulator;
+
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class GridPosition {
@@ -43,6 +47,49 @@ public class GridPosition {
     public static int distance(GridPosition a, GridPosition b) {
         double distance = Math.sqrt(Math.pow(b.x - a.x, 2)+Math.pow(b.y-a.y,2));
         return (int)distance;
+    }
+
+    public static ArrayDeque<GridPosition> getPath(GridPosition start, GridPosition end) {
+        ArrayDeque<GridPosition> path = new ArrayDeque<>();
+
+        if (start != end) {
+            //BREADTH FIRST SEARCH
+            ArrayDeque<GridPosition> frontier = new ArrayDeque<GridPosition>();
+            frontier.add(start);
+
+            HashMap<GridPosition, GridPosition> cameFrom = new HashMap<>();
+            cameFrom.put(start, null);
+
+            while (!frontier.isEmpty()) {
+                GridPosition current = frontier.removeFirst();
+                if (current == end) {
+                    break;
+                }
+
+                for (GridPosition next : GridPosition.getNeighbours(current)) {
+                    if (!cameFrom.containsKey(next) && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
+                        frontier.add(next);
+                        cameFrom.put(next, current);
+                    }
+                }
+            }
+
+            //FOLLOW PATH
+
+            GridPosition current = end;
+
+            int i = 0;
+            while (current != start && i < 200) {
+                i++;
+                if (current != null) {
+                    path.add(current);
+                    current = cameFrom.get(current);
+                }
+            }
+        }
+
+        path.add(start);
+        return path;
     }
 
     @Override

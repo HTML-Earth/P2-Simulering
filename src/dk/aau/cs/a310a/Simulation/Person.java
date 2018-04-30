@@ -217,51 +217,14 @@ public class Person {
             System.out.println("already have destination");
             return;
         }
-        if (position == destination) {
-            return;
+
+        currentPath = GridPosition.getPath(position, destination);
+
+        if (currentPath.size() > 1) {
+            this.destination = destination;
+            hasDestination = true;
+
         }
-
-        //BREADTH FIRST SEARCH
-        ArrayDeque<GridPosition> frontier = new ArrayDeque<GridPosition>();
-        frontier.add(position);
-
-        HashMap<GridPosition, GridPosition> cameFrom = new HashMap<>();
-        cameFrom.put(position, null);
-
-        while(!frontier.isEmpty()) {
-            GridPosition current = frontier.removeFirst();
-            if (current == destination) {
-                break;
-            }
-
-            for (GridPosition next : GridPosition.getNeighbours(current)) {
-                if (!cameFrom.containsKey(next) && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
-                    frontier.add(next);
-                    cameFrom.put(next, current);
-                }
-            }
-        }
-
-        //FOLLOW PATH
-
-        GridPosition current = destination;
-        ArrayDeque<GridPosition> path = new ArrayDeque<>();
-
-        int i = 0;
-        while (current != position && i < 200) {
-            i++;
-            if (current != null) {
-                path.add(current);
-                current = cameFrom.get(current);
-            }
-        }
-        path.add(position);
-
-        currentPath = path;
-
-        this.destination = destination;
-        hasDestination = true;
-
     }
 
     public boolean isMoving() {

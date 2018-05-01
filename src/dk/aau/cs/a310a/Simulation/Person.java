@@ -23,6 +23,8 @@ public class Person {
     private int homeHour = 15;
     private int distanceToWork;
 
+    private int departureTimeModifier = 0;
+
     private String debugText = "";
 
     //midlertidige positioner
@@ -49,6 +51,8 @@ public class Person {
         this.work = workPosition;
 
         distanceToWork = GridPosition.getPath(homePosition, workPosition).size();
+
+        setDepartureTimeModifier();
 
         this.age = rand.nextInt(80) + 20;
     }
@@ -126,13 +130,13 @@ public class Person {
         }
 
         if (position == home) {
-            if (Simulator.clock.ticksUntil(workHour) + distanceToWork == 0) {
+            if (Simulator.clock.ticksUntil(workHour) + distanceToWork + departureTimeModifier == 0) {
                 setDestination(work);
             }
         }
 
         if (position == work) {
-            if (Simulator.clock.ticksUntil(homeHour) + distanceToWork == 0) {
+            if (Simulator.clock.ticksUntil(homeHour) + distanceToWork + departureTimeModifier == 0) {
                 setDestination(home);
             }
         }
@@ -224,12 +228,17 @@ public class Person {
         if (currentPath.size() > 1) {
             this.destination = destination;
             hasDestination = true;
-
         }
+
+        setDepartureTimeModifier();
     }
 
     public boolean isMoving() {
         return !(position.equals(destination));
+    }
+
+    void setDepartureTimeModifier() {
+        departureTimeModifier = rand.nextInt(10) - 5;
     }
 
     public health getCurrentHealth() {
@@ -240,7 +249,7 @@ public class Person {
         this.currentHealth = health.Infected;
         this.disease = disease;
         this.tickInfected = Simulator.clock.getCurrentTick();
-        this.ticksBeforeRecover = rand.nextInt(430) + 144;
+        this.ticksBeforeRecover = rand.nextInt(4300) + 1440;
     }
 
     public void influenzaRecover(int currentTick) {

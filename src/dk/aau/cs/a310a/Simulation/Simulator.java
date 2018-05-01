@@ -37,7 +37,9 @@ public class Simulator {
     private boolean simulationHasBeenInitialised;
     private boolean simulationIsActive;
 
-    private double tickTime = 0.05;
+    private double slowTickTime = 0.05;
+    private double fastTickTime = 0.001;
+    private double tickTime = slowTickTime;
     private double lastTick = 0;
 
     private int lastGraphUpdate;
@@ -224,8 +226,16 @@ public class Simulator {
 
         for (Person p : people) {
             //opdater skærmpositioner
-            p.updateScreenPosition((currentTime - lastTick)/tickTime);
+            p.updateScreenPosition((currentTime-lastTick)*(1/tickTime));
         }
+
+        //Kør simulationen langsommere når folk skal bevæge sig
+        int hour = clock.currentTime.hours;
+
+        if (hour > 6 && hour < 9 || hour > 13 && hour < 16)
+            tickTime = slowTickTime;
+        else
+            tickTime = fastTickTime;
     }
 
     public boolean isSimulationActive() {

@@ -14,7 +14,7 @@ public class LiveLineChart {
     XYChart.Series<Integer, Integer> sSeries;
     XYChart.Series<Integer, Integer> iSeries;
     XYChart.Series<Integer, Integer> rSeries;
-    public final int ticksPerPoint = 144;
+    public final int ticksPerPoint = 1440;
 
     public LineChart createLineChart() {
         NumberAxis xAxis = new NumberAxis();

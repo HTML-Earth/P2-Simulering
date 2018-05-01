@@ -1,7 +1,7 @@
 package dk.aau.cs.a310a.Simulation;
 
 public class Clock {
-    int minsPerTick = 10;
+    int minsPerTick = 1;
 
     int currentTick;
     Time currentTime;

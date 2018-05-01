@@ -31,6 +31,11 @@ public class Person {
 
     private boolean stayingHome;
 
+    private boolean isVaccinated;
+    private boolean usesHandSanitizer;
+    private boolean coughsInSleeve;
+    private boolean staysHome;
+
     private String debugText = "";
 
     //midlertidige positioner

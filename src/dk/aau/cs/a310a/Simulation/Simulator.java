@@ -37,6 +37,8 @@ public class Simulator {
     private boolean simulationHasBeenInitialised;
     private boolean simulationIsActive;
 
+    private boolean newDay = true;
+
     private double slowTickTime = 0.05;
     private double fastTickTime = 0.001;
     private double tickTime = slowTickTime;
@@ -196,6 +198,7 @@ public class Simulator {
     public void stopSimulation() {
         simulationIsActive = false;
         simulationHasBeenInitialised = false;
+        newDay = true;
         for (Person p : people) {
             p = null;
         }
@@ -205,6 +208,15 @@ public class Simulator {
     public void simulate(double currentTime, double deltaTime) {
         if (!simulationIsActive)
             return;
+
+        int hour = clock.currentTime.hours;
+
+        if (newDay && hour == 0) {
+            for (Person p : people)
+                p.dailyUpdate();
+
+            newDay = false;
+        }
 
         if (currentTime > lastTick + tickTime) {
             int currentTick = clock.getCurrentTick();
@@ -230,7 +242,6 @@ public class Simulator {
         }
 
         //Kør simulationen langsommere når folk skal bevæge sig
-        int hour = clock.currentTime.hours;
 
         if (hour > 6 && hour < 9 || hour > 13 && hour < 16)
             tickTime = slowTickTime;

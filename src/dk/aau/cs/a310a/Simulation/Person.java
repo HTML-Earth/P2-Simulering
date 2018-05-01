@@ -22,8 +22,14 @@ public class Person {
     private int workHour = 8;
     private int homeHour = 15;
     private int distanceToWork;
+    private int distanceToHospital;
 
     private int departureTimeModifier = 0;
+
+    private boolean beenToHospital = false;
+    private boolean goingToHospital;
+
+    private boolean stayingHome;
 
     private String debugText = "";
 
@@ -36,6 +42,7 @@ public class Person {
     //permanente positioner
     private GridPosition home;
     private GridPosition work;
+    private GridPosition hospital;
 
     //display positioner
     private Vector screenPosition;
@@ -50,7 +57,11 @@ public class Person {
         initPosition(homePosition);
         this.work = workPosition;
 
+        int randomHospital = rand.nextInt(Simulator.theSimulator.getHospitals().size());
+        hospital = Simulator.theSimulator.getHospitals().get(randomHospital);
+
         distanceToWork = GridPosition.getPath(homePosition, workPosition).size();
+        distanceToHospital = GridPosition.getPath(homePosition, hospital).size();
 
         setDepartureTimeModifier();
 
@@ -100,6 +111,42 @@ public class Person {
             p.infect(disease);
     }
 
+    public void dailyUpdate() {
+        if (beenToHospital) {
+            goingToHospital = false;
+            return;
+        }
+
+        double goToHospitalChance = 0;
+        double stayHomeChance = 0;
+
+        switch (currentHealth) {
+            case Susceptible:
+                goToHospitalChance = 0.005;
+                stayHomeChance = 0.01;
+                break;
+            case Infected:
+                goToHospitalChance = 0.5;
+                stayHomeChance = 0.1;
+                break;
+            case Recovered:
+                goToHospitalChance = 0.001;
+                stayHomeChance = 0.001;
+                break;
+            case Dead:
+                goToHospitalChance = 1;
+                stayHomeChance = 1;
+                break;
+        }
+
+        stayingHome = (rand.nextDouble() < stayHomeChance);
+
+        goingToHospital = (rand.nextDouble() < goToHospitalChance);
+
+        if (goingToHospital)
+            beenToHospital = true;
+    }
+
     public void updateDestination() {
         if (currentHealth == health.Dead)
             return;
@@ -107,31 +154,19 @@ public class Person {
         if (hasDestination)
             return;
 
-        double goToWorkChance = 0;
-        double stayHomeChance = 0;
-        double goToHospitalChance = 0;
-
-        switch (currentHealth) {
-            case Susceptible:
-                goToWorkChance = 0.4;
-                stayHomeChance = 0.1;
-                goToHospitalChance = 0.01;
-                break;
-            case Infected:
-                goToWorkChance = 0.3;
-                stayHomeChance = 0.8;
-                goToHospitalChance = 0.9;
-                break;
-            case Recovered:
-                goToWorkChance = 0.5;
-                stayHomeChance = 0.1;
-                goToHospitalChance = 0.001;
-                break;
-        }
-
         if (position == home) {
-            if (Simulator.clock.ticksUntil(workHour) + distanceToWork + departureTimeModifier == 0) {
-                setDestination(work);
+            if (!stayingHome) {
+                if (goingToHospital)
+                {
+                    if (Simulator.clock.ticksUntil(workHour) + distanceToHospital + departureTimeModifier == 0) {
+                        setDestination(hospital);
+                    }
+                }
+                else {
+                    if (Simulator.clock.ticksUntil(workHour) + distanceToWork + departureTimeModifier == 0) {
+                        setDestination(work);
+                    }
+                }
             }
         }
 
@@ -141,19 +176,11 @@ public class Person {
             }
         }
 
-        /*
-        if (rand.nextDouble() < goToWorkChance) {
-            setDestination(work);
+        if (position == hospital) {
+            if (Simulator.clock.ticksUntil(homeHour) + distanceToHospital + departureTimeModifier == 0) {
+                setDestination(home);
+            }
         }
-        else if (rand.nextDouble() < stayHomeChance) {
-            setDestination(home);
-        }
-        else if (rand.nextDouble() < goToHospitalChance) {
-            setDestination(Simulator.placeType.Hospital);
-        }
-        else {
-            setDestination(Simulator.placeType.House);
-        }*/
     }
 
     public void updateMovement() {

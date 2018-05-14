@@ -1,4 +1,4 @@
-# P2-Simulation
+﻿# P2-Simulation
 The program is used to simulate the spread of the flu, over a small population (a max of 2000 people).  
 The program was created as part of a study project, during the second semester of computer science at AAU.  
 The study belongs to group dat310a.  
@@ -8,6 +8,7 @@ When you first open the program, you will be presented with a menu, containing s
 Once values have been entered hit apply and press start to begin the simulation. You will need to hit apply in order use your values.  
 If the simulation has been started you are able to continue with what was previously the start button. If you wish to restart hit apply again.  
 The boxes are separated into two sections.
+
 ### SIR-Options.
 These values represent start values in terms of the amount of people to be simulated.  
 Susceptible: The start value for the amount of people who have yet to contract the flu and therefore are susceptible.  
@@ -32,6 +33,8 @@ Just above the textfield is overall statistics about the current simulation loca
 - Recovered marked as yellow circles, are immune to being infected
 - Dead are marked with a red cross
 
+## Extra maps
+The resource folder includes the default city map plus two extra examples. The default city can be swapped to an example by changing its name to "city".
 
 ## Credits
 Pictures shown during the simulation are drawn by the project group (dat310a).

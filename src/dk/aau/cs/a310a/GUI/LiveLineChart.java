@@ -14,7 +14,7 @@ public class LiveLineChart {
     XYChart.Series<Integer, Integer> sSeries;
     XYChart.Series<Integer, Integer> iSeries;
     XYChart.Series<Integer, Integer> rSeries;
-    public final int ticksPerPoint = 1440;
+    public final int ticksPerPoint = 60;
 
     public LineChart createLineChart() {
         NumberAxis xAxis = new NumberAxis();
@@ -27,6 +27,7 @@ public class LiveLineChart {
         lineChart.setData(chartData);
         lineChart.setTitle("Live Zombe");
         lineChart.setAnimated(false);
+        lineChart.setCreateSymbols(false);
         return lineChart;
     }
 
@@ -37,8 +38,7 @@ public class LiveLineChart {
     }
 
     public void updateLineChart() {
-
-        Integer tick = Simulator.clock.getGraphTime();
+        Double tick = Simulator.clock.getGraphTime();
         int susceptible = Simulator.theSimulator.healthCount(Person.health.Susceptible);
         int infected = Simulator.theSimulator.healthCount(Person.health.Infected);
         int recovered = Simulator.theSimulator.healthCount(Person.health.Recovered);

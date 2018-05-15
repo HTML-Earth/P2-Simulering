@@ -26,8 +26,8 @@ public class Clock {
         return (totalMinutes - (hour * 60)) / minsPerTick;
     }
 
-    public int getGraphTime() {
-        return currentTime.days;
+    public double getGraphTime() {
+        return currentTime.days + (currentTime.hours / 24.0);
     }
 
     public String getTimeString() {

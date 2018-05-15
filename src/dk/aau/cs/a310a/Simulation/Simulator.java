@@ -68,7 +68,9 @@ public class Simulator {
     }
 
     public boolean importMap(String resourceUrl) throws IOException {
-        File file = new File(getClass().getResource("/maps/" + resourceUrl).getFile());
+        String filePath = getClass().getResource("/maps/" + resourceUrl).getFile();
+        filePath = filePath.replace("%20", " ");
+        File file = new File(filePath);
         return importMap(file);
     }
 

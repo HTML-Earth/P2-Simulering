@@ -150,8 +150,7 @@ public class Draw {
     }
 
     public Image resizeImage(String resourceUrl, int scale) throws IOException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(resourceUrl).getFile());
+        File file = new File(getClass().getResource("/maps/" + resourceUrl).getFile());
         return resizeImage(file, scale);
     }
 

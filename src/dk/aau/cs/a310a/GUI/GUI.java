@@ -49,10 +49,10 @@ public class GUI extends Application {
     public void init() throws IOException {
         theGUI = this;
         sim = new Simulator();
-        sim.importMap("city.png");
+        sim.importMap("map01.png");
 
         picture = new Draw();
-        visualMap = picture.resizeImage("city.png", 20);
+        visualMap = picture.resizeImage("map01.png", 20);
         picture.setBackground(visualMap);
     }
 

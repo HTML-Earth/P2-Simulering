@@ -17,8 +17,8 @@ public class LiveLineChart {
     public final int ticksPerPoint = 60;
 
     public LineChart createLineChart() {
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
+        NumberAxis xAxis = new NumberAxis("Days", 0, 6, 1);
+        NumberAxis yAxis = new NumberAxis("People", 0, 100, 25);
         //yAxis.setForceZeroInRange(false)
 
         lineChart = new LineChart(xAxis, yAxis);

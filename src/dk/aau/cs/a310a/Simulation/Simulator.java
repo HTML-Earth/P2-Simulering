@@ -280,7 +280,11 @@ public class Simulator {
                 lastGraphUpdate = currentTick;
             }
 
+            int day = clock.currentTime.days;
             clock.tick();
+            if (day < clock.currentTime.days)
+                newDay = true;
+
             lastTick = currentTime;
         }
 

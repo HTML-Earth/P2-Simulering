@@ -8,7 +8,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 public class Simulator {
     public static Simulator theSimulator;
@@ -16,7 +19,9 @@ public class Simulator {
     //Tid
     public static Clock clock;
 
-    public enum placeType {House, Work, Hospital, Road, Grass};
+    public enum placeType {House, Work, Hospital, Road, Grass}
+
+    ;
 
     //Området der simuleres på
     private HashMap<GridPosition, placeType> grid;
@@ -66,11 +71,12 @@ public class Simulator {
         simulationHasBeenInitialised = false;
         simulationIsActive = false;
     }
-    public void vaccinatePeople(int vaccinePercent) {
+
+    public void vaccinatePeople(int vaccinePercent, int infectedAmount) {
         //Tilføj procent variabler til personer
         //sætter antal procent som er vaccineret, antallet er procent og svarer til antal personer pr. hundrede, personerne er valgt tilfældigt
         //TODO: måske while loop?
-        for (int i = 0; i< (vaccinePercent * people.size()/100); i++) {
+        for (int i = 0; i < (vaccinePercent * (people.size() - infectedAmount) / 100); i++) {
             int randPerson = rand.nextInt(people.size());
             if (!people.get(randPerson).getVaccinated() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
                 people.get(randPerson).setVaccinated(true);
@@ -81,9 +87,9 @@ public class Simulator {
     }
 
     public void handsanitizePeople(int useHandsanitizerPercent) {
-        for (int i = 0; i< (useHandsanitizerPercent * people.size()/100); i++) {
+        for (int i = 0; i < (useHandsanitizerPercent *people.size() / 100); i++) {
             int randPerson = rand.nextInt(people.size());
-            if (!people.get(randPerson).getUsesHandSanitizer() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+            if (!people.get(randPerson).getUsesHandSanitizer()) {
                 people.get(randPerson).setUsesHandSanitizer(true);
             } else {
                 i--;
@@ -92,9 +98,9 @@ public class Simulator {
     }
 
     public void coverCoughPeople(int coverCoughPercent) {
-        for (int i = 0; i< (coverCoughPercent * people.size()/100); i++) {
+        for (int i = 0; i < (coverCoughPercent * people.size() / 100); i++) {
             int randPerson = rand.nextInt(people.size());
-            if (!people.get(randPerson).getCoughsInSleeve() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+            if (!people.get(randPerson).getCoughsInSleeve()) {
                 people.get(randPerson).setCoughsInSleeve(true);
             } else {
                 i--;
@@ -103,8 +109,7 @@ public class Simulator {
     }
 
     public void stayHomePeople(int stayHomePercent) {
-        //TODO: måske while loop?
-        for (int i = 0; i< (stayHomePercent * people.size()/100); i++) {
+        for (int i = 0; i < (stayHomePercent * people.size() / 100); i++) {
             int randPerson = rand.nextInt(people.size());
             if (!people.get(randPerson).getStaysHome()) {
                 people.get(randPerson).setStaysHome(true);
@@ -200,7 +205,7 @@ public class Simulator {
         return true;
     }
 
-    public void initialiseSimulation(int susceptibleAmount, int infectedAmount) {
+    public void initialiseSimulation(int peopleAmount, int infectedAmount) {
         //ny influenza
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
@@ -212,13 +217,13 @@ public class Simulator {
         lastGraphUpdate = -GUI.lineChart.ticksPerPoint;
 
         //opret personer
-        addPeople(susceptibleAmount, infectedAmount);
+        addPeople(peopleAmount, infectedAmount);
 
         simulationHasBeenInitialised = true;
     }
 
-    public void addPeople(int susceptibles, int infecteds) {
-        for (int i = 0; i < susceptibles + infecteds; i++) {
+    public void addPeople(int totalpeople, int infecteds) {
+        for (int i = 0; i < totalpeople; i++) {
             int randomHouse = rand.nextInt(houses.size());
             int randomWork = rand.nextInt(workplaces.size());
 
@@ -290,7 +295,7 @@ public class Simulator {
 
         for (Person p : people) {
             //opdater skærmpositioner
-            p.updateScreenPosition((currentTime-lastTick)*(1/tickTime));
+            p.updateScreenPosition((currentTime - lastTick) * (1 / tickTime));
         }
 
         //Kør simulationen langsommere når folk skal bevæge sig

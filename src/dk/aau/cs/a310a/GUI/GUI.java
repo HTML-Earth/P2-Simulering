@@ -128,9 +128,9 @@ public class GUI extends Application {
 
         scrollPane.setContent(personData);
 
-        //Graf med statistikker
+        //PLACEHOLDER GRAF
         lineChart = new LiveLineChart();
-        LineChart chart = lineChart.createLineChart();
+        LineChart chart = lineChart.createLineChart(100);
         styler.StyleChart(chart);
 
         //Graf og canvas tilføjes til main panel
@@ -143,7 +143,6 @@ public class GUI extends Application {
         simWindow.getChildren().addAll(mainPanel, sidePanel);
         simWindow.setAlignment(Pos.BOTTOM_LEFT);
 
-        //Simwindow bliver blurred
         //Simwindow bliver blurred
         BoxBlur boxblur = new BoxBlur();
         boxblur.setHeight(5);
@@ -179,7 +178,7 @@ public class GUI extends Application {
 
 
         // Menu - labels til beskrivelse
-        Label susceptibleLabel = new Label("Susceptible:");
+        Label susceptibleLabel = new Label("Population:");
         Label infectedLabel = new Label("Infected:");
         Label appliedLabel = new Label("Population applied!");
         Label titleLabel = new Label("Zombe");
@@ -191,7 +190,8 @@ public class GUI extends Application {
         Label coverMouthLabel = new Label(" - cover mouth when coughing?");
         Label stayAtHomeLabel = new Label(" - stays at home after symptoms?");
         Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
-        Label population0Label = new Label("Error: Susceptibles and infected can't be 0");
+        Label population0Label = new Label("Error: Population and infected can't be 0");
+        Label infectedOverPopLabel = new Label("Error: Infected must be less than population");
 
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
@@ -199,11 +199,13 @@ public class GUI extends Application {
         spreadLabel.setTextFill(Color.WHITE);
         tooBigPopulationLabel.setTextFill(new Color(1,0.3,0.3,1));
         population0Label.setTextFill(new Color(1,0.3,0.3,1));
+        infectedOverPopLabel.setTextFill(new Color(1,0.3,0.3,1));
 
 
         buttonMethod.cuztomizeLabel(appliedLabel, 200, 150, 20);
         buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 200, 150, 20);
         buttonMethod.cuztomizeLabel(population0Label, 200, 150, 20);
+        buttonMethod.cuztomizeLabel(infectedOverPopLabel, 200, 150, 20);
 
         buttonMethod.cuztomizeLabel(sirLabel, -260, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
         buttonMethod.cuztomizeLabel(spreadLabel, -260 + 400, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
@@ -225,16 +227,23 @@ public class GUI extends Application {
         Button imageButton = new Button("Upload custom image");
 
         //Tooltip for <1000 personer
-        Tooltip lessthan1000 = new Tooltip("A number between 1 - 999");
+        Tooltip lessthan1000 = new Tooltip("A number between 1 - 1000");
+
+        //Tooltop for infected
+        Tooltip lessthanpop = new Tooltip("A number over 0 and under population");
 
         lessthan1000.setStyle("-fx-background-color: Grey");
+        lessthanpop.setStyle("-fx-background-color: Grey");
 
         Tooltip.install(susceptibleAmount, lessthan1000);
-        Tooltip.install(infectedAmount, lessthan1000);
+        Tooltip.install(infectedAmount, lessthanpop);
 
         // Event til at anvende og checke indtastede værdier fra menu
-        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent);
+        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount,
+                sim, menu,
+                tooBigPopulationLabel, population0Label, infectedOverPopLabel, appliedLabel,
+                picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent,
+                this, styler, mainPanel);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);

@@ -16,9 +16,9 @@ public class LiveLineChart {
     XYChart.Series<Integer, Integer> rSeries;
     public final int ticksPerPoint = 60;
 
-    public LineChart createLineChart() {
+    public LineChart createLineChart(int upperBound) {
         NumberAxis xAxis = new NumberAxis("Days", 0, 6, 1);
-        NumberAxis yAxis = new NumberAxis("People", 0, 100, 25);
+        NumberAxis yAxis = new NumberAxis("People", 0, upperBound, 25);
         //yAxis.setForceZeroInRange(false)
 
         lineChart = new LineChart(xAxis, yAxis);

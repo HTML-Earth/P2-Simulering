@@ -146,9 +146,9 @@ public class Person {
         //hvis personen bevæger sig, så er der mindre infektionsrisiko
         double movingPenalty = (!isMoving() && !p.isMoving()) ? 1 : disease.getMovingMultiplier();
 
-        //Hvis personen er vaccineret er der mindre risiko
+        //Hvis personen er vaccineret er der mindre risiko, 0,4 svarer til 60% reduktion i risiko
         if (p.getVaccinated()) {
-            vaccineReduceRisk = 0;
+            vaccineReduceRisk = 0.4;
         }
 
         if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty * vaccineReduceRisk)

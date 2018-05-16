@@ -235,7 +235,7 @@ public class GUI extends Application {
 
         // Event til at anvende og checke indtastede værdier fra menu
         buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent, sanitizerPercent);
+                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent, sanitizerPercent, stayHomePercent);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);

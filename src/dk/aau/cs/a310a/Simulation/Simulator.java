@@ -72,7 +72,7 @@ public class Simulator {
         //TODO: måske while loop?
         for (int i = 0; i< (vaccinePercent * people.size()/100); i++) {
             int randPerson = rand.nextInt(people.size());
-            if (people.get(randPerson).getVaccinated() == false && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+            if (!people.get(randPerson).getVaccinated() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
                 people.get(randPerson).setVaccinated(true);
             } else {
                 i--;
@@ -84,7 +84,7 @@ public class Simulator {
         //TODO: måske while loop?
         for (int i = 0; i< (useHandsanitizerPercent * people.size()/100); i++) {
             int randPerson = rand.nextInt(people.size());
-            if (people.get(randPerson).getUsesHandSanitizer() == false && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+            if (!people.get(randPerson).getUsesHandSanitizer() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
                 people.get(randPerson).setUsesHandSanitizer(true);
             } else {
                 i--;
@@ -92,7 +92,17 @@ public class Simulator {
         }
     }
 
-
+    public void stayHomePeople(int stayHomePercent) {
+        //TODO: måske while loop?
+        for (int i = 0; i< (stayHomePercent * people.size()/100); i++) {
+            int randPerson = rand.nextInt(people.size());
+            if (!people.get(randPerson).getStaysHome()) {
+                people.get(randPerson).setStaysHome(true);
+            } else {
+                i--;
+            }
+        }
+    }
 
     public boolean importMap(String resourceUrl) throws IOException {
         String filePath = getClass().getResource("/maps/" + resourceUrl).getFile();

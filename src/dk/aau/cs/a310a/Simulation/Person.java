@@ -167,19 +167,17 @@ public class Person {
         switch (currentHealth) {
             case Susceptible:
                 goToHospitalChance = 0.005;
-                stayHomeChance = 0.01;
                 break;
             case Infected:
                 goToHospitalChance = 0.5;
-                stayHomeChance = 0.1;
+                if (staysHome)
+                    stayHomeChance = 1;
                 break;
             case Recovered:
                 goToHospitalChance = 0.001;
-                stayHomeChance = 0.001;
                 break;
             case Dead:
                 goToHospitalChance = 1;
-                stayHomeChance = 1;
                 break;
         }
 

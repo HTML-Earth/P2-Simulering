@@ -21,6 +21,7 @@ public class Draw {
     Color infectedColor;
     Color recoveredColor;
     Color deadColor;
+    Color vaccinated;
 
     Color grassColor;
     Color roadColor;
@@ -68,6 +69,7 @@ public class Draw {
         infectedColor    = new Color(1,0,0,0.5);
         recoveredColor   = new Color(1,1,0,0.5);
         deadColor        = new Color(1,0,0,0.5);
+        vaccinated       = new Color(0, 1, 0, 0.9);
     }
 
     public void setGraphicsContext(GraphicsContext gc) {
@@ -96,6 +98,10 @@ public class Draw {
         switch (health) {
             case Susceptible:
                 color = susceptibleColor;
+                if (person.getVaccinated() == true) {
+                    color = vaccinated;
+                }
+
                 break;
             case Infected:
                 color = infectedColor;

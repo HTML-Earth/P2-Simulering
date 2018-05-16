@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class GUI extends Application {
 
@@ -144,6 +145,7 @@ public class GUI extends Application {
         simWindow.setAlignment(Pos.BOTTOM_LEFT);
 
         //Simwindow bliver blurred
+        //Simwindow bliver blurred
         BoxBlur boxblur = new BoxBlur();
         boxblur.setHeight(5);
         boxblur.setWidth(5);
@@ -237,7 +239,7 @@ public class GUI extends Application {
 
         // Event til at anvende og checke indtastede værdier
         buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, picture);
+                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent);
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);

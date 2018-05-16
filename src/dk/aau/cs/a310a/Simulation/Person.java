@@ -31,7 +31,7 @@ public class Person {
 
     private boolean stayingHome;
 
-    private boolean isVaccinated;
+    private boolean isVaccinated = false;
     private boolean usesHandSanitizer;
     private boolean coughsInSleeve;
     private boolean staysHome;
@@ -73,6 +73,38 @@ public class Person {
         this.age = rand.nextInt(80) + 20;
     }
 
+    public boolean getVaccinated() {
+        return isVaccinated;
+    }
+
+    public void setVaccinated(boolean vaccinated) {
+        isVaccinated = vaccinated;
+    }
+
+    public boolean getUsesHandSanitizer() {
+        return usesHandSanitizer;
+    }
+
+    public void setUsesHandSanitizer(boolean usesHandSanitizer) {
+        this.usesHandSanitizer = usesHandSanitizer;
+    }
+
+    public boolean getCoughsInSleeve() {
+        return coughsInSleeve;
+    }
+
+    public void setCoughsInSleeve(boolean coughsInSleeve) {
+        this.coughsInSleeve = coughsInSleeve;
+    }
+
+    public boolean getStaysHome() {
+        return staysHome;
+    }
+
+    public void setStaysHome(boolean staysHome) {
+        this.staysHome = staysHome;
+    }
+
     void initPosition(GridPosition homePosition) {
         this.position = homePosition;
         this.destination = homePosition;
@@ -109,10 +141,17 @@ public class Person {
     }
 
     void tryInfect(Person p) {
+        double vaccineReduceRisk = 1;
+
         //hvis personen bevæger sig, så er der mindre infektionsrisiko
         double movingPenalty = (!isMoving() && !p.isMoving()) ? 1 : disease.getMovingMultiplier();
 
-        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty)
+        //Hvis personen er vaccineret er der mindre risiko
+        if (p.getVaccinated()) {
+            vaccineReduceRisk = 0;
+        }
+
+        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty * vaccineReduceRisk)
             p.infect(disease);
     }
 

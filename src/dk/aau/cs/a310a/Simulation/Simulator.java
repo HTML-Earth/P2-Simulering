@@ -66,6 +66,19 @@ public class Simulator {
         simulationHasBeenInitialised = false;
         simulationIsActive = false;
     }
+    public void vaccinatePeople(int vaccinePercent) {
+        //Tilføj procent variabler til personer
+        //sætter antal procent som er vaccineret, antallet er procent og svarer til antal personer pr. hundrede, personerne er valgt tilfældigt
+        //TODO: måske while loop?
+        for (int i = 0; i< (vaccinePercent * people.size()/100); i++) {
+            int randPerson = rand.nextInt(people.size());
+            if (people.get(randPerson).getVaccinated() == false) {
+                people.get(randPerson).setVaccinated(true);
+            } else {
+                i--;
+            }
+        }
+    }
 
     public boolean importMap(String resourceUrl) throws IOException {
         String filePath = getClass().getResource("/maps/" + resourceUrl).getFile();

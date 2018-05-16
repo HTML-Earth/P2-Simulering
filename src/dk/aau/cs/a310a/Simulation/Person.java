@@ -157,7 +157,7 @@ public class Person {
             handsanitizerReduceRisk = 0.8;
         }
 
-        //Reducerer med 7%
+        //Reducerer med 7%, udgangspunkt i personen som i forvejen er infected (den som smitter til person p)
         if (getCoughsInSleeve()) {
             coverReduceRisk = 0.93;
         }

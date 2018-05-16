@@ -86,10 +86,10 @@ public class Simulator {
         }
     }
 
-    public void handsanitizePeople(int useHandsanitizerPercent, int infectedAmount) {
-        for (int i = 0; i < (useHandsanitizerPercent *(people.size() - infectedAmount) / 100); i++) {
+    public void handsanitizePeople(int useHandsanitizerPercent) {
+        for (int i = 0; i < (useHandsanitizerPercent *people.size() / 100); i++) {
             int randPerson = rand.nextInt(people.size());
-            if (!people.get(randPerson).getUsesHandSanitizer() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+            if (!people.get(randPerson).getUsesHandSanitizer()) {
                 people.get(randPerson).setUsesHandSanitizer(true);
             } else {
                 i--;

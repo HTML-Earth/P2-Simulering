@@ -3,10 +3,14 @@ package dk.aau.cs.a310a.Simulation;
 import dk.aau.cs.a310a.Grid.GridPosition;
 import dk.aau.cs.a310a.Grid.Vector;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.Random;
 
 public class Person {
-    public enum health {Susceptible, Infected, Recovered, Dead};
+    public enum health {Susceptible, Infected, Recovered, Dead}
+
+    ;
 
     private health currentHealth = health.Susceptible;
     private Influenza disease;
@@ -122,9 +126,9 @@ public class Person {
             case Infected:
                 for (Person p : Simulator.theSimulator.people) {
                     //Tjek om personen er susceptible
-                    if (p.getCurrentHealth() == health.Susceptible){
+                    if (p.getCurrentHealth() == health.Susceptible) {
                         //Tjek om personerne er tæt på hinanden
-                        if (GridPosition.distance(this.position,p.getGridPosition()) < disease.getInfectionRange()){
+                        if (GridPosition.distance(this.position, p.getGridPosition()) < disease.getInfectionRange()) {
                             //Prøv at inficere personen
                             tryInfect(p);
                         }
@@ -152,8 +156,12 @@ public class Person {
         if (p.getVaccinated()) {
             vaccineReduceRisk = 0.4;
         }
-        //Reduktion på 20%
-        if (p.getUsesHandSanitizer()) {
+        //Reduktion på ca. 20%, diminishing returns hvis begge bruger
+        if (p.getUsesHandSanitizer() && this.getUsesHandSanitizer()) {
+            handsanitizerReduceRisk = 0.70;
+        } else if (p.getUsesHandSanitizer()) {
+            handsanitizerReduceRisk = 0.8;
+        } else if (this.getUsesHandSanitizer()) {
             handsanitizerReduceRisk = 0.8;
         }
 
@@ -209,13 +217,11 @@ public class Person {
 
         if (position == home) {
             if (!stayingHome) {
-                if (goingToHospital)
-                {
+                if (goingToHospital) {
                     if (Simulator.clock.ticksUntil(workHour) + distanceToHospital + departureTimeModifier == 0) {
                         setDestination(hospital);
                     }
-                }
-                else {
+                } else {
                     if (Simulator.clock.ticksUntil(workHour) + distanceToWork + departureTimeModifier == 0) {
                         setDestination(work);
                     }
@@ -271,7 +277,7 @@ public class Person {
         return position;
     }
 
-    public void setDestination (Simulator.placeType place) {
+    public void setDestination(Simulator.placeType place) {
         List<GridPosition> places;
 
         switch (place) {
@@ -291,8 +297,7 @@ public class Person {
 
         if (places.size() < 1) {
             System.out.println("no places found");
-        }
-        else {
+        } else {
             setDestination(places.get(rand.nextInt(places.size())));
         }
     }
@@ -333,7 +338,7 @@ public class Person {
     }
 
     public void influenzaRecover(int currentTick) {
-        if(currentTick - tickInfected > ticksBeforeRecover) {
+        if (currentTick - tickInfected > ticksBeforeRecover) {
             //Risiko for at dø
             if (rand.nextDouble() < disease.getDeathRisk(age))
                 currentHealth = health.Dead;

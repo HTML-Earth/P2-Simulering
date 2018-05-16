@@ -79,9 +79,9 @@ public class ButtonCalls {
                 sim.initialiseSimulation(people, infected);
                 //sætter personer til at være vaccineret
                 sim.vaccinatePeople(vaccinatedPercent, infected);
-                sim.handsanitizePeople(handsanitizedPercent, infected);
-                sim.coverCoughPeople(coverCoughPercent, infected);
-                sim.stayHomePeople(staysHomePercent, infected);
+                sim.handsanitizePeople(handsanitizedPercent);
+                sim.coverCoughPeople(coverCoughPercent);
+                sim.stayHomePeople(staysHomePercent);
                 runButton.setText("Start");
                 bob.drawBackground();
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);

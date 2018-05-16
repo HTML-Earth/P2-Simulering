@@ -65,11 +65,11 @@ public class Draw {
         //Middle left
         crossPoints[11] = new Vector(-0.2,0.0);
 
-        susceptibleColor = new Color(0,1,1,0.5);
-        infectedColor    = new Color(1,0,0,0.5);
-        recoveredColor   = new Color(1,1,0,0.5);
-        deadColor        = new Color(1,0,0,0.5);
-        vaccinated       = new Color(0, 1, 0, 0.9);
+        susceptibleColor = new Color(0,1,1,1);
+        infectedColor    = new Color(1,0,0,1);
+        recoveredColor   = new Color(1,1,0,1);
+        deadColor        = new Color(1,0,0,1);
+        vaccinated       = new Color(1, 1, 1, 1);
     }
 
     public void setGraphicsContext(GraphicsContext gc) {
@@ -95,29 +95,26 @@ public class Draw {
         Vector position = person.getPosition();
 
         Color color = Color.BLACK;
-        switch (health) {
-            case Susceptible:
-                color = susceptibleColor;
-                if (person.getVaccinated() == true) {
-                    color = vaccinated;
-                }
 
-                break;
-            case Infected:
-                color = infectedColor;
-                break;
-            case Recovered:
-                color = recoveredColor;
-                break;
-            case Dead:
-                color = deadColor;
-                break;
-        }
-
-        gc.setFill(color);
         if (health != Person.health.Dead) {
+
+            if (person.getVaccinated())
+                drawVaccineLine(person.getPosition());
+
+            switch (health) {
+                case Susceptible:
+                    color = susceptibleColor;
+                    break;
+                case Infected:
+                    color = infectedColor;
+                    break;
+                case Recovered:
+                    color = recoveredColor;
+                    break;
+            }
+            gc.setFill(color);
             //Tegn cirkel
-            gc.fillOval(position.x-8,position.y-8,16,16);
+            gc.fillOval(position.x-4,position.y-4,8,8);
 
             gc.setFill(Color.BLACK);
             if (debugMode) {
@@ -136,6 +133,7 @@ public class Draw {
 
         }
         else {
+            gc.setFill(deadColor);
             double[] xPoints = new double[12];
             double[] yPoints = new double[12];
 
@@ -153,6 +151,11 @@ public class Draw {
         gc.setFill(Color.LIGHTGREEN);
         gc.strokeLine(position.x,position.y,destination.x,destination.y);
         gc.fillOval(destination.x-4,destination.y-4,8,8);
+    }
+
+    public void drawVaccineLine(Vector position) {
+        gc.setFill(vaccinated);
+        gc.fillOval(position.x-6,position.y-6,12,12);
     }
 
     public Image resizeImage(String resourceUrl, int scale) throws IOException {

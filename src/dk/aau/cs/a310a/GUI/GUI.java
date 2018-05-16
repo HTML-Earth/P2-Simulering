@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 public class GUI extends Application {
 
@@ -349,6 +348,7 @@ public class GUI extends Application {
 
         Scene scene = new Scene(root, 1200, 750);
 
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

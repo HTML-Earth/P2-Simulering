@@ -229,7 +229,7 @@ public class Person {
             }
         }
 
-        if (position == hospital) {
+        if (position == hospital && currentHealth != health.Infected) {
             if (Simulator.clock.ticksUntil(homeHour) + distanceToHospital + departureTimeModifier == 0) {
                 setDestination(home);
             }

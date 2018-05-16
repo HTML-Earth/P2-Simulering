@@ -129,9 +129,9 @@ public class GUI extends Application {
 
         scrollPane.setContent(personData);
 
-        //Graf med statistikker
+        //PLACEHOLDER GRAF
         lineChart = new LiveLineChart();
-        LineChart chart = lineChart.createLineChart();
+        LineChart chart = lineChart.createLineChart(100);
         styler.StyleChart(chart);
 
         //Graf og canvas tilføjes til main panel
@@ -234,8 +234,11 @@ public class GUI extends Application {
         Tooltip.install(infectedAmount, lessthan1000);
 
         // Event til at anvende og checke indtastede værdier fra menu
-        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent);
+        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount,
+                sim, menu,
+                tooBigPopulationLabel, population0Label, appliedLabel,
+                picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent,
+                this, styler, mainPanel);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);

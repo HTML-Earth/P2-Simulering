@@ -2,6 +2,7 @@ package dk.aau.cs.a310a.GUI;
 
 import dk.aau.cs.a310a.Simulation.Simulator;
 
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
@@ -9,6 +10,7 @@ import javafx.scene.effect.Effect;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -47,8 +49,13 @@ public class ButtonCalls {
         });
     }
 
-    void applyVariable(Button applySettings, Button runButton, NumberTextField susceptibleAmount, NumberTextField infectedAmount,
-                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, Draw bob, NumberTextField vaccinePercent, NumberTextField sanitizerPercent, NumberTextField stayHomePercent, NumberTextField coverMouthPercent) {
+    void applyVariable(Button applySettings, Button runButton,
+                       NumberTextField susceptibleAmount, NumberTextField infectedAmount,
+                       Simulator sim, StackPane menu,
+                       Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, Draw bob,
+                       NumberTextField vaccinePercent, NumberTextField sanitizerPercent,
+                       NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
+                       GUI gui, Styler styler, VBox mainPanel) {
         applySettings.setOnMouseClicked(event -> {
             int susceptibles = Integer.parseInt(susceptibleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());
@@ -59,6 +66,15 @@ public class ButtonCalls {
             if (susceptibles > 0 && infected > 0 && susceptibles < 1000 && infected < 1000) {
                 runButton.setDisable(false);
                 sim.stopSimulation();
+
+                //Graf med statistikker
+                gui.lineChart = new LiveLineChart();
+                LineChart chart = gui.lineChart.createLineChart(susceptibles + infected);
+                styler.StyleChart(chart);
+
+                //Graf og canvas tilføjes til main panel
+                mainPanel.getChildren().set(0, chart);
+
                 //Opretter personer
                 sim.initialiseSimulation(susceptibles, infected);
                 //sætter personer til at være vaccineret

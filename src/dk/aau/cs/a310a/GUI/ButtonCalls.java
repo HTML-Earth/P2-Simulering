@@ -50,33 +50,33 @@ public class ButtonCalls {
     }
 
     void applyVariable(Button applySettings, Button runButton,
-                       NumberTextField susceptibleAmount, NumberTextField infectedAmount,
+                       NumberTextField peopleAmount, NumberTextField infectedAmount,
                        Simulator sim, StackPane menu,
-                       Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, Draw bob,
+                       Label tooBigPopulationLabel, Label population0Label, Label infectedOverPopLabel, Label appliedLabel, Draw bob,
                        NumberTextField vaccinePercent, NumberTextField sanitizerPercent,
                        NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
                        GUI gui, Styler styler, VBox mainPanel) {
         applySettings.setOnMouseClicked(event -> {
-            int susceptibles = Integer.parseInt(susceptibleAmount.getText());
+            int people = Integer.parseInt(peopleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());
             int vaccinatedPercent = Integer.parseInt(vaccinePercent.getText());
             int handsanitizedPercent = Integer.parseInt(sanitizerPercent.getText());
             int staysHomePercent = Integer.parseInt(stayHomePercent.getText());
             int coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
-            if (susceptibles > 0 && infected > 0 && susceptibles < 1000 && infected < 1000) {
+            if (people > 0 && infected > 0 && people <= 1000 && infected < people) {
                 runButton.setDisable(false);
                 sim.stopSimulation();
 
                 //Graf med statistikker
                 gui.lineChart = new LiveLineChart();
-                LineChart chart = gui.lineChart.createLineChart(susceptibles + infected);
+                LineChart chart = gui.lineChart.createLineChart(people);
                 styler.StyleChart(chart);
 
                 //Graf og canvas tilføjes til main panel
                 mainPanel.getChildren().set(0, chart);
 
                 //Opretter personer
-                sim.initialiseSimulation(susceptibles, infected);
+                sim.initialiseSimulation(people, infected);
                 //sætter personer til at være vaccineret
                 sim.vaccinatePeople(vaccinatedPercent);
                 sim.handsanitizePeople(handsanitizedPercent);
@@ -90,7 +90,7 @@ public class ButtonCalls {
                 }
                 menu.getChildren().add(appliedLabel);
 
-            } else if (susceptibles > 0 && infected > 0 && susceptibles >= 1000 || infected >= 1000) {
+            } else if (people > 0 && infected > 0 && people > 1000 || infected > people) {
                 if (menu.getChildren().contains(tooBigPopulationLabel)) {
                     menu.getChildren().remove(tooBigPopulationLabel);
                 }

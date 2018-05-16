@@ -200,7 +200,7 @@ public class Simulator {
         return true;
     }
 
-    public void initialiseSimulation(int susceptibleAmount, int infectedAmount) {
+    public void initialiseSimulation(int peopleAmount, int infectedAmount) {
         //ny influenza
         influenzaA = new Influenza(Influenza.influenzaType.A);
 
@@ -212,13 +212,13 @@ public class Simulator {
         lastGraphUpdate = -GUI.lineChart.ticksPerPoint;
 
         //opret personer
-        addPeople(susceptibleAmount, infectedAmount);
+        addPeople(peopleAmount, infectedAmount);
 
         simulationHasBeenInitialised = true;
     }
 
-    public void addPeople(int susceptibles, int infecteds) {
-        for (int i = 0; i < susceptibles + infecteds; i++) {
+    public void addPeople(int totalpeople, int infecteds) {
+        for (int i = 0; i < totalpeople; i++) {
             int randomHouse = rand.nextInt(houses.size());
             int randomWork = rand.nextInt(workplaces.size());
 

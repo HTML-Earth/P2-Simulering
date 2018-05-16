@@ -233,13 +233,12 @@ public class GUI extends Application {
         Tooltip.install(susceptibleAmount, lessthan1000);
         Tooltip.install(infectedAmount, lessthan1000);
 
+        // Event til at anvende og checke indtastede værdier fra menu
+        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
+                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent, sanitizerPercent);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);
-
-        // Event til at anvende og checke indtastede værdier
-        buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount, sim, menu,
-                tooBigPopulationLabel, population0Label, appliedLabel, picture, vaccinePercent, sanitizerPercent);
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);

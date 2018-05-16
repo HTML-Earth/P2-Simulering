@@ -98,9 +98,9 @@ public class Simulator {
     }
 
     public void coverCoughPeople(int coverCoughPercent, int infectedAmount) {
-        for (int i = 0; i < (coverCoughPercent * (people.size() - infectedAmount) / 100); i++) {
+        for (int i = 0; i < (coverCoughPercent * people.size() / 100); i++) {
             int randPerson = rand.nextInt(people.size());
-            if (!people.get(randPerson).getCoughsInSleeve() && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+            if (!people.get(randPerson).getCoughsInSleeve()) {
                 people.get(randPerson).setCoughsInSleeve(true);
             } else {
                 i--;
@@ -109,7 +109,7 @@ public class Simulator {
     }
 
     public void stayHomePeople(int stayHomePercent, int infectedAmount) {
-        for (int i = 0; i < (stayHomePercent * (people.size() - infectedAmount) / 100) - infectedAmount; i++) {
+        for (int i = 0; i < (stayHomePercent * (people.size() - infectedAmount) / 100); i++) {
             int randPerson = rand.nextInt(people.size());
             if (!people.get(randPerson).getStaysHome()) {
                 people.get(randPerson).setStaysHome(true);

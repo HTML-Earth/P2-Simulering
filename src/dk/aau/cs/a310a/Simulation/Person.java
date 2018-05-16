@@ -158,7 +158,7 @@ public class Person {
         }
 
         //Reducerer med 7%
-        if (p.getCoughsInSleeve()) {
+        if (getCoughsInSleeve()) {
             coverReduceRisk = 0.93;
         }
 

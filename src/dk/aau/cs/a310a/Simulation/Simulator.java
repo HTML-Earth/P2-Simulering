@@ -81,7 +81,6 @@ public class Simulator {
     }
 
     public void handsanitizePeople(int useHandsanitizerPercent) {
-        //TODO: måske while loop?
         for (int i = 0; i< (useHandsanitizerPercent * people.size()/100); i++) {
             int randPerson = rand.nextInt(people.size());
             if (people.get(randPerson).getUsesHandSanitizer() == false && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
@@ -91,6 +90,30 @@ public class Simulator {
             }
         }
     }
+
+    public void coverCoughPeople(int coverCoughPercent) {
+        for (int i = 0; i< (coverCoughPercent * people.size()/100); i++) {
+            int randPerson = rand.nextInt(people.size());
+            if (people.get(randPerson).getCoughsInSleeve() == false && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+                people.get(randPerson).setCoughsInSleeve(true);
+            } else {
+                i--;
+            }
+        }
+    }
+
+    public void stayHomePeople(int staysHomePercent) {
+        for (int i = 0; i< (staysHomePercent * people.size()/100); i++) {
+            int randPerson = rand.nextInt(people.size());
+            if (people.get(randPerson).getStaysHome() == false && people.get(randPerson).getCurrentHealth() != Person.health.Infected) {
+                people.get(randPerson).setStaysHome(true);
+            } else {
+                i--;
+            }
+        }
+    }
+
+
 
 
 

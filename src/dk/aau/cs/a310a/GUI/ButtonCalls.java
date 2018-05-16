@@ -48,12 +48,14 @@ public class ButtonCalls {
     }
 
     void applyVariable(Button applySettings, Button runButton, NumberTextField susceptibleAmount, NumberTextField infectedAmount,
-                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, Draw bob, NumberTextField vaccinePercent, NumberTextField sanitizerPercent) {
+                       Simulator sim, StackPane menu, Label tooBigPopulationLabel, Label population0Label, Label appliedLabel, Draw bob, NumberTextField vaccinePercent, NumberTextField sanitizerPercent, NumberTextField stayHomePercent, NumberTextField coverMouthPercent) {
         applySettings.setOnMouseClicked(event -> {
             int susceptibles = Integer.parseInt(susceptibleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());
             int vaccinatedPercent = Integer.parseInt(vaccinePercent.getText());
             int handsanitizedPercent = Integer.parseInt(sanitizerPercent.getText());
+            int staysHomePercent = Integer.parseInt(stayHomePercent.getText());
+            int coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
             if (susceptibles > 0 && infected > 0 && susceptibles < 1000 && infected < 1000) {
                 runButton.setDisable(false);
                 sim.stopSimulation();
@@ -62,6 +64,8 @@ public class ButtonCalls {
                 //sætter personer til at være vaccineret
                 sim.vaccinatePeople(vaccinatedPercent);
                 sim.handsanitizePeople(handsanitizedPercent);
+                sim.coverCoughPeople(coverCoughPercent);
+                sim.stayHomePeople(staysHomePercent);
                 runButton.setText("Start");
                 bob.drawBackground();
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);

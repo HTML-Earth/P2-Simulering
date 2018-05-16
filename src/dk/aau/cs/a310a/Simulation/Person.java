@@ -32,9 +32,9 @@ public class Person {
     private boolean stayingHome;
 
     private boolean isVaccinated = false;
-    private boolean usesHandSanitizer;
-    private boolean coughsInSleeve;
-    private boolean staysHome;
+    private boolean usesHandSanitizer = false;
+    private boolean coughsInSleeve = false;
+    private boolean staysHome = false;
 
     private String debugText = "";
 
@@ -142,6 +142,8 @@ public class Person {
 
     void tryInfect(Person p) {
         double vaccineReduceRisk = 1;
+        double handsanitizerReduceRisk = 1;
+        double coverReduceRisk = 1;
 
         //hvis personen bevæger sig, så er der mindre infektionsrisiko
         double movingPenalty = (!isMoving() && !p.isMoving()) ? 1 : disease.getMovingMultiplier();
@@ -150,8 +152,17 @@ public class Person {
         if (p.getVaccinated()) {
             vaccineReduceRisk = 0.4;
         }
+        //Reduktion på 20%
+        if (p.getUsesHandSanitizer()) {
+            handsanitizerReduceRisk = 0.8;
+        }
 
-        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty * vaccineReduceRisk)
+        //Reducerer med 7%
+        if (p.getCoughsInSleeve()) {
+            coverReduceRisk = 0.93;
+        }
+
+        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty * vaccineReduceRisk * handsanitizerReduceRisk * coverReduceRisk)
             p.infect(disease);
     }
 

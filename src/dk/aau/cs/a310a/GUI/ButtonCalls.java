@@ -3,6 +3,7 @@ package dk.aau.cs.a310a.GUI;
 import dk.aau.cs.a310a.Simulation.Simulator;
 
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
@@ -63,6 +64,14 @@ public class ButtonCalls {
             int handsanitizedPercent = Integer.parseInt(sanitizerPercent.getText());
             int staysHomePercent = Integer.parseInt(stayHomePercent.getText());
             int coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
+
+            //Alertbox hvis procenterne er over 100 eller under 0
+            if (!((0 <= vaccinatedPercent && vaccinatedPercent <= 100) && (0 <= handsanitizedPercent && handsanitizedPercent <= 100) && (0 <= staysHomePercent && staysHomePercent <= 100) && (0 <= coverCoughPercent && coverCoughPercent <= 100))) {
+                GUI.theGUI.displayMessage(Alert.AlertType.ERROR, "ERROR", "Invalid percentage", "Percentage must be between 0 - 100");
+                return;
+            }
+
+
             if (people > 0 && infected > 0 && people <= 1000 && infected < people) {
                 runButton.setDisable(false);
                 sim.stopSimulation();

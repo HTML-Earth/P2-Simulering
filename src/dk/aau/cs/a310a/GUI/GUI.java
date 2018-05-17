@@ -25,6 +25,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
 
@@ -229,14 +230,24 @@ public class GUI extends Application {
         //Tooltip for <1000 personer
         Tooltip lessthan1000 = new Tooltip("A number between 1 - 1000");
 
-        //Tooltop for infected
+        //Tooltip for infected
         Tooltip lessthanpop = new Tooltip("A number over 0 and under population");
+
+        //Tooltip for procenter
+        Tooltip percentTip = new Tooltip("A number between 0 - 100");
 
         lessthan1000.setStyle("-fx-background-color: Grey");
         lessthanpop.setStyle("-fx-background-color: Grey");
+        percentTip.setStyle("-fx-background-color: Grey");
 
         Tooltip.install(susceptibleAmount, lessthan1000);
         Tooltip.install(infectedAmount, lessthanpop);
+        Tooltip.install(coverMouthPercent, percentTip);
+        Tooltip.install(sanitizerPercent, percentTip);
+        Tooltip.install(stayHomePercent, percentTip);
+        Tooltip.install(vaccinePercent, percentTip);
+
+
 
         // Event til at anvende og checke indtastede værdier fra menu
         buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount,

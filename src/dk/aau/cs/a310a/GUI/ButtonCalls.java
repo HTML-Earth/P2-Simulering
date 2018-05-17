@@ -88,13 +88,14 @@ public class ButtonCalls {
                 //Graf og canvas tilføjes til main panel
                 mainPanel.getChildren().set(0, chart);
 
-                //Opretter personer
+                //Opretter personer og sygdom
                 Simulator.theSimulator.initialiseSimulation(people, infected);
                 //sætter personer til at være vaccineret
                 Simulator.theSimulator.vaccinatePeople(vaccinatedPercent, infected);
                 Simulator.theSimulator.handsanitizePeople(handsanitizedPercent);
                 Simulator.theSimulator.coverCoughPeople(coverCoughPercent);
                 Simulator.theSimulator.stayHomePeople(staysHomePercent);
+                
                 runButton.setText("Start");
                 bob.drawBackground();
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);

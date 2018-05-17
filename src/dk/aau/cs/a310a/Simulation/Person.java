@@ -8,9 +8,10 @@ import java.util.List;
 import java.util.Random;
 
 public class Person {
-    public enum health {Susceptible, Infected, Recovered, Dead}
+    public enum health {Susceptible, Infected, Recovered, Dead};
 
-    ;
+    int minDaysBeforeHospital = 1;
+    int maxDaysBeforeHospital = 2;
 
     private health currentHealth = health.Susceptible;
     private Influenza disease;
@@ -337,8 +338,14 @@ public class Person {
         this.currentHealth = health.Infected;
         this.disease = disease;
         this.tickInfected = Simulator.clock.getCurrentTick();
-        this.ticksBeforeRecover = rand.nextInt(3 * 60 * 24) + (60 * 24); // 1-4 dage
-        this.ticksBeforeHospital = rand.nextInt(60 * 24) + (60 * 24); // 1-2 dage
+        this.ticksBeforeRecover = disease.getTicksBeforeRecover();
+        this.ticksBeforeHospital = getTicksBeforeHospital();
+    }
+
+    int getTicksBeforeHospital() {
+        int ticksPerDay = 60 * 24;
+        int bound = maxDaysBeforeHospital - minDaysBeforeHospital;
+        return rand.nextInt(bound * ticksPerDay) + minDaysBeforeHospital * ticksPerDay;
     }
 
     public void influenzaRecover(int currentTick) {

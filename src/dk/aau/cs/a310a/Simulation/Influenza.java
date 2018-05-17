@@ -1,53 +1,46 @@
 package dk.aau.cs.a310a.Simulation;
 
+import java.util.Random;
+
 public class Influenza {
-    private int baseSpread;  //Beta
-    private int amountCured; //Gamma
-    private double infectionRange;
     private double infectionRisk;
+    private double infectionRange;
+
+    private double minDaysBeforeRecover;
+    private double maxDaysBeforeRecover;
+
     private double baseDeathRisk;
     private double movingMultiplier;
 
-    public enum influenzaType {A, B}
+    Random rand;
 
-    private influenzaType type;
+    public Influenza(double infectionRisk, double infectionRange,
+                     double minDaysBeforeRecover, double maxDaysBeforeRecover,
+                     double baseDeathRisk, double movingMultiplier) {
 
-    //Gør det muligt at bede om en Influenza af typen A eller B
-    public Influenza(influenzaType type) {
-        switch (type) {
-            case A:
-                this.baseSpread = 4;
-                this.amountCured = 2;
-                this.infectionRange = 2;
-                this.infectionRisk = 0.3;
-                this.baseDeathRisk = 0.000002;
-                this.movingMultiplier = 0.1;
-                break;
-            case B:
-                this.baseSpread = 3;
-                this.amountCured = 1;
-                this.infectionRange = 1;
-                this.infectionRisk = 0.2;
-                this.baseDeathRisk = 0.000002;
-                this.movingMultiplier = 0.1;
-                break;
-        }
+        rand = new Random();
+        this.infectionRisk = infectionRisk;
+        this.infectionRange = infectionRange;
+
+        this.minDaysBeforeRecover = minDaysBeforeRecover;
+        this.maxDaysBeforeRecover = maxDaysBeforeRecover;
+
+        this.baseDeathRisk = baseDeathRisk;
+        this.movingMultiplier = movingMultiplier;
     }
 
-    public int getBaseSpread() {
-        return baseSpread;
-    }
-
-    public int getAmountCured() {
-        return amountCured;
+    public double getInfectionRisk() {
+        return infectionRisk;
     }
 
     public double getInfectionRange() {
         return infectionRange;
     }
 
-    public double getInfectionRisk() {
-        return infectionRisk;
+    public int getTicksBeforeRecover() {
+        double ticksPerDay = 60 * 24;
+        double bound = maxDaysBeforeRecover - minDaysBeforeRecover;
+        return rand.nextInt((int)(bound * ticksPerDay)) + (int)(minDaysBeforeRecover * ticksPerDay);
     }
 
     public double getDeathRisk(int age) {

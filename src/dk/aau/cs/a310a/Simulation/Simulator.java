@@ -211,7 +211,9 @@ public class Simulator {
 
     public void initialiseSimulation(int peopleAmount, int infectedAmount) {
         //ny influenza
-        influenzaA = new Influenza(Influenza.influenzaType.A);
+        influenzaA = new Influenza(0.3, 2,
+                1, 4,
+                0.000002, 0.1);
 
         //Nulstil tiden
         clock.resetTime();

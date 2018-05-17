@@ -28,7 +28,7 @@ public class Simulator {
     private BufferedImage pixelMap;
 
     //Sygdom
-    private Influenza influenzaA;
+    private Influenza influenza;
 
     //Lister over personer
     public ArrayList<Person> people;
@@ -211,7 +211,7 @@ public class Simulator {
 
     public void initialiseSimulation(int peopleAmount, int infectedAmount) {
         //ny influenza
-        influenzaA = new Influenza(0.3, 2,
+        influenza = new Influenza(0.3, 2,
                 1, 4,
                 0.000002, 0.1);
 
@@ -236,7 +236,7 @@ public class Simulator {
             Person person = new Person(houses.get(randomHouse), workplaces.get(randomWork));
 
             if (i < infecteds)
-                person.infect(influenzaA);
+                person.infect(influenza);
 
             //Tilføj person til liste
             people.add(person);
@@ -362,8 +362,8 @@ public class Simulator {
     }
 
     public String getR0(double beta, double gamma) {
-        if (influenzaA != null)
-            return influenzaA.calculateR0(beta, gamma);
+        if (influenza != null)
+            return influenza.calculateR0(beta, gamma);
         else
             return "There is no disease.";
     }

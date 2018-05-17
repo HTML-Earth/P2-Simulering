@@ -95,7 +95,7 @@ public class ButtonCalls {
                 Simulator.theSimulator.handsanitizePeople(handsanitizedPercent);
                 Simulator.theSimulator.coverCoughPeople(coverCoughPercent);
                 Simulator.theSimulator.stayHomePeople(staysHomePercent);
-                
+
                 runButton.setText("Start");
                 bob.drawBackground();
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);

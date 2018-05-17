@@ -15,6 +15,6 @@ public class Snapshot {
 
     @Override
     public String toString() {
-        return "S:" + susceptible + " I:" + infected + " R:" + infected + " D:" + dead;
+        return "S:" + susceptible + " I:" + infected + " R:" + recovered + " D:" + dead;
     }
 }

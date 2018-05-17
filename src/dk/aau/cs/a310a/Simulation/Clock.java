@@ -5,10 +5,12 @@ public class Clock {
 
     int currentTick;
     Time currentTime;
+    Simulator sim;
 
-    public Clock() {
+    public Clock(Simulator sim) {
         this.currentTick = 0;
         this.currentTime = new Time(0,0,0);
+        this.sim = sim;
     }
 
     public void resetTime() {
@@ -19,6 +21,8 @@ public class Clock {
     public void tick() {
         currentTick++;
         currentTime.addMinutes(minsPerTick);
+        if (currentTime.days > Simulator.maxDaysToSimulate - 1 && currentTime.minutes > 0)
+            sim.stopSimulation();
     }
 
     public int ticksUntil(int hour) {

@@ -45,6 +45,10 @@ public class GUI extends Application {
 
     Draw picture;
 
+    Button pausePlaySim;
+    Button stopSim;
+    Button printSim;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -110,17 +114,17 @@ public class GUI extends Application {
         bottomInteraction.setAlignment(Pos.CENTER);
         bottomInteraction.setSpacing(10);
 
-        Button pausePlaySim = new Button("\u23F8"); // ⏸
+        pausePlaySim = new Button("\u23F8"); // ⏸
         pausePlaySim.setFont(Font.font(14));
         pausePlaySim.setMinSize(40,40);
         pausePlaySim.setMaxSize(40, 40);
 
 
-        Button stopSim = new Button("\u23F9");
+        stopSim = new Button("\u23F9");
         stopSim.setFont(Font.font(14));
         stopSim.setMinSize(40,40);
 
-        Button printSim = new Button("\uD83D\uDCBE");
+        printSim = new Button("\uD83D\uDCBE");
         printSim.setFont(Font.font(14));
         printSim.setDisable(true);
         printSim.setMinSize(40,40);
@@ -291,25 +295,25 @@ public class GUI extends Application {
 
         // Event til at anvende og checke indtastede værdier fra menu
         buttonMethod.applyVariable(applySettings, runButton, susceptibleAmount, infectedAmount,
-                sim, menu,
+                menu,
                 tooBigPopulationLabel, population0Label, infectedOverPopLabel, appliedLabel,
                 picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent,
                 this, styler, mainPanel);
 
         // Event til starte simulering og fjerne menu og blur
-        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, sim, appliedLabel, pausePlaySim, printSim);
+        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, appliedLabel);
 
         //Events til menuknap
-        buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, corner, sim, boxblur);
+        buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, corner, boxblur);
 
         // Event til at pause eller starte simulationen
-        buttonMethod.pausePlaySim(pausePlaySim, sim);
+        buttonMethod.pausePlaySim();
 
         // Event til at stoppe simulationen
-        buttonMethod.stopSim(stopSim, printSim, pausePlaySim, sim);
+        buttonMethod.stopSim();
 
         // Event til at printe simulationen
-        buttonMethod.printSim(printSim, sim);
+        buttonMethod.printSim();
 
         // Events til Uploadknap
         imageButton.setOnMouseClicked(event ->{
@@ -424,6 +428,12 @@ public class GUI extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onStopSimulation() {
+        pausePlaySim.setDisable(true);
+        stopSim.setDisable(true);
+        printSim.setDisable(false);
     }
 
     public void displayMessage(Alert.AlertType type, String title, String header, String content) {

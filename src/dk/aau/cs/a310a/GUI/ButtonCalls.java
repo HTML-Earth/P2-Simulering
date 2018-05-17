@@ -38,7 +38,7 @@ public class ButtonCalls {
         label.setEffect(effect);
     }
 
-    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, HBox info, Simulator sim, Label appliedLabel) {
+    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, HBox info, Simulator sim, Label appliedLabel, Button pausePlaySim, Button printSim) {
         run.setOnMouseClicked(event -> {
             root.getChildren().remove(menu);
             menu.getChildren().remove(appliedLabel);
@@ -46,6 +46,9 @@ public class ButtonCalls {
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
+
+            pausePlaySim.setDisable(false);
+            printSim.setDisable(true);
 
         });
     }
@@ -169,6 +172,19 @@ public class ButtonCalls {
                 pausePlaySim.setFont(Font.font(14));
             }
         });
+    }
+
+    void stopSim (Button stopSim, Button printSim, Button pausePlaySim, Simulator simulator) {
+        stopSim.setOnMouseClicked(event -> {
+                simulator.stopSimulation();
+                printSim.setDisable(false);
+                pausePlaySim.setDisable(true);
+
+        });
+    }
+
+    void printSim (Button printSim, Simulator simulator) {
+        printSim.setOnMouseClicked(event -> simulator.printResults());
     }
 
 }

@@ -297,13 +297,19 @@ public class GUI extends Application {
                 this, styler, mainPanel);
 
         // Event til starte simulering og fjerne menu og blur
-        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, sim, appliedLabel);
+        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, sim, appliedLabel, pausePlaySim, printSim);
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, corner, sim, boxblur);
 
         // Event til at pause eller starte simulationen
         buttonMethod.pausePlaySim(pausePlaySim, sim);
+
+        // Event til at stoppe simulationen
+        buttonMethod.stopSim(stopSim, printSim, pausePlaySim, sim);
+
+        // Event til at printe simulationen
+        buttonMethod.printSim(printSim, sim);
 
         // Events til Uploadknap
         imageButton.setOnMouseClicked(event ->{

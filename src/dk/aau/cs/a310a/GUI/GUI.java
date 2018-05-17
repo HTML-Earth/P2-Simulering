@@ -71,7 +71,9 @@ public class GUI extends Application {
         HBox simWindow = new HBox();
 
         // filechooser
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("PNG Files", "*.png");
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(imageFilter);
 
         //Canvas objekter
         Canvas canvas = new Canvas(800, 600);
@@ -191,7 +193,7 @@ public class GUI extends Application {
         Label coverMouthLabel = new Label(" - cover mouth when coughing?");
         Label stayAtHomeLabel = new Label(" - stays at home after symptoms?");
         Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
-        Label population0Label = new Label("Error: Population and infected can't be 0");
+        Label population0Label = new Label("Error: Population or infected can't be 0");
         Label infectedOverPopLabel = new Label("Error: Infected must be less than population");
 
         appliedLabel.setTextFill(Color.LIGHTGREEN);
@@ -225,7 +227,8 @@ public class GUI extends Application {
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
 
-        Button imageButton = new Button("Upload custom image");
+        Button imageButton = new Button("Upload map");
+        imageButton.setFont(Font.font(20));
 
         //Tooltip for <1000 personer
         Tooltip lessthan1000 = new Tooltip("A number between 1 - 1000");
@@ -264,6 +267,7 @@ public class GUI extends Application {
 
         // Events til Uploadknap
         imageButton.setOnMouseClicked(event ->{
+            runButton.setDisable(true);
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
                 try {
@@ -296,7 +300,6 @@ public class GUI extends Application {
         menuLabels.add(sanitizerPercent, 4, 2);
         menuLabels.add(coverMouthPercent, 4, 3);
         menuLabels.add(stayHomePercent, 4, 4);
-        menuLabels.add(imageButton, 0, 4);
 
 
         styler.StyleGrid(menuLabels);
@@ -315,9 +318,13 @@ public class GUI extends Application {
 
         //Apply og start knap
         GridPane menuButttonsBottomRight = new GridPane();
-        menuButttonsBottomRight.add(applySettings, 0, 0);
-        menuButttonsBottomRight.add(runButton, 1, 0);
-        menuButttonsBottomRight.setTranslateX(800);
+        Pane emptyCol2 = new Pane();
+        emptyCol2.setMinWidth(500);
+        menuButttonsBottomRight.add(applySettings, 2, 0);
+        menuButttonsBottomRight.add(runButton, 3, 0);
+        menuButttonsBottomRight.add(imageButton,0,0);
+        menuButttonsBottomRight.add(emptyCol2,1,0);
+        menuButttonsBottomRight.setTranslateX(200);
         menuButttonsBottomRight.setTranslateY(600);
 
         menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);

@@ -72,7 +72,7 @@ public class ButtonCalls {
             }
 
 
-            if (people > 0 && infected > 0 && people <= 1000 && infected < people) {
+            if (people > 0 && infected > 0 && people <= 1000 && infected <= people) {
                 runButton.setDisable(false);
                 sim.stopSimulation();
 
@@ -97,9 +97,12 @@ public class ButtonCalls {
                 if (menu.getChildren().contains(appliedLabel)) {
                     menu.getChildren().remove(appliedLabel);
                 }
+                if (menu.getChildren().contains(infectedOverPopLabel)) {
+                    menu.getChildren().remove(infectedOverPopLabel);
+                }
                 menu.getChildren().add(appliedLabel);
 
-            } else if (people > 0 && infected > 0 && people > 1000 || infected > people) {
+            } else if (infected > 0 && people > 1000) {
                 if (menu.getChildren().contains(tooBigPopulationLabel)) {
                     menu.getChildren().remove(tooBigPopulationLabel);
                 }
@@ -109,9 +112,29 @@ public class ButtonCalls {
                 removeLabels(runButton, menu, appliedLabel);
 
                 runButton.setDisable(true);
-            } else {
+            } else if (infected > people) {
                 if (menu.getChildren().contains(population0Label)) {
                     menu.getChildren().remove(population0Label);
+                }
+                if (menu.getChildren().contains(appliedLabel)) {
+                    menu.getChildren().remove(appliedLabel);
+                }
+                if (menu.getChildren().contains(tooBigPopulationLabel)) {
+                    menu.getChildren().remove(tooBigPopulationLabel);
+                }
+                if (menu.getChildren().contains(infectedOverPopLabel)) {
+                    menu.getChildren().remove(infectedOverPopLabel);
+                }
+                menu.getChildren().add(infectedOverPopLabel);
+
+                runButton.setDisable(true);
+            }
+            else {
+                if (menu.getChildren().contains(population0Label)) {
+                    menu.getChildren().remove(population0Label);
+                }
+                if (menu.getChildren().contains(infectedOverPopLabel)) {
+                    menu.getChildren().remove(infectedOverPopLabel);
                 }
                 menu.getChildren().remove(tooBigPopulationLabel);
                 menu.getChildren().add(population0Label);

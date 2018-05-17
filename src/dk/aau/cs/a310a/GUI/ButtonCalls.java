@@ -38,11 +38,11 @@ public class ButtonCalls {
         label.setEffect(effect);
     }
 
-    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, GridPane info, Simulator sim, Label appliedLabel) {
+    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, HBox info, Simulator sim, Label appliedLabel) {
         run.setOnMouseClicked(event -> {
             root.getChildren().remove(menu);
             menu.getChildren().remove(appliedLabel);
-            root.getChildren().add(showMenu);
+            showMenu.setDisable(false);
             simWindow.setEffect(null);
             info.setEffect(null);
             sim.startSimulation();
@@ -145,10 +145,10 @@ public class ButtonCalls {
 
     }
 
-    void pauseSimMenu(Button showMenu, Button runButton, StackPane root, StackPane menu, HBox simWindow, GridPane info, Simulator sim, BoxBlur boxblur) {
+    void pauseSimMenu(Button showMenu, Button runButton, StackPane root, StackPane menu, HBox simWindow, HBox info, Simulator sim, BoxBlur boxblur) {
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().add(menu);
-            root.getChildren().remove(showMenu);
+            showMenu.setDisable(true);
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);
             sim.pauseSimulation();

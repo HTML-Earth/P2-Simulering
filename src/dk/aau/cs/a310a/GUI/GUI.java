@@ -22,12 +22,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
+import java.util.Stack;
 
 public class GUI extends Application {
 
@@ -88,17 +90,53 @@ public class GUI extends Application {
         VBox sidePanel = new VBox();
         sidePanel.setMinWidth(400);
 
-        //Infoboks med Livestatistikker i hjørnet
-        GridPane info = new GridPane();
-        info.setMinHeight(150);
+        // HBOX til toppen af sidepanel
+        HBox corner = new HBox();
 
-        //Infoboks labels i simWindow
+        //VBOX som indsættes i HBOX i toppen af sidepanel
+        VBox interaction = new VBox();
+        interaction.setMinWidth(200);
+        interaction.setSpacing(10);
+        interaction.setAlignment(Pos.CENTER);
+
+        Label stringTimeOfDay = new Label();
+        stringTimeOfDay.setMinWidth(100);
+        stringTimeOfDay.setFont(Font.font("Arial", FontWeight.BOLD, 26));
+        Button showMenu = new Button("Menu");
+        showMenu.setFont(Font.font(14));
+        showMenu.setDisable(true);
+
+        HBox bottomInteraction = new HBox();
+        bottomInteraction.setAlignment(Pos.CENTER);
+        bottomInteraction.setSpacing(10);
+
+        Button pauseSim = new Button("\u23F8"); // ▶
+        pauseSim.setFont(Font.font(14));
+
+        Button stopSim = new Button("\u23F9");
+        stopSim.setFont(Font.font(14));
+
+        Button printSim = new Button("\uD83D\uDCBE");
+        printSim.setFont(Font.font(14));
+        printSim.setDisable(true);
+
+        bottomInteraction.getChildren().addAll(pauseSim, stopSim, printSim);
+        interaction.getChildren().addAll(stringTimeOfDay, showMenu, bottomInteraction);
+
+
+
+        //Infoboks med Livestatistikker i hjørnet
+        VBox info = new VBox();
+        info.setMinHeight(150);
+        info.setAlignment(Pos.CENTER);
+
+        //Infoboks labels i info simWindow
         Label stringSusceptible = new Label("Susceptible: " + sim.healthCount(Person.health.Susceptible));
         Label stringInfected = new Label("Infected: " + sim.healthCount(Person.health.Infected));
         Label stringRecovered = new Label("Recovered: " + sim.healthCount(Person.health.Recovered));
         Label stringDead = new Label("Dead: " + sim.healthCount(Person.health.Dead));
         Label stringEpidemic = new Label("");
-        Label stringTimeOfDay = new Label();
+        stringEpidemic.setTextAlignment(TextAlignment.CENTER);
 
 
         //styling af labels
@@ -108,14 +146,11 @@ public class GUI extends Application {
         styler.StyleLabel(stringRecovered);
         styler.StyleLabel(stringInfected);
         styler.StyleLabel(stringDead);
-        styler.StyleLabel(stringTimeOfDay);
 
-        info.add(stringSusceptible, 0, 0);
-        info.add(stringInfected, 0, 1);
-        info.add(stringRecovered, 0, 2);
-        info.add(stringDead, 0, 3);
-        info.add(stringEpidemic, 0, 4);
-        info.add(stringTimeOfDay, 1, 0);
+        info.getChildren().addAll(stringSusceptible, stringInfected, stringRecovered, stringDead, stringEpidemic);
+
+        // Tilføjer til corner
+        corner.getChildren().addAll(interaction,info);
 
         //Scrollpane med persondata
         ScrollPane scrollPane = new ScrollPane();
@@ -139,8 +174,8 @@ public class GUI extends Application {
         //Graf og canvas tilføjes til main panel
         mainPanel.getChildren().addAll(chart, canvas);
 
-        //info og scrollpane tilføjes til sidepanel
-        sidePanel.getChildren().addAll(info,scrollPane);
+        //corner og scrollpane tilføjes til sidepanel
+        sidePanel.getChildren().addAll(corner, scrollPane);
 
         //Main panel og side panel tilføjes til simwindow
         simWindow.getChildren().addAll(mainPanel, sidePanel);
@@ -216,9 +251,6 @@ public class GUI extends Application {
 
 
         //Button factory
-        Button showMenu = new Button("Menu");
-        showMenu.setFont(Font.font(14));
-        StackPane.setAlignment(showMenu, Pos.TOP_LEFT);
 
         Button applySettings = new Button("Apply");
         applySettings.setFont(Font.font(20));
@@ -260,10 +292,10 @@ public class GUI extends Application {
                 this, styler, mainPanel);
 
         // Event til starte simulering og fjerne menu og blur
-        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, info, sim, appliedLabel);
+        buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, sim, appliedLabel);
 
         //Events til menuknap
-        buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, info, sim, boxblur);
+        buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, corner, sim, boxblur);
 
         // Events til Uploadknap
         imageButton.setOnMouseClicked(event ->{

@@ -63,8 +63,8 @@ public class Influenza {
         double isEpidemic = beta / gamma; //R0
 
         if (isEpidemic >= 1)
-            return "R0: " + isEpidemic + " There is a chance of an epidemic.";
+            return "R0: " + isEpidemic + "\nThere is a chance of an epidemic.";
         else
-            return "R0: " + isEpidemic + " No chance of an epidemic. (yet)";
+            return "R0: " + isEpidemic + "\nNo chance of an epidemic. (yet)";
     }
 }

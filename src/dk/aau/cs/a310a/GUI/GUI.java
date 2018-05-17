@@ -405,7 +405,7 @@ public class GUI extends Application {
                     stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
                     stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
-                    stringEpidemic.setText("Chance of epidemic" + "\n" + sim.getR0(1,1.0));
+                    stringEpidemic.setText(sim.getR0(1,1.0));
                     stringTimeOfDay.setText(sim.getSimulationTime());
                 }
 

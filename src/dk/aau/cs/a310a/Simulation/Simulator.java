@@ -359,7 +359,7 @@ public class Simulator {
         if (influenzaA != null)
             return influenzaA.calculateR0(beta, gamma);
         else
-            return "";
+            return "There is no disease.";
     }
 
     public List<Person> getPeople() {

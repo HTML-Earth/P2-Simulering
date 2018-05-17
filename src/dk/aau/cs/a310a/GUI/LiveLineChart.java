@@ -37,11 +37,7 @@ public class LiveLineChart {
         rSeries.getData().clear();
     }
 
-    public void updateLineChart() {
-        Double tick = Simulator.clock.getGraphTime();
-        int susceptible = Simulator.theSimulator.healthCount(Person.health.Susceptible);
-        int infected = Simulator.theSimulator.healthCount(Person.health.Infected);
-        int recovered = Simulator.theSimulator.healthCount(Person.health.Recovered);
+    public void updateLineChart(double tick, int susceptible, int infected, int recovered) {
         sSeries.getData().add(new XYChart.Data(tick, susceptible));
         iSeries.getData().add(new XYChart.Data(tick, infected));
         rSeries.getData().add(new XYChart.Data(tick, recovered));

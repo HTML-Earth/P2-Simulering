@@ -19,9 +19,7 @@ public class Simulator {
     //Tid
     public static Clock clock;
 
-    public enum placeType {House, Work, Hospital, Road, Grass}
-
-    ;
+    public enum placeType {House, Work, Hospital, Road, Grass};
 
     //Området der simuleres på
     private HashMap<GridPosition, placeType> grid;
@@ -55,6 +53,8 @@ public class Simulator {
     private ArrayList<GridPosition> workplaces;
     private ArrayList<GridPosition> hospitals;
 
+    private ArrayList<Snapshot> snapshots;
+
     public Simulator() {
         //Gør denne simulator globalt tilgængelig
         theSimulator = this;
@@ -70,6 +70,8 @@ public class Simulator {
 
         simulationHasBeenInitialised = false;
         simulationIsActive = false;
+
+        snapshots = new ArrayList<>();
     }
 
     public void vaccinatePeople(int vaccinePercent, int infectedAmount) {
@@ -281,7 +283,7 @@ public class Simulator {
             }
 
             if (currentTick > lastGraphUpdate + GUI.lineChart.ticksPerPoint) {
-                GUI.lineChart.updateLineChart();
+                saveTick();
                 lastGraphUpdate = currentTick;
             }
 
@@ -304,6 +306,18 @@ public class Simulator {
             tickTime = slowTickTime;
         else
             tickTime = fastTickTime;
+    }
+
+    private void saveTick() {
+        double tick = clock.getGraphTime();
+        int susceptible = healthCount(Person.health.Susceptible);
+        int infected = healthCount(Person.health.Infected);
+        int recovered = healthCount(Person.health.Recovered);
+        int dead = healthCount(Person.health.Dead);
+
+        snapshots.add(new Snapshot(susceptible,infected,recovered,dead));
+
+        GUI.lineChart.updateLineChart(tick, susceptible, infected, recovered);
     }
 
     public boolean isSimulationActive() {

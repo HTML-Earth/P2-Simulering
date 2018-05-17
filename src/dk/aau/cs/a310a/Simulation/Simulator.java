@@ -239,6 +239,14 @@ public class Simulator {
         }
     }
 
+    public boolean hasBeenInitialised() {
+        return simulationHasBeenInitialised;
+    }
+
+    public boolean isActive() {
+        return simulationIsActive;
+    }
+
     public void startSimulation() {
         if (!simulationHasBeenInitialised) {
             System.out.println("Please initialise first");
@@ -253,11 +261,25 @@ public class Simulator {
     public void stopSimulation() {
         simulationIsActive = false;
         simulationHasBeenInitialised = false;
+    }
+
+    public void clearSimulation() {
+        stopSimulation();
         newDay = true;
         for (Person p : people) {
             p = null;
         }
         people.clear();
+    }
+
+    public void printResults() {
+        if (simulationIsActive || simulationHasBeenInitialised) {
+            return;
+        }
+
+        for (Snapshot snapshot : snapshots) {
+            System.out.println("S:" + snapshot.susceptible + " I:" + snapshot.infected + " R:" + snapshot.infected + " D:" + snapshot.dead);
+        }
     }
 
     public void simulate(double currentTime, double deltaTime) {

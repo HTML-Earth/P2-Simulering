@@ -74,7 +74,7 @@ public class ButtonCalls {
 
             if (people > 0 && infected > 0 && people <= 1000 && infected <= people) {
                 runButton.setDisable(false);
-                sim.stopSimulation();
+                sim.clearSimulation();
 
                 //Graf med statistikker
                 gui.lineChart = new LiveLineChart();

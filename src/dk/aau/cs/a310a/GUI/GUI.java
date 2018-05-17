@@ -110,17 +110,22 @@ public class GUI extends Application {
         bottomInteraction.setAlignment(Pos.CENTER);
         bottomInteraction.setSpacing(10);
 
-        Button pauseSim = new Button("\u23F8"); // ▶
-        pauseSim.setFont(Font.font(14));
+        Button pausePlaySim = new Button("\u23F8"); // ⏸
+        pausePlaySim.setFont(Font.font(14));
+        pausePlaySim.setMinSize(40,40);
+        pausePlaySim.setMaxSize(40, 40);
+
 
         Button stopSim = new Button("\u23F9");
         stopSim.setFont(Font.font(14));
+        stopSim.setMinSize(40,40);
 
         Button printSim = new Button("\uD83D\uDCBE");
         printSim.setFont(Font.font(14));
         printSim.setDisable(true);
+        printSim.setMinSize(40,40);
 
-        bottomInteraction.getChildren().addAll(pauseSim, stopSim, printSim);
+        bottomInteraction.getChildren().addAll(pausePlaySim, stopSim, printSim);
         interaction.getChildren().addAll(stringTimeOfDay, showMenu, bottomInteraction);
 
 
@@ -296,6 +301,9 @@ public class GUI extends Application {
 
         //Events til menuknap
         buttonMethod.pauseSimMenu(showMenu, runButton, root, menu, simWindow, corner, sim, boxblur);
+
+        // Event til at pause eller starte simulationen
+        buttonMethod.pausePlaySim(pausePlaySim, sim);
 
         // Events til Uploadknap
         imageButton.setOnMouseClicked(event ->{

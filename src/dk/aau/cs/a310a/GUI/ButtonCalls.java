@@ -156,4 +156,19 @@ public class ButtonCalls {
         });
     }
 
+    void pausePlaySim(Button pausePlaySim, Simulator simulator) {
+        pausePlaySim.setOnMouseClicked(event -> {
+            if (simulator.isSimulationActive()) {
+                simulator.pauseSimulation();
+                pausePlaySim.setText("\u25B6");
+                pausePlaySim.setFont(Font.font(20));
+            }
+            else {
+                simulator.startSimulation();
+                pausePlaySim.setText("\u23F8");
+                pausePlaySim.setFont(Font.font(14));
+            }
+        });
+    }
+
 }

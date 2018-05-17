@@ -12,4 +12,9 @@ public class Snapshot {
         this.recovered = recovered;
         this.dead = dead;
     }
+
+    @Override
+    public String toString() {
+        return "S:" + susceptible + " I:" + infected + " R:" + infected + " D:" + dead;
+    }
 }

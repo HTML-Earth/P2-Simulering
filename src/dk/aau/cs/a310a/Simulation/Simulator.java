@@ -279,7 +279,7 @@ public class Simulator {
         }
 
         for (Snapshot snapshot : snapshots) {
-            System.out.println("S:" + snapshot.susceptible + " I:" + snapshot.infected + " R:" + snapshot.infected + " D:" + snapshot.dead);
+            System.out.println(snapshot);
         }
     }
 

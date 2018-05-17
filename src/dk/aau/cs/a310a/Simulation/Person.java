@@ -17,9 +17,11 @@ public class Person {
     private int age;
 
     //tidspunkt hvor personen blev inficeret
-    int tickInfected = 0;
+    private int tickInfected = 0;
 
-    int ticksBeforeRecover = 0;
+    private int ticksBeforeRecover = 0;
+
+    private int ticksBeforeHospital = 0;
 
     private boolean hasDestination;
 
@@ -188,7 +190,8 @@ public class Person {
                 goToHospitalChance = 0.005;
                 break;
             case Infected:
-                goToHospitalChance = 0.5;
+                if (Simulator.clock.getCurrentTick() >= tickInfected + ticksBeforeHospital)
+                    goToHospitalChance = 0.5;
                 if (staysHome)
                     stayHomeChance = 1;
                 break;
@@ -334,7 +337,8 @@ public class Person {
         this.currentHealth = health.Infected;
         this.disease = disease;
         this.tickInfected = Simulator.clock.getCurrentTick();
-        this.ticksBeforeRecover = rand.nextInt(4300) + 1440;
+        this.ticksBeforeRecover = rand.nextInt(3 * 60 * 24) + (60 * 24); // 1-4 dage
+        this.ticksBeforeHospital = rand.nextInt(60 * 24) + (60 * 24); // 1-2 dage
     }
 
     public void influenzaRecover(int currentTick) {

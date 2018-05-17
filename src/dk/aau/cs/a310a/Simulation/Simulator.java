@@ -270,6 +270,7 @@ public class Simulator {
             p = null;
         }
         people.clear();
+        snapshots.clear();
     }
 
     public void printResults() {

@@ -218,6 +218,10 @@ public class GUI extends Application {
         coverMouthPercent.setMaxWidth(40);
         NumberTextField stayHomePercent = new NumberTextField("0");
         stayHomePercent.setMaxWidth(40);
+        NumberTextField beta = new NumberTextField("3");
+        beta.setMaxWidth(40);
+        NumberTextField gamma = new NumberTextField("0.2");
+        gamma.setMaxWidth(40);
 
 
         // Menu - labels til beskrivelse
@@ -235,11 +239,15 @@ public class GUI extends Application {
         Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
         Label population0Label = new Label("Error: Population or infected can't be 0");
         Label infectedOverPopLabel = new Label("Error: Infected must be less than population");
+        Label betaLabel = new Label("Average amount of people an infected can infect daily (β):");
+        Label gammaLabel = new Label("1 divided with average time an infection can last (γ):");
 
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
         spreadLabel.setTextFill(Color.WHITE);
+        betaLabel.setTextFill(Color.WHITE);
+        gammaLabel.setTextFill(Color.WHITE);
         tooBigPopulationLabel.setTextFill(new Color(1,0.3,0.3,1));
         population0Label.setTextFill(new Color(1,0.3,0.3,1));
         infectedOverPopLabel.setTextFill(new Color(1,0.3,0.3,1));
@@ -329,36 +337,44 @@ public class GUI extends Application {
 
         //Grids
         //Grid til textfield variabler i menu
-        GridPane menuLabels = new GridPane();
-        menuLabels.setTranslateX(260);
-        menuLabels.setTranslateY(240);
+        GridPane menuLabelsTop = new GridPane();
+        menuLabelsTop.setTranslateX(260);
+        menuLabelsTop.setTranslateY(240);
 
-        menuLabels.add(susceptibleLabel, 0, 0);
-        menuLabels.add(susceptibleAmount, 1, 0);
-        menuLabels.add(whatPerLabel,3,0);
-        menuLabels.add(infectedLabel, 0, 1);
-        menuLabels.add(infectedAmount, 1, 1);
-        menuLabels.add(isVaccinatedLabel, 3, 1);
-        menuLabels.add(useSanitizersLabel, 3, 2);
-        menuLabels.add(coverMouthLabel, 3, 3);
-        menuLabels.add(stayAtHomeLabel, 3, 4);
-        menuLabels.add(vaccinePercent, 4, 1);
-        menuLabels.add(sanitizerPercent, 4, 2);
-        menuLabels.add(coverMouthPercent, 4, 3);
-        menuLabels.add(stayHomePercent, 4, 4);
+        menuLabelsTop.add(susceptibleLabel, 0, 0);
+        menuLabelsTop.add(susceptibleAmount, 1, 0);
+        menuLabelsTop.add(whatPerLabel,3,0);
+        menuLabelsTop.add(infectedLabel, 0, 1);
+        menuLabelsTop.add(infectedAmount, 1, 1);
+        menuLabelsTop.add(isVaccinatedLabel, 3, 1);
+        menuLabelsTop.add(useSanitizersLabel, 3, 2);
+        menuLabelsTop.add(coverMouthLabel, 3, 3);
+        menuLabelsTop.add(stayAtHomeLabel, 3, 4);
+        menuLabelsTop.add(vaccinePercent, 4, 1);
+        menuLabelsTop.add(sanitizerPercent, 4, 2);
+        menuLabelsTop.add(coverMouthPercent, 4, 3);
+        menuLabelsTop.add(stayHomePercent, 4, 4);
 
+        GridPane menuLabelsBottom = new GridPane();
+        menuLabelsBottom.setTranslateX(260);
+        menuLabelsBottom.setTranslateY(450);
+        menuLabelsBottom.add(betaLabel, 0,0);
+        menuLabelsBottom.add(beta, 1, 0);
+        menuLabelsBottom.add(gammaLabel, 0, 1);
+        menuLabelsBottom.add(gamma, 1, 1);
 
-        styler.StyleGrid(menuLabels);
+        styler.StyleGrid(menuLabelsBottom);
+        styler.StyleGrid(menuLabelsTop);
 
         //Tilføj tom plads i grid
         Pane emptyCol = new Pane();
         emptyCol.setMinWidth(175);
-        menuLabels.add(emptyCol, 2, 1);
+        menuLabelsTop.add(emptyCol, 2, 1);
 
         //Tilføj % til flere rækker
         for(int i = 1; i < 5; i++) {
             Label percentLabel = new Label("%");
-            menuLabels.add(percentLabel, 5, i);
+            menuLabelsTop.add(percentLabel, 5, i);
             percentLabel.setTextFill(Color.WHITE);
         }
 
@@ -373,7 +389,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(200);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, menuLabels, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

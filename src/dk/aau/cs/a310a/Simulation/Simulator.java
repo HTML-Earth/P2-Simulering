@@ -28,13 +28,15 @@ public class Simulator {
     private BufferedImage pixelMap;
 
     //Sygdom
-    private Influenza influenzaA;
+    private Influenza influenza;
 
     //Lister over personer
     public ArrayList<Person> people;
 
     //RNG
     public Random rand;
+
+    public static int maxDaysToSimulate = 7;
 
     //Simuleringsvariabler
     private boolean simulationHasBeenInitialised;
@@ -63,7 +65,7 @@ public class Simulator {
         rand = new Random();
 
         //Tid
-        clock = new Clock();
+        clock = new Clock(this);
 
         //Opret tomme lister af 'Person'
         people = new ArrayList<>();
@@ -209,7 +211,9 @@ public class Simulator {
 
     public void initialiseSimulation(int peopleAmount, int infectedAmount) {
         //ny influenza
-        influenzaA = new Influenza(Influenza.influenzaType.A);
+        influenza = new Influenza(0.3, 2,
+                1, 4,
+                0.000002, 0.1);
 
         //Nulstil tiden
         clock.resetTime();
@@ -232,7 +236,7 @@ public class Simulator {
             Person person = new Person(houses.get(randomHouse), workplaces.get(randomWork));
 
             if (i < infecteds)
-                person.infect(influenzaA);
+                person.infect(influenza);
 
             //Tilføj person til liste
             people.add(person);
@@ -261,6 +265,8 @@ public class Simulator {
     public void stopSimulation() {
         simulationIsActive = false;
         simulationHasBeenInitialised = false;
+
+        GUI.theGUI.onStopSimulation();
     }
 
     public void clearSimulation() {
@@ -305,17 +311,17 @@ public class Simulator {
                 p.updateMovement();
             }
 
-            if (currentTick > lastGraphUpdate + GUI.lineChart.ticksPerPoint) {
-                saveTick();
-                lastGraphUpdate = currentTick;
-            }
-
             int day = clock.currentTime.days;
             clock.tick();
             if (day < clock.currentTime.days)
                 newDay = true;
 
             lastTick = currentTime;
+
+            if (currentTick >= lastGraphUpdate + GUI.lineChart.ticksPerPoint) {
+                saveTick();
+                lastGraphUpdate = currentTick;
+            }
         }
 
         for (Person p : people) {
@@ -356,8 +362,8 @@ public class Simulator {
     }
 
     public String getR0(double beta, double gamma) {
-        if (influenzaA != null)
-            return influenzaA.calculateR0(beta, gamma);
+        if (influenza != null)
+            return influenza.calculateR0(beta, gamma);
         else
             return "There is no disease.";
     }

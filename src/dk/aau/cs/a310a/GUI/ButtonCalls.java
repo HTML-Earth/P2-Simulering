@@ -38,24 +38,25 @@ public class ButtonCalls {
         label.setEffect(effect);
     }
 
-    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, HBox info, Simulator sim, Label appliedLabel, Button pausePlaySim, Button printSim) {
+    void runProgram(Button run, Button showMenu, StackPane root, StackPane menu, HBox simWindow, HBox info, Label appliedLabel) {
         run.setOnMouseClicked(event -> {
             root.getChildren().remove(menu);
             menu.getChildren().remove(appliedLabel);
             showMenu.setDisable(false);
             simWindow.setEffect(null);
             info.setEffect(null);
-            sim.startSimulation();
+            Simulator.theSimulator.startSimulation();
 
-            pausePlaySim.setDisable(false);
-            printSim.setDisable(true);
+            GUI.theGUI.pausePlaySim.setDisable(false);
+            GUI.theGUI.stopSim.setDisable(false);
+            GUI.theGUI.printSim.setDisable(true);
 
         });
     }
 
     void applyVariable(Button applySettings, Button runButton,
                        NumberTextField peopleAmount, NumberTextField infectedAmount,
-                       Simulator sim, StackPane menu,
+                       StackPane menu,
                        Label tooBigPopulationLabel, Label population0Label, Label infectedOverPopLabel, Label appliedLabel, Draw bob,
                        NumberTextField vaccinePercent, NumberTextField sanitizerPercent,
                        NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
@@ -77,7 +78,7 @@ public class ButtonCalls {
 
             if (people > 0 && infected > 0 && people <= 1000 && infected <= people) {
                 runButton.setDisable(false);
-                sim.clearSimulation();
+                Simulator.theSimulator.clearSimulation();
 
                 //Graf med statistikker
                 gui.lineChart = new LiveLineChart();
@@ -87,13 +88,14 @@ public class ButtonCalls {
                 //Graf og canvas tilføjes til main panel
                 mainPanel.getChildren().set(0, chart);
 
-                //Opretter personer
-                sim.initialiseSimulation(people, infected);
+                //Opretter personer og sygdom
+                Simulator.theSimulator.initialiseSimulation(people, infected);
                 //sætter personer til at være vaccineret
-                sim.vaccinatePeople(vaccinatedPercent, infected);
-                sim.handsanitizePeople(handsanitizedPercent);
-                sim.coverCoughPeople(coverCoughPercent);
-                sim.stayHomePeople(staysHomePercent);
+                Simulator.theSimulator.vaccinatePeople(vaccinatedPercent, infected);
+                Simulator.theSimulator.handsanitizePeople(handsanitizedPercent);
+                Simulator.theSimulator.coverCoughPeople(coverCoughPercent);
+                Simulator.theSimulator.stayHomePeople(staysHomePercent);
+
                 runButton.setText("Start");
                 bob.drawBackground();
                 menu.getChildren().removeAll(tooBigPopulationLabel, population0Label);
@@ -148,43 +150,38 @@ public class ButtonCalls {
 
     }
 
-    void pauseSimMenu(Button showMenu, Button runButton, StackPane root, StackPane menu, HBox simWindow, HBox info, Simulator sim, BoxBlur boxblur) {
+    void pauseSimMenu(Button showMenu, Button runButton, StackPane root, StackPane menu, HBox simWindow, HBox info, BoxBlur boxblur) {
         showMenu.setOnMouseClicked(event -> {
             root.getChildren().add(menu);
             showMenu.setDisable(true);
             simWindow.setEffect(boxblur);
             info.setEffect(boxblur);
-            sim.pauseSimulation();
+            Simulator.theSimulator.pauseSimulation();
             runButton.setText("Continue");
         });
     }
 
-    void pausePlaySim(Button pausePlaySim, Simulator simulator) {
-        pausePlaySim.setOnMouseClicked(event -> {
-            if (simulator.isSimulationActive()) {
-                simulator.pauseSimulation();
-                pausePlaySim.setText("\u25B6");
-                pausePlaySim.setFont(Font.font(20));
+    void pausePlaySim() {
+        GUI.theGUI.pausePlaySim.setOnMouseClicked(event -> {
+            if (Simulator.theSimulator.isSimulationActive()) {
+                Simulator.theSimulator.pauseSimulation();
+                GUI.theGUI.pausePlaySim.setText("\u25B6");
+                GUI.theGUI.pausePlaySim.setFont(Font.font(20));
             }
             else {
-                simulator.startSimulation();
-                pausePlaySim.setText("\u23F8");
-                pausePlaySim.setFont(Font.font(14));
+                Simulator.theSimulator.startSimulation();
+                GUI.theGUI.pausePlaySim.setText("\u23F8");
+                GUI.theGUI.pausePlaySim.setFont(Font.font(14));
             }
         });
     }
 
-    void stopSim (Button stopSim, Button printSim, Button pausePlaySim, Simulator simulator) {
-        stopSim.setOnMouseClicked(event -> {
-                simulator.stopSimulation();
-                printSim.setDisable(false);
-                pausePlaySim.setDisable(true);
-
-        });
+    void stopSim () {
+        GUI.theGUI.stopSim.setOnMouseClicked(event -> Simulator.theSimulator.stopSimulation());
     }
 
-    void printSim (Button printSim, Simulator simulator) {
-        printSim.setOnMouseClicked(event -> simulator.printResults());
+    void printSim () {
+        GUI.theGUI.printSim.setOnMouseClicked(event -> Simulator.theSimulator.printResults());
     }
 
 }

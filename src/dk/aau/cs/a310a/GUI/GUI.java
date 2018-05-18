@@ -72,7 +72,7 @@ public class GUI extends Application {
 
         //ROOT STACKPANE
         StackPane root = new StackPane();
-        root.setStyle("-fx-background-color: #B6C0D2;");
+        root.setStyle("-fx-background-color: #CDD8EC;");
 
         //SIMULERINGSVINDUE
         HBox simWindow = new HBox();

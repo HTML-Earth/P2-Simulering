@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class GridPosition {
+    public static final int gridWidth = 40;
+    public static final int gridHeight = 30;
+
     public int x, y;
 
     public GridPosition(int x, int y) {
@@ -49,6 +52,19 @@ public class GridPosition {
         return (int)distance;
     }
 
+    public boolean isValidGridPosition() {
+        if (x < 0)
+            return false;
+        if (x >= gridWidth)
+            return false;
+        if (y < 0)
+            return false;
+        if (y >= gridHeight)
+            return false;
+
+        return true;
+    }
+
     public static ArrayDeque<GridPosition> getPath(GridPosition start, GridPosition end) {
         ArrayDeque<GridPosition> path = new ArrayDeque<>();
 
@@ -67,7 +83,7 @@ public class GridPosition {
                 }
 
                 for (GridPosition next : GridPosition.getNeighbours(current)) {
-                    if (!cameFrom.containsKey(next) && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
+                    if (next.isValidGridPosition() && !cameFrom.containsKey(next) && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
                         frontier.add(next);
                         cameFrom.put(next, current);
                     }

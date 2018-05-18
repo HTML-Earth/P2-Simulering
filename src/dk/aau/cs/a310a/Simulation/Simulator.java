@@ -6,8 +6,10 @@ import javafx.scene.control.Alert;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -279,13 +281,14 @@ public class Simulator {
         snapshots.clear();
     }
 
-    public void printResults() {
-        if (simulationIsActive || simulationHasBeenInitialised) {
-            return;
-        }
-
-        for (Snapshot snapshot : snapshots) {
-            System.out.println(snapshot);
+    public void exportResults(File file) {
+        try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
+            writer.write("Tick,Susceptible,Infected,Recovered,Dead\n");
+            for (int i = 0; i < snapshots.size(); i++) {
+                writer.write(i + "," + snapshots.get(i).toString() + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to write file.");
         }
     }
 

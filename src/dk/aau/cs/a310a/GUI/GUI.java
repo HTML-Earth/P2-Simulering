@@ -322,7 +322,7 @@ public class GUI extends Application {
         buttonMethod.stopSim();
 
         // Event til at printe simulationen
-        buttonMethod.printSim();
+        buttonMethod.printSim(stage);
 
         // Events til Uploadknap
         imageButton.setOnMouseClicked(event ->{
@@ -459,5 +459,18 @@ public class GUI extends Application {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.show();
+    }
+
+    public void exportFileDialog(Stage stage) {
+        if (sim.isSimulationActive() || sim.hasBeenInitialised()) {
+            return;
+        }
+
+        FileChooser.ExtensionFilter statsFilter = new FileChooser.ExtensionFilter("Comma separated values", "*.csv");
+        final FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(statsFilter);
+
+        File file = fileChooser.showSaveDialog(stage);
+        sim.exportResults(file);
     }
 }

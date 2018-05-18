@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 public class ButtonCalls {
 
@@ -180,8 +181,8 @@ public class ButtonCalls {
         GUI.theGUI.stopSim.setOnMouseClicked(event -> Simulator.theSimulator.stopSimulation());
     }
 
-    void printSim () {
-        GUI.theGUI.printSim.setOnMouseClicked(event -> Simulator.theSimulator.printResults());
+    void printSim (Stage stage) {
+        GUI.theGUI.printSim.setOnMouseClicked(event -> GUI.theGUI.exportFileDialog(stage));
     }
 
 }

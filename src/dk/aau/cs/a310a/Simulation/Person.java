@@ -7,6 +7,8 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.log;
+
 public class Person {
     public enum health {Susceptible, Infected, Recovered, Dead};
 
@@ -173,7 +175,7 @@ public class Person {
             coverReduceRisk = 0.93;
         }
 
-        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty * vaccineReduceRisk * handsanitizerReduceRisk * coverReduceRisk)
+        if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty + log(vaccineReduceRisk) + log(handsanitizerReduceRisk) + log(coverReduceRisk))
             p.infect(disease);
     }
 

@@ -8,6 +8,7 @@ public class Styler {
     public void StyleLabel(Label x) {
         x.getStylesheets().add(getClass().getResource("Styles/LabelStyle.css").toExternalForm());
         x.getStyleClass().add("label");
+        x.setStyle("-fx-background-color: #FFFFFF;");
     }
 
     public void StyleGrid(GridPane y) {

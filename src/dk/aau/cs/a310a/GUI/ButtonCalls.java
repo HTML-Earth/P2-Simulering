@@ -70,6 +70,8 @@ public class ButtonCalls {
             int handsanitizedPercent = 0;
             int staysHomePercent = 0;
             int coverCoughPercent = 0;
+            double risk = 0;
+            int range = 0;
 
             //if numberTextField is empty initialize variable to 0
 
@@ -95,6 +97,13 @@ public class ButtonCalls {
 
             if (!coverMouthPercent.getText().equals("")){
                 coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
+            }
+
+            if (!infectionRisk.getText().equals("")){
+                risk = Double.parseDouble(infectionRisk.getText());
+            }
+            if (!infectionRange.getText().equals("")){
+                range = Integer.parseInt(infectionRange.getText());
             }
 
 

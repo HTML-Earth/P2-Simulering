@@ -61,8 +61,9 @@ public class ButtonCalls {
                        Label tooBigPopulationLabel, Label population0Label, Label infectedOverPopLabel, Label appliedLabel, Draw bob,
                        NumberTextField vaccinePercent, NumberTextField sanitizerPercent,
                        NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
-                       GUI gui, Styler styler, VBox mainPanel) {
+                       GUI gui, Styler styler, VBox mainPanel, NumberTextField infectionRisk, NumberTextField infectionRange) {
         applySettings.setOnMouseClicked(event -> {
+
             int people = 0;
             int infected = 0;
             int vaccinatedPercent = 0;
@@ -96,6 +97,7 @@ public class ButtonCalls {
                 coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
             }
 
+
             //Alertbox hvis procenterne er over 100 eller under 0
             if (!((0 <= vaccinatedPercent && vaccinatedPercent <= 100) && (0 <= handsanitizedPercent && handsanitizedPercent <= 100) && (0 <= staysHomePercent && staysHomePercent <= 100) && (0 <= coverCoughPercent && coverCoughPercent <= 100))) {
                 GUI.theGUI.displayMessage(Alert.AlertType.ERROR, "ERROR", "Invalid percentage", "Percentage must be between 0 - 100");
@@ -116,7 +118,7 @@ public class ButtonCalls {
                 mainPanel.getChildren().set(0, chart);
 
                 //Opretter personer og sygdom
-                Simulator.theSimulator.initialiseSimulation(people, infected);
+                Simulator.theSimulator.initialiseSimulation(people, infected, risk, range);
                 //sætter personer til at være vaccineret
                 Simulator.theSimulator.vaccinatePeople(vaccinatedPercent, infected);
                 Simulator.theSimulator.handsanitizePeople(handsanitizedPercent);

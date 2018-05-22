@@ -223,10 +223,10 @@ public class GUI extends Application {
         coverMouthPercent.setMaxWidth(40);
         NumberTextField stayHomePercent = new NumberTextField("0");
         stayHomePercent.setMaxWidth(40);
-        NumberTextField beta = new NumberTextField("3");
-        beta.setMaxWidth(40);
-        NumberTextField gamma = new NumberTextField("0.2");
-        gamma.setMaxWidth(40);
+        NumberTextField infectionRisk = new NumberTextField("0.3");
+        infectionRisk.setMaxWidth(40);
+        NumberTextField infectionRange = new NumberTextField("2");
+        infectionRange.setMaxWidth(40);
 
 
         // Menu - labels til beskrivelse
@@ -235,6 +235,7 @@ public class GUI extends Application {
         Label appliedLabel = new Label("Population applied!");
         Label titleLabel = new Label("Zombe");
         Label sirLabel = new Label("SIR-Options:");
+        Label diseaseLabel = new Label("Disease-Options:");
         Label spreadLabel = new Label("Spread-modifiers:");
         Label whatPerLabel = new Label("What percentage:");
         Label isVaccinatedLabel = new Label(" - is vaccinated?");
@@ -244,15 +245,16 @@ public class GUI extends Application {
         Label tooBigPopulationLabel = new Label("Error: Population can't be more than 1000");
         Label population0Label = new Label("Error: Population or infected can't be 0");
         Label infectedOverPopLabel = new Label("Error: Infected must be less than population");
-        Label betaLabel = new Label("Average amount of people an infected can infect daily (β):");
-        Label gammaLabel = new Label("1 divided with average time an infection can last (γ):");
+        Label riskLabel = new Label("Enter infection risk (between 0 and 1): ");
+        Label rangeLabel = new Label("Enter infection range: ");
 
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
+        diseaseLabel.setTextFill(Color.WHITE);
         spreadLabel.setTextFill(Color.WHITE);
-        betaLabel.setTextFill(Color.WHITE);
-        gammaLabel.setTextFill(Color.WHITE);
+        riskLabel.setTextFill(Color.WHITE);
+        rangeLabel.setTextFill(Color.WHITE);
         tooBigPopulationLabel.setTextFill(new Color(1,0.3,0.3,1));
         population0Label.setTextFill(new Color(1,0.3,0.3,1));
         infectedOverPopLabel.setTextFill(new Color(1,0.3,0.3,1));
@@ -264,6 +266,7 @@ public class GUI extends Application {
         buttonMethod.cuztomizeLabel(infectedOverPopLabel, 200, 150, 20);
 
         buttonMethod.cuztomizeLabel(sirLabel, -260, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
+        buttonMethod.cuztomizeLabel(diseaseLabel, -260, -180 + 230, "Georgia", 20, dropShadow, FontWeight.BOLD );
         buttonMethod.cuztomizeLabel(spreadLabel, -260 + 400, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
         buttonMethod.cuztomizeLabel(titleLabel, 0, -240, "Georgia", 70, dropShadow, FontWeight.BOLD);
 
@@ -307,7 +310,7 @@ public class GUI extends Application {
                 menu,
                 tooBigPopulationLabel, population0Label, infectedOverPopLabel, appliedLabel,
                 picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent,
-                this, styler, mainPanel);
+                this, styler, mainPanel, infectionRisk, infectionRange);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, appliedLabel);
@@ -363,10 +366,10 @@ public class GUI extends Application {
         GridPane menuLabelsBottom = new GridPane();
         menuLabelsBottom.setTranslateX(260);
         menuLabelsBottom.setTranslateY(450);
-        menuLabelsBottom.add(betaLabel, 0,0);
-        menuLabelsBottom.add(beta, 1, 0);
-        menuLabelsBottom.add(gammaLabel, 0, 1);
-        menuLabelsBottom.add(gamma, 1, 1);
+        menuLabelsBottom.add(riskLabel, 0,0);
+        menuLabelsBottom.add(infectionRisk, 1, 0);
+        menuLabelsBottom.add(rangeLabel, 0, 1);
+        menuLabelsBottom.add(infectionRange, 1, 1);
 
         styler.StyleGrid(menuLabelsBottom);
         styler.StyleGrid(menuLabelsTop);
@@ -394,7 +397,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(200);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, diseaseLabel, spreadLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

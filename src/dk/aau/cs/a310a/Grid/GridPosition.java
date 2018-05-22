@@ -83,7 +83,8 @@ public class GridPosition {
                 }
 
                 for (GridPosition next : GridPosition.getNeighbours(current)) {
-                    if (next.isValidGridPosition() && !cameFrom.containsKey(next) && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
+                    if (next.isValidGridPosition() && !cameFrom.containsKey(next)
+                            && Simulator.theSimulator.getPlaceType(next) != Simulator.placeType.Grass) {
                         frontier.add(next);
                         cameFrom.put(next, current);
                     }

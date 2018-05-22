@@ -43,7 +43,7 @@ public class Person {
     private boolean coughsInSleeve = false;
     private boolean staysHome = false;
 
-    private String debugText = "";
+    private String statusString = "";
 
     //midlertidige positioner
     private GridPosition position;
@@ -216,10 +216,13 @@ public class Person {
         if (currentHealth == health.Dead)
             return;
 
-        if (hasDestination)
+        if (hasDestination){
+            statusString = "Moving";
             return;
+        }
 
         if (position == home) {
+            statusString = "Home";
             if (!stayingHome) {
                 if (goingToHospital) {
                     if (Simulator.clock.ticksUntil(workHour) + distanceToHospital + departureTimeModifier == 0) {
@@ -234,14 +237,18 @@ public class Person {
         }
 
         if (position == work) {
+            statusString = "Work";
             if (Simulator.clock.ticksUntil(homeHour) + distanceToWork + departureTimeModifier == 0) {
                 setDestination(home);
             }
         }
 
-        if (position == hospital && currentHealth != health.Infected) {
-            if (Simulator.clock.ticksUntil(homeHour) + distanceToHospital + departureTimeModifier == 0) {
-                setDestination(home);
+        if (position == hospital) {
+            statusString = "Hospital";
+            if (currentHealth != health.Infected) {
+                if (Simulator.clock.ticksUntil(homeHour) + distanceToHospital + departureTimeModifier == 0) {
+                    setDestination(home);
+                }
             }
         }
     }
@@ -371,6 +378,11 @@ public class Person {
 
     //Metoden som kaldes når man printer objektet
     public String toString() {
-        return String.format("%1$" + -20 + "s", getCurrentHealth()) + String.format("%1$" + -20 + "s", "\t Age:" + age) + "\t X:" + position.x + "\t Y:" + position.y;
+        String health = getCurrentHealth().toString();
+        String infectedTime = (getCurrentHealth() == Person.health.Susceptible) ? "\t" : "\t (Day " + (tickInfected/1440+1) + ")";
+        String ageString = "\t Age:" + age;
+        String status = "\t " + statusString;
+        String pos = "\t [" + position.x + ", " + position.y + "]";
+        return health + infectedTime + ageString + status + pos;
     }
 }

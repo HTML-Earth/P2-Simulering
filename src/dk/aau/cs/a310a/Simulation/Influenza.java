@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Influenza {
     private double infectionRisk;
-    private double infectionRange;
+    private int infectionRange;
 
     private double minDaysBeforeRecover;
     private double maxDaysBeforeRecover;
@@ -14,7 +14,7 @@ public class Influenza {
 
     Random rand;
 
-    public Influenza(double infectionRisk, double infectionRange,
+    public Influenza(double infectionRisk, int infectionRange,
                      double minDaysBeforeRecover, double maxDaysBeforeRecover,
                      double baseDeathRisk, double movingMultiplier) {
 

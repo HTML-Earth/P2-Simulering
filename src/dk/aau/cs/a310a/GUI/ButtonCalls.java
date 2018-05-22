@@ -61,7 +61,7 @@ public class ButtonCalls {
                        Label tooBigPopulationLabel, Label population0Label, Label infectedOverPopLabel, Label appliedLabel, Draw bob,
                        NumberTextField vaccinePercent, NumberTextField sanitizerPercent,
                        NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
-                       GUI gui, Styler styler, VBox mainPanel) {
+                       GUI gui, Styler styler, VBox mainPanel, NumberTextField infectionRisk, NumberTextField infectionRange) {
         applySettings.setOnMouseClicked(event -> {
             int people = Integer.parseInt(peopleAmount.getText());
             int infected = Integer.parseInt(infectedAmount.getText());
@@ -69,6 +69,8 @@ public class ButtonCalls {
             int handsanitizedPercent = Integer.parseInt(sanitizerPercent.getText());
             int staysHomePercent = Integer.parseInt(stayHomePercent.getText());
             int coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
+            double risk = Double.parseDouble(infectionRisk.getText());
+            int range = Integer.parseInt(infectionRange.getText());
 
             //Alertbox hvis procenterne er over 100 eller under 0
             if (!((0 <= vaccinatedPercent && vaccinatedPercent <= 100) && (0 <= handsanitizedPercent && handsanitizedPercent <= 100) && (0 <= staysHomePercent && staysHomePercent <= 100) && (0 <= coverCoughPercent && coverCoughPercent <= 100))) {
@@ -90,7 +92,7 @@ public class ButtonCalls {
                 mainPanel.getChildren().set(0, chart);
 
                 //Opretter personer og sygdom
-                Simulator.theSimulator.initialiseSimulation(people, infected);
+                Simulator.theSimulator.initialiseSimulation(people, infected, risk, range);
                 //sætter personer til at være vaccineret
                 Simulator.theSimulator.vaccinatePeople(vaccinatedPercent, infected);
                 Simulator.theSimulator.handsanitizePeople(handsanitizedPercent);

@@ -307,7 +307,7 @@ public class GUI extends Application {
                 menu,
                 tooBigPopulationLabel, population0Label, infectedOverPopLabel, appliedLabel,
                 picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent,
-                this, styler, mainPanel);
+                this, styler, mainPanel, infectionRisk, infectionRange);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, appliedLabel);

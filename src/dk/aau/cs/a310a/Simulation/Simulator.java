@@ -211,9 +211,9 @@ public class Simulator {
         return true;
     }
 
-    public void initialiseSimulation(int peopleAmount, int infectedAmount) {
+    public void initialiseSimulation(int peopleAmount, int infectedAmount, double infectionRisk, int infectionRange) {
         //ny influenza
-        influenza = new Influenza(0.3, 2,
+        influenza = new Influenza(infectionRisk, infectionRange,
                 1, 4,
                 0.000002, 0.1);
 

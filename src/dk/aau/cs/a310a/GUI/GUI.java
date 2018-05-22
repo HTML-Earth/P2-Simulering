@@ -235,6 +235,7 @@ public class GUI extends Application {
         Label appliedLabel = new Label("Population applied!");
         Label titleLabel = new Label("Zombe");
         Label sirLabel = new Label("SIR-Options:");
+        Label diseaseLabel = new Label("Disease-Options:");
         Label spreadLabel = new Label("Spread-modifiers:");
         Label whatPerLabel = new Label("What percentage:");
         Label isVaccinatedLabel = new Label(" - is vaccinated?");
@@ -250,6 +251,7 @@ public class GUI extends Application {
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
         sirLabel.setTextFill(Color.WHITE);
+        diseaseLabel.setTextFill(Color.WHITE);
         spreadLabel.setTextFill(Color.WHITE);
         riskLabel.setTextFill(Color.WHITE);
         rangeLabel.setTextFill(Color.WHITE);
@@ -264,6 +266,7 @@ public class GUI extends Application {
         buttonMethod.cuztomizeLabel(infectedOverPopLabel, 200, 150, 20);
 
         buttonMethod.cuztomizeLabel(sirLabel, -260, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
+        buttonMethod.cuztomizeLabel(diseaseLabel, -260, -180 + 230, "Georgia", 20, dropShadow, FontWeight.BOLD );
         buttonMethod.cuztomizeLabel(spreadLabel, -260 + 400, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
         buttonMethod.cuztomizeLabel(titleLabel, 0, -240, "Georgia", 70, dropShadow, FontWeight.BOLD);
 
@@ -394,7 +397,7 @@ public class GUI extends Application {
         menuButttonsBottomRight.setTranslateX(200);
         menuButttonsBottomRight.setTranslateY(600);
 
-        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, spreadLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, diseaseLabel, spreadLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

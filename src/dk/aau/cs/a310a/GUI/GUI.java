@@ -405,8 +405,6 @@ public class GUI extends Application {
         //Vis baggrundsbilledet
         picture.drawBackground();
 
-        final double targetDelta = 0.0166; /* 16.6ms ~ 60fps */
-
         new AnimationTimer() {
             double previousTime = System.nanoTime();
 
@@ -416,7 +414,7 @@ public class GUI extends Application {
                 double deltaTime = currentTime - previousTime;
 
                 //Opdater simulering
-                sim.simulate(currentTime, deltaTime);
+                sim.simulate(currentTime);
 
                 if (sim.isSimulationActive()) {
                     //Vis baggrund (hvilket overskriver forrige frame

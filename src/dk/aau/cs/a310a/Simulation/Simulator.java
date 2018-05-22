@@ -292,7 +292,7 @@ public class Simulator {
         }
     }
 
-    public void simulate(double currentTime, double deltaTime) {
+    public void simulate(double currentTime) {
         if (!simulationIsActive)
             return;
 

@@ -63,12 +63,38 @@ public class ButtonCalls {
                        NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
                        GUI gui, Styler styler, VBox mainPanel) {
         applySettings.setOnMouseClicked(event -> {
-            int people = Integer.parseInt(peopleAmount.getText());
-            int infected = Integer.parseInt(infectedAmount.getText());
-            int vaccinatedPercent = Integer.parseInt(vaccinePercent.getText());
-            int handsanitizedPercent = Integer.parseInt(sanitizerPercent.getText());
-            int staysHomePercent = Integer.parseInt(stayHomePercent.getText());
-            int coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
+            int people = 0;
+            int infected = 0;
+            int vaccinatedPercent = 0;
+            int handsanitizedPercent = 0;
+            int staysHomePercent = 0;
+            int coverCoughPercent = 0;
+
+            //if numberTextField is empty initialize variable to 0
+
+            if (!peopleAmount.getText().equals("")){
+                people = Integer.parseInt(peopleAmount.getText());
+            }
+
+            if (!infectedAmount.getText().equals("")){
+                infected = Integer.parseInt(infectedAmount.getText());
+            }
+
+            if (!vaccinePercent.getText().equals("")){
+                vaccinatedPercent = Integer.parseInt(vaccinePercent.getText());
+            }
+
+            if  (!sanitizerPercent.getText().equals("")){
+                handsanitizedPercent = Integer.parseInt(sanitizerPercent.getText());
+            }
+
+            if (!stayHomePercent.getText().equals("")){
+                staysHomePercent = Integer.parseInt(stayHomePercent.getText());
+            }
+
+            if (!coverMouthPercent.getText().equals("")){
+                coverCoughPercent = Integer.parseInt(coverMouthPercent.getText());
+            }
 
             //Alertbox hvis procenterne er over 100 eller under 0
             if (!((0 <= vaccinatedPercent && vaccinatedPercent <= 100) && (0 <= handsanitizedPercent && handsanitizedPercent <= 100) && (0 <= staysHomePercent && staysHomePercent <= 100) && (0 <= coverCoughPercent && coverCoughPercent <= 100))) {

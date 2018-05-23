@@ -61,7 +61,9 @@ public class ButtonCalls {
                        Label tooBigPopulationLabel, Label population0Label, Label infectedOverPopLabel, Label appliedLabel, Draw bob,
                        NumberTextField vaccinePercent, NumberTextField sanitizerPercent,
                        NumberTextField stayHomePercent, NumberTextField coverMouthPercent,
-                       GUI gui, Styler styler, VBox mainPanel, NumberTextField infectionRisk, NumberTextField infectionRange) {
+                       GUI gui, Styler styler, VBox mainPanel, NumberTextField infectionRisk,
+                       NumberTextField infectionRange, NumberTextField deathRisk, NumberTextField minDaysbfRecovered,
+                       NumberTextField maxDaysbfRecovered, NumberTextField movingRisk) {
         applySettings.setOnMouseClicked(event -> {
 
             int people = 0;
@@ -72,6 +74,10 @@ public class ButtonCalls {
             int coverCoughPercent = 0;
             double risk = 0;
             int range = 0;
+            double death = 0;
+            int maxDayRecover = 0;
+            int minDayRecover = 0;
+            double moving = 0;
 
             //if numberTextField is empty initialize variable to 0
 
@@ -105,6 +111,18 @@ public class ButtonCalls {
             if (!infectionRange.getText().equals("")){
                 range = Integer.parseInt(infectionRange.getText());
             }
+            if (!deathRisk.getText().equals("")){
+                death = Double.parseDouble(deathRisk.getText());
+            }
+            if (!maxDaysbfRecovered.getText().equals("")){
+                maxDayRecover = Integer.parseInt(maxDaysbfRecovered.getText());
+            }
+            if (!minDaysbfRecovered.getText().equals("")){
+                minDayRecover = Integer.parseInt(minDaysbfRecovered.getText());
+            }
+            if (!movingRisk.getText().equals("")){
+                moving = Double.parseDouble(movingRisk.getText());
+            }
 
 
             //Alertbox hvis procenterne er over 100 eller under 0
@@ -127,7 +145,7 @@ public class ButtonCalls {
                 mainPanel.getChildren().set(0, chart);
 
                 //Opretter personer og sygdom
-                Simulator.theSimulator.initialiseSimulation(people, infected, risk, range);
+                Simulator.theSimulator.initialiseSimulation(people, infected, risk, range, death, minDayRecover, maxDayRecover, moving);
                 //sætter personer til at være vaccineret
                 Simulator.theSimulator.vaccinatePeople(vaccinatedPercent, infected);
                 Simulator.theSimulator.handsanitizePeople(handsanitizedPercent);

@@ -211,11 +211,11 @@ public class Simulator {
         return true;
     }
 
-    public void initialiseSimulation(int peopleAmount, int infectedAmount, double infectionRisk, int infectionRange) {
+    public void initialiseSimulation(int peopleAmount, int infectedAmount, double infectionRisk, int infectionRange, double deathRisk, int minDaysRecover, int maxDaysRecover, double movingRisk) {
         //ny influenza
         influenza = new Influenza(infectionRisk, infectionRange,
-                1, 4,
-                0.000002, 0.1);
+                minDaysRecover, maxDaysRecover,
+                deathRisk, movingRisk);
 
         //Nulstil tiden
         clock.resetTime();

@@ -227,6 +227,14 @@ public class GUI extends Application {
         infectionRisk.setMaxWidth(40);
         NumberTextField infectionRange = new NumberTextField("2");
         infectionRange.setMaxWidth(40);
+        NumberTextField deathRisk = new NumberTextField("0.000002");
+        deathRisk.setMaxWidth(80);
+        NumberTextField minDaysbfRecovered = new NumberTextField("1");
+        minDaysbfRecovered.setMaxWidth(40);
+        NumberTextField maxDaysbfRecovered = new NumberTextField("4");
+        maxDaysbfRecovered.setMaxWidth(40);
+        NumberTextField movingRisk = new NumberTextField("0.1");
+        movingRisk.setMaxWidth(40);
 
 
         // Menu - labels til beskrivelse
@@ -247,6 +255,10 @@ public class GUI extends Application {
         Label infectedOverPopLabel = new Label("Error: Infected must be less than population");
         Label riskLabel = new Label("Enter infection risk (between 0 and 1): ");
         Label rangeLabel = new Label("Enter infection range: ");
+        Label deathLabel = new Label("Enter base risk of dying: ");
+        Label minDaysLabel = new Label("Minimum days before recovered: ");
+        Label maxDaysLabel = new Label("Maximum days before recovered: ");
+        Label movingRiskLabel = new Label("Risk of infection while moving ");
 
         appliedLabel.setTextFill(Color.LIGHTGREEN);
         titleLabel.setTextFill(Color.WHITE);
@@ -255,15 +267,19 @@ public class GUI extends Application {
         spreadLabel.setTextFill(Color.WHITE);
         riskLabel.setTextFill(Color.WHITE);
         rangeLabel.setTextFill(Color.WHITE);
+        deathLabel.setTextFill(Color.WHITE);
+        minDaysLabel.setTextFill(Color.WHITE);
+        maxDaysLabel.setTextFill(Color.WHITE);
+        movingRiskLabel.setTextFill(Color.WHITE);
         tooBigPopulationLabel.setTextFill(new Color(1,0.3,0.3,1));
         population0Label.setTextFill(new Color(1,0.3,0.3,1));
         infectedOverPopLabel.setTextFill(new Color(1,0.3,0.3,1));
 
 
-        buttonMethod.cuztomizeLabel(appliedLabel, 200, 150, 20);
-        buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 200, 150, 20);
-        buttonMethod.cuztomizeLabel(population0Label, 200, 150, 20);
-        buttonMethod.cuztomizeLabel(infectedOverPopLabel, 200, 150, 20);
+        buttonMethod.cuztomizeLabel(appliedLabel, 0, 245, 20);
+        buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 0, 245, 20);
+        buttonMethod.cuztomizeLabel(population0Label, 0, 245, 20);
+        buttonMethod.cuztomizeLabel(infectedOverPopLabel, 0, 245, 20);
 
         buttonMethod.cuztomizeLabel(sirLabel, -260, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
         buttonMethod.cuztomizeLabel(diseaseLabel, -260, -180 + 230, "Georgia", 20, dropShadow, FontWeight.BOLD );
@@ -310,7 +326,8 @@ public class GUI extends Application {
                 menu,
                 tooBigPopulationLabel, population0Label, infectedOverPopLabel, appliedLabel,
                 picture, vaccinePercent, sanitizerPercent, stayHomePercent, coverMouthPercent,
-                this, styler, mainPanel, infectionRisk, infectionRange);
+                this, styler, mainPanel, infectionRisk, infectionRange, deathRisk, minDaysbfRecovered,
+                maxDaysbfRecovered, movingRisk);
 
         // Event til starte simulering og fjerne menu og blur
         buttonMethod.runProgram(runButton, showMenu, root, menu, simWindow, corner, appliedLabel);
@@ -370,6 +387,14 @@ public class GUI extends Application {
         menuLabelsBottom.add(infectionRisk, 1, 0);
         menuLabelsBottom.add(rangeLabel, 0, 1);
         menuLabelsBottom.add(infectionRange, 1, 1);
+        menuLabelsBottom.add(deathLabel, 0, 2);
+        menuLabelsBottom.add(deathRisk, 1, 2);
+        menuLabelsBottom.add(minDaysLabel, 2, 0);
+        menuLabelsBottom.add(minDaysbfRecovered, 3, 0);
+        menuLabelsBottom.add(maxDaysLabel, 2, 1);
+        menuLabelsBottom.add(maxDaysbfRecovered, 3, 1);
+        menuLabelsBottom.add(movingRiskLabel, 2, 2);
+        menuLabelsBottom.add(movingRisk, 3, 2);
 
         styler.StyleGrid(menuLabelsBottom);
         styler.StyleGrid(menuLabelsTop);

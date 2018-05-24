@@ -379,12 +379,12 @@ public class Person {
     //Metoden som kaldes når man printer objektet
     public String toString() {
         String health = getCurrentHealth().toString();
-        String infectedTime = (getCurrentHealth() == Person.health.Susceptible) ? "\t\t" : "\t\t (Day " + (tickInfected/1440+1) + ")";
+        String infectedTime = (getCurrentHealth() == Person.health.Susceptible) ? "\t" : "\t\t " + (tickInfected/1440+1);
         if (getCurrentHealth() == Person.health.Recovered)
-            infectedTime = "\t (Day " + (tickInfected/1440+1) + ")";
-        String ageString = "\t Age:" + age;
-        String status = "\t " + statusString;
-        String pos = "\t [" + position.x + ", " + position.y + "]";
+            infectedTime = "\t " + (tickInfected/1440+1);
+        String ageString = "\t\t " + age;
+        String status = "\t\t " + statusString;
+        String pos = "\t\t " + position.x + "\t " + position.y;
         return health + infectedTime + ageString + status + pos;
     }
 }

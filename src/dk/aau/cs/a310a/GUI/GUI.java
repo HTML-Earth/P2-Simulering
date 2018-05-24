@@ -446,7 +446,7 @@ public class GUI extends Application {
                     picture.drawBackground();
 
                     //Reset personData tekst
-                    personData.setText("");
+                    personData.setText(" Health: \t \t Day: \t Age: \t Position: \t\t X:\t Y:");
 
                     //Tegn alle personer og print deres info
                     for (Person p : sim.getPeople()) {

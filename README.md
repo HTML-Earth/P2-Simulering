@@ -36,6 +36,18 @@ Just above the textfield is overall statistics about the current simulation loca
 ## Extra maps
 The resource folder includes the default city map plus two extra examples. The default city can be swapped to an example by changing its name to "city".
 
+### Creating your own map
+If you wish to create your own map, you will need a 40x30 pixel picture.
+The picture will need to consist of housings, workplaces, roads and a hospital to function.
+When creating your map use the following full colors to add certain parts:
+- White = Grass
+- Black = Housing
+- Grey = Road
+- Blue = Workplace
+- Red = Hospital
+
+The colors are used only to identify different parts of the map and will be shown as other colors identical to the other premade maps.
+
 ## Credits
 Pictures shown during the simulation are drawn by the project group (dat310a).
 The group consists of seven people including:

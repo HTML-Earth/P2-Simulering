@@ -249,13 +249,14 @@ public class ButtonCalls {
         GUI.theGUI.printSim.setOnMouseClicked(event -> GUI.theGUI.exportFileDialog(stage));
     }
 
-    public void setImportImage(ImageView imgView, String imageName)
+    public void setImportImage(ImageView imgView, String imageName, Button startButton)
     {
         imgView.setOnMouseClicked(event -> {
             try {
                 Simulator.theSimulator.importMap(imageName + ".png");
                 GUI.theGUI.visualMap = GUI.theGUI.picture.resizeImage(imageName + ".png", 20);
                 GUI.theGUI.picture.setBackground(GUI.theGUI.visualMap);
+                startButton.setDisable(true);
             }
             catch (IOException e)
             {

@@ -279,7 +279,7 @@ public class GUI extends Application {
         infectedOverPopLabel.setTextFill(new Color(1,0.3,0.3,1));
 
 
-        buttonMethod.cuztomizeLabel(appliedLabel, 120, 245, 20);
+        buttonMethod.cuztomizeLabel(appliedLabel, 120, 200, 20);
         buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 120, 200, 20);
         buttonMethod.cuztomizeLabel(population0Label, 120, 200, 20);
         buttonMethod.cuztomizeLabel(infectedOverPopLabel, 120, 200, 20);
@@ -314,10 +314,10 @@ public class GUI extends Application {
         map04.setFitWidth(60);
         map04.setFitHeight(45);
 
-        buttonMethod.setImportImage(map01, "map01");
-        buttonMethod.setImportImage(map02, "map02");
-        buttonMethod.setImportImage(map03, "map03");
-        buttonMethod.setImportImage(map04, "map04");
+        buttonMethod.setImportImage(map01, "map01", runButton);
+        buttonMethod.setImportImage(map02, "map02", runButton);
+        buttonMethod.setImportImage(map03, "map03", runButton);
+        buttonMethod.setImportImage(map04, "map04", runButton);
 
         Button imageButton = new Button("Custom...");
         imageButton.setFont(Font.font(20));
@@ -437,7 +437,7 @@ public class GUI extends Application {
         //Apply og start knap
         GridPane menuButttonsBottomRight = new GridPane();
         Pane emptyCol2 = new Pane();
-        emptyCol2.setMinWidth(250);
+        emptyCol2.setMinWidth(200);
         menuButttonsBottomRight.add(map01,0,0);
         menuButttonsBottomRight.add(map02,1,0);
         menuButttonsBottomRight.add(map03,2,0);

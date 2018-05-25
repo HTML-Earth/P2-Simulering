@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import javax.tools.Tool;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Stack;
 
 public class GUI extends Application {
@@ -139,6 +140,7 @@ public class GUI extends Application {
         //Infoboks med Livestatistikker i hjørnet
         VBox info = new VBox();
         info.setMinHeight(150);
+        info.setMinWidth(200);
         info.setAlignment(Pos.CENTER);
 
         //Infoboks labels i info simWindow
@@ -489,7 +491,8 @@ public class GUI extends Application {
                     stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
                     stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
-                    stringEpidemic.setText(sim.getR0(1,1.0));
+                    DecimalFormat numberFormat = new DecimalFormat("#.##");
+                    stringEpidemic.setText("R0 = " + numberFormat.format(sim.getBeta() / sim.getGamma()));
                     stringTimeOfDay.setText(sim.getSimulationTime());
                 }
 

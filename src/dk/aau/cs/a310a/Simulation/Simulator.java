@@ -51,6 +51,9 @@ public class Simulator {
     private double tickTime = slowTickTime;
     private double lastTick = 0;
 
+    private double gamma = 0;
+    private double beta = 0;
+
     private int lastGraphUpdate;
 
     private ArrayList<GridPosition> houses;
@@ -305,6 +308,30 @@ public class Simulator {
             newDay = false;
         }
 
+
+        double totalInfectionDuration = 0;
+        double averageInfectionDuration = 0;
+        double totalOtherInfected = 0;
+        double averageOtherInfected = 0;
+
+        for (Person p : people) {
+            totalInfectionDuration += p.getInfectionDuration();
+            totalOtherInfected += p.getOthersInfected();
+        }
+
+        averageInfectionDuration = totalInfectionDuration / people.size();
+        averageOtherInfected = totalOtherInfected / people.size();
+
+
+        if (averageInfectionDuration > 0) {
+            gamma = 1 / averageInfectionDuration;
+        }
+
+        if (clock.getCurrentTick() > 0) {
+            beta = averageOtherInfected / clock.getCurrentTick();
+        }
+
+
         if (currentTime > lastTick + tickTime) {
             int currentTick = clock.getCurrentTick();
             //Opdater positionen og helbredet for personen
@@ -349,6 +376,8 @@ public class Simulator {
 
         snapshots.add(new Snapshot(susceptible,infected,recovered,dead));
 
+
+
         GUI.lineChart.updateLineChart(tick, susceptible, infected, recovered);
     }
 
@@ -364,11 +393,12 @@ public class Simulator {
         return clock.getTimeString();
     }
 
-    public String getR0(double beta, double gamma) {
-        if (influenza != null)
-            return influenza.calculateR0(beta, gamma);
-        else
-            return "There is no disease.";
+    public double getGamma() {
+        return gamma;
+    }
+
+    public double getBeta() {
+        return beta;
     }
 
     public List<Person> getPeople() {

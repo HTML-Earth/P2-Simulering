@@ -7,12 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.Effect;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import java.awt.*;
+import java.io.IOException;
 
 public class ButtonCalls {
 
@@ -245,4 +249,18 @@ public class ButtonCalls {
         GUI.theGUI.printSim.setOnMouseClicked(event -> GUI.theGUI.exportFileDialog(stage));
     }
 
+    public void setImportImage(ImageView imgView, String imageName)
+    {
+        imgView.setOnMouseClicked(event -> {
+            try {
+                Simulator.theSimulator.importMap(imageName + ".png");
+                GUI.theGUI.visualMap = GUI.theGUI.picture.resizeImage(imageName + ".png", 20);
+                GUI.theGUI.picture.setBackground(GUI.theGUI.visualMap);
+            }
+            catch (IOException e)
+            {
+                System.out.println(e);
+            }
+        });
+    }
 }

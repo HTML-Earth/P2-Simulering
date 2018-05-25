@@ -17,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -43,7 +44,7 @@ public class GUI extends Application {
     //Billedet i canvas
     Image visualMap;
 
-    Draw picture;
+    public Draw picture;
 
     Button pausePlaySim;
     Button stopSim;
@@ -245,6 +246,7 @@ public class GUI extends Application {
         Label sirLabel = new Label("SIR-Options:");
         Label diseaseLabel = new Label("Disease-Options:");
         Label spreadLabel = new Label("Spread-modifiers:");
+        Label mapLabel = new Label("Map:");
         Label whatPerLabel = new Label("What percentage:");
         Label isVaccinatedLabel = new Label(" - is vaccinated?");
         Label useSanitizersLabel = new Label(" - use handsanitizers?");
@@ -265,6 +267,7 @@ public class GUI extends Application {
         sirLabel.setTextFill(Color.WHITE);
         diseaseLabel.setTextFill(Color.WHITE);
         spreadLabel.setTextFill(Color.WHITE);
+        mapLabel.setTextFill(Color.WHITE);
         riskLabel.setTextFill(Color.WHITE);
         rangeLabel.setTextFill(Color.WHITE);
         deathLabel.setTextFill(Color.WHITE);
@@ -276,14 +279,15 @@ public class GUI extends Application {
         infectedOverPopLabel.setTextFill(new Color(1,0.3,0.3,1));
 
 
-        buttonMethod.cuztomizeLabel(appliedLabel, 0, 245, 20);
-        buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 0, 245, 20);
-        buttonMethod.cuztomizeLabel(population0Label, 0, 245, 20);
-        buttonMethod.cuztomizeLabel(infectedOverPopLabel, 0, 245, 20);
+        buttonMethod.cuztomizeLabel(appliedLabel, 120, 245, 20);
+        buttonMethod.cuztomizeLabel(tooBigPopulationLabel, 120, 200, 20);
+        buttonMethod.cuztomizeLabel(population0Label, 120, 200, 20);
+        buttonMethod.cuztomizeLabel(infectedOverPopLabel, 120, 200, 20);
 
         buttonMethod.cuztomizeLabel(sirLabel, -260, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
         buttonMethod.cuztomizeLabel(diseaseLabel, -260, -180 + 230, "Georgia", 20, dropShadow, FontWeight.BOLD );
         buttonMethod.cuztomizeLabel(spreadLabel, -260 + 400, -180, "Georgia", 20, dropShadow, FontWeight.BOLD);
+        buttonMethod.cuztomizeLabel(mapLabel, -260 - 120, -180 + 380, "Georgia", 20, dropShadow, FontWeight.BOLD);
         buttonMethod.cuztomizeLabel(titleLabel, 0, -240, "Georgia", 70, dropShadow, FontWeight.BOLD);
 
 
@@ -296,7 +300,26 @@ public class GUI extends Application {
         runButton.setDisable(true);
         runButton.setFont(Font.font(20));
 
-        Button imageButton = new Button("Upload map");
+        ImageView map01 = new ImageView("file:resources/maps/map01.png");
+        ImageView map02 = new ImageView("file:resources/maps/map02.png");
+        ImageView map03 = new ImageView("file:resources/maps/map03.png");
+        ImageView map04 = new ImageView("file:resources/maps/map04.png");
+
+        map01.setFitWidth(60);
+        map01.setFitHeight(45);
+        map02.setFitWidth(60);
+        map02.setFitHeight(45);
+        map03.setFitWidth(60);
+        map03.setFitHeight(45);
+        map04.setFitWidth(60);
+        map04.setFitHeight(45);
+
+        buttonMethod.setImportImage(map01, "map01");
+        buttonMethod.setImportImage(map02, "map02");
+        buttonMethod.setImportImage(map03, "map03");
+        buttonMethod.setImportImage(map04, "map04");
+
+        Button imageButton = new Button("Custom...");
         imageButton.setFont(Font.font(20));
 
         //Tooltip for <1000 personer
@@ -414,15 +437,23 @@ public class GUI extends Application {
         //Apply og start knap
         GridPane menuButttonsBottomRight = new GridPane();
         Pane emptyCol2 = new Pane();
-        emptyCol2.setMinWidth(500);
-        menuButttonsBottomRight.add(applySettings, 2, 0);
-        menuButttonsBottomRight.add(runButton, 3, 0);
-        menuButttonsBottomRight.add(imageButton,0,0);
-        menuButttonsBottomRight.add(emptyCol2,1,0);
+        emptyCol2.setMinWidth(250);
+        menuButttonsBottomRight.add(map01,0,0);
+        menuButttonsBottomRight.add(map02,1,0);
+        menuButttonsBottomRight.add(map03,2,0);
+        menuButttonsBottomRight.add(map04,3,0);
+
+        menuButttonsBottomRight.add(imageButton,4,0);
+        menuButttonsBottomRight.add(emptyCol2,5,0);
+
+        menuButttonsBottomRight.add(applySettings, 6, 0);
+        menuButttonsBottomRight.add(runButton, 7, 0);
+
         menuButttonsBottomRight.setTranslateX(200);
         menuButttonsBottomRight.setTranslateY(600);
+        menuButttonsBottomRight.setHgap(10);
 
-        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, diseaseLabel, spreadLabel, menuButttonsBottomRight);
+        menu.getChildren().addAll(menuBackground, menuLabelsTop, menuLabelsBottom, titleLabel, sirLabel, diseaseLabel, spreadLabel, mapLabel, menuButttonsBottomRight);
 
         //Tilføj simwindow og menu til root stackpane
         root.getChildren().addAll(simWindow, menu);

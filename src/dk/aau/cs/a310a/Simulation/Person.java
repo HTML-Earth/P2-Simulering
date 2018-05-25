@@ -26,6 +26,8 @@ public class Person {
 
     private int ticksBeforeHospital = 0;
 
+    private int othersInfected = 0;
+
     private boolean hasDestination;
 
     private int workHour = 8;
@@ -176,7 +178,10 @@ public class Person {
         }
 
         if (rand.nextDouble() < disease.getInfectionRisk() * Simulator.theSimulator.getTickTime() * movingPenalty * vaccineReduceRisk * handsanitizerReduceRisk * coverReduceRisk)
+        {
             p.infect(disease);
+            othersInfected++;
+        }
     }
 
     public void dailyUpdate() {
@@ -366,6 +371,10 @@ public class Person {
         }
 
         return ticks;
+    }
+
+    public int getOthersInfected() {
+        return othersInfected;
     }
 
     int getTicksBeforeHospital() {

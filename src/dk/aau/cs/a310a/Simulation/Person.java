@@ -20,6 +20,8 @@ public class Person {
     //tidspunkt hvor personen blev inficeret
     private int tickInfected = 0;
 
+    private int tickRecovered = 0;
+
     private int ticksBeforeRecover = 0;
 
     private int ticksBeforeHospital = 0;
@@ -349,6 +351,23 @@ public class Person {
         this.ticksBeforeHospital = getTicksBeforeHospital();
     }
 
+    public double getInfectionDuration() {
+        int ticks = 0;
+
+        if (currentHealth == health.Susceptible)
+            ticks = 0;
+        else {
+            if (tickRecovered != 0) {
+                ticks = tickRecovered - tickInfected;
+            }
+            else {
+                ticks = Simulator.clock.currentTick - tickInfected;
+            }
+        }
+
+        return ticks;
+    }
+
     int getTicksBeforeHospital() {
         int ticksPerDay = 60 * 24;
         int bound = maxDaysBeforeHospital - minDaysBeforeHospital;
@@ -362,6 +381,8 @@ public class Person {
                 currentHealth = health.Dead;
             else
                 currentHealth = health.Recovered;
+
+            tickRecovered = currentTick;
         }
     }
 

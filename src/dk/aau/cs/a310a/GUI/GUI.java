@@ -51,6 +51,8 @@ public class GUI extends Application {
     Button stopSim;
     Button printSim;
 
+    DecimalFormat numberFormat;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -63,6 +65,8 @@ public class GUI extends Application {
         picture = new Draw();
         visualMap = picture.resizeImage("map01.png", 20);
         picture.setBackground(visualMap);
+
+        numberFormat = new DecimalFormat("#.##");
     }
 
     public void start(Stage stage) {
@@ -469,7 +473,6 @@ public class GUI extends Application {
             public void handle(long currentNanoTime) {
 
                 double currentTime = currentNanoTime / 1_000_000_000.0;
-                double deltaTime = currentTime - previousTime;
 
                 //Opdater simulering
                 sim.simulate(currentTime);
@@ -491,7 +494,6 @@ public class GUI extends Application {
                     stringInfected.setText("Infected: " + sim.healthCount(Person.health.Infected));
                     stringRecovered.setText("Recovered: " + sim.healthCount(Person.health.Recovered));
                     stringDead.setText("Dead: " + sim.healthCount(Person.health.Dead));
-                    DecimalFormat numberFormat = new DecimalFormat("#.##");
                     stringEpidemic.setText("R0 = " + numberFormat.format(sim.getBeta() / sim.getGamma()));
                     stringTimeOfDay.setText(sim.getSimulationTime());
                 }

@@ -286,7 +286,7 @@ public class Simulator {
 
     public void exportResults(File file) {
         try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
-            writer.write("Tick,Susceptible,Infected,Recovered,Dead\n");
+            writer.write("Tick, Susceptible, Infected, Recovered, Dead, Beta, Gamma, R0\n");
             for (int i = 0; i < snapshots.size(); i++) {
                 writer.write(i + "," + snapshots.get(i).toString() + "\n");
             }
@@ -374,9 +374,7 @@ public class Simulator {
         int recovered = healthCount(Person.health.Recovered);
         int dead = healthCount(Person.health.Dead);
 
-        snapshots.add(new Snapshot(susceptible,infected,recovered,dead));
-
-
+        snapshots.add(new Snapshot(susceptible,infected,recovered,dead, beta, gamma, (gamma != 0) ? beta / gamma : 0));
 
         GUI.lineChart.updateLineChart(tick, susceptible, infected, recovered);
     }

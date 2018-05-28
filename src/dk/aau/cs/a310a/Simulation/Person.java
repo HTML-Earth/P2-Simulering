@@ -159,9 +159,9 @@ public class Person {
         //hvis personen bevæger sig, så er der mindre infektionsrisiko
         double movingPenalty = (!isMoving() && !p.isMoving()) ? 1 : disease.getMovingMultiplier();
 
-        //Hvis personen er vaccineret er der mindre risiko, 0,4 svarer til 60% reduktion i risiko
+        //Hvis personen er vaccineret er der mindre risiko, 0,5 svarer til 50% reduktion i risiko
         if (p.getVaccinated()) {
-            vaccineReduceRisk = 0.4;
+            vaccineReduceRisk = 0.5;
         }
         //Reduktion på ca. 20%, diminishing returns hvis begge bruger
         if (p.getUsesHandSanitizer() && this.getUsesHandSanitizer()) {
